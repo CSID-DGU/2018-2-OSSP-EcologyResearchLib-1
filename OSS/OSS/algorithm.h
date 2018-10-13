@@ -21,8 +21,7 @@
 #ifndef _ALGORITHM_H__
 #define _ALGORITHM_H__
 
-#include "organism.h"
-#include "database.h"
+#include "db_organism.hpp"
 
 
 // 생물 이동경로 예측 알고리즘
