@@ -1,6 +1,6 @@
 #pragma once
-#include "Organism.hpp"
-#include "DataBase.hpp"
+#include "tax_organism.hpp"
+#include "db_origin.hpp"
 
 class OrgDataBase : public DataBase
 {

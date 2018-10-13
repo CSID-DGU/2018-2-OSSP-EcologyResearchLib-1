@@ -27,56 +27,56 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataBase.hpp">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Animalia.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Chordata.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
     <ClInclude Include="Class.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
     <ClInclude Include="Eukaryotes.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
-    <ClInclude Include="Kingdom.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
     <ClInclude Include="Mammalia.hpp">
       <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Organism.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Phylum.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrgDataBase.hpp">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="FieldDataBase.hpp">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.hpp">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Location.hpp">
-      <Filter>Header Files\Location</Filter>
     </ClInclude>
     <ClInclude Include="algorithm.h">
       <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
     <ClInclude Include="humpback_whale_mp.hpp">
       <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="db_origin.hpp">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="db_field.hpp">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="db_organism.hpp">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="db_timer.hpp">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="location_origin.hpp">
+      <Filter>Header Files\Location</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tax_phylum.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="kingdom_animalia.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="phylum_chordata.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="tax_domain.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="tax_kingdom.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="tax_organism.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

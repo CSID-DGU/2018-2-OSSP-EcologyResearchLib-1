@@ -144,22 +144,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="algorithm.h" />
-    <ClInclude Include="Animalia.hpp" />
-    <ClInclude Include="Chordata.hpp" />
+    <ClInclude Include="kingdom_animalia.hpp" />
+    <ClInclude Include="phylum_chordata.hpp" />
     <ClInclude Include="Class.hpp" />
-    <ClInclude Include="DataBase.hpp" />
-    <ClInclude Include="Domain.hpp" />
+    <ClInclude Include="db_origin.hpp" />
+    <ClInclude Include="tax_domain.hpp" />
     <ClInclude Include="Eukaryotes.hpp" />
-    <ClInclude Include="FieldDataBase.hpp" />
+    <ClInclude Include="db_field.hpp" />
     <ClInclude Include="humpback_whale_mp.hpp" />
-    <ClInclude Include="Kingdom.hpp" />
-    <ClInclude Include="Location.hpp" />
+    <ClInclude Include="tax_kingdom.hpp" />
+    <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="Mammalia.hpp" />
-    <ClInclude Include="Manager.hpp" />
-    <ClInclude Include="Organism.hpp" />
-    <ClInclude Include="OrgDataBase.hpp" />
-    <ClInclude Include="Phylum.hpp" />
-    <ClInclude Include="Timer.hpp" />
+    <ClInclude Include="lib_manager.hpp" />
+    <ClInclude Include="tax_organism.hpp" />
+    <ClInclude Include="db_organism.hpp" />
+    <ClInclude Include="tax_phylum.hpp" />
+    <ClInclude Include="db_timer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp" />

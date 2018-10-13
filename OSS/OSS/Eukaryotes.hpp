@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Organism.hpp"
-#include "Domain.hpp"
+#include "db_organism.hpp"
+#include "tax_domain.hpp"
 
 /* 
 ºÐ·ù : ¿ª

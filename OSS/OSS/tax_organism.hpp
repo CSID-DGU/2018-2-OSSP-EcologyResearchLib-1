@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <iostream>
-#include "OrgDataBase.hpp"
+#include "db_organism.hpp"
 
 class Organism
 {

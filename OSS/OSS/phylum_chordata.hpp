@@ -1,6 +1,6 @@
 #pragma once
-#include "Animalia.hpp"
-#include "Phylum.hpp"
+#include "kingdom_animalia.hpp"
+#include "phylum_chordata.hpp"
 
 /*
 ºÐ·ù : ¹®

@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "Timer.hpp"
+#include "db_timer.hpp"
 
 // Position data struct
 typedef struct Position
 {
-	float fLatitude, fLongitude, fDepth;
+	float fLatitude, fLongitude, fAltitude;
 } Position;
 
 class DataBase
