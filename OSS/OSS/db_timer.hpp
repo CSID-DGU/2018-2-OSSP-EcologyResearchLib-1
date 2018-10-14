@@ -94,6 +94,7 @@ public:
     Timer(int time[]);                                                          // 배열 매개변수 생성자
     Timer(int year, int month, int day, int hour, int minute, int second);      // 개별 매개변수 생성자
     Timer(std::string time);                                                    // 스트링 매개변수 생성자
+    ~Timer() { delete [] this->time; }                                          // 소멸자
 
     void setTime(int time[]);             // Setter
     void setTime(int year, int month, int day, int hour, int minute, int second);
