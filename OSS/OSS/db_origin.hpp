@@ -1,3 +1,5 @@
+// 작성자 : 신종하
+
 #pragma once
 #include <iostream>
 #include <vector>

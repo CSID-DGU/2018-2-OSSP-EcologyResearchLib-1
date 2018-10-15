@@ -1,3 +1,5 @@
+// 작성자 : 홍사민
+
 // 이동 경로 예측 알고리즘
 // 혹등 고래
 
@@ -12,8 +14,8 @@ class HumpbackWhaleMP : public MovementPrediction
 {
 
 public:
-    virtual void predictByHour(Organism& organism, int hours);
-    virtual void predictByDay (Organism& organism, int days ) { predictByHour(organism, days * 24); }
+    virtual void predictByHour(Organism& organism, int hours) override;
+    virtual void predictByDay (Organism& organism, int days ) override { predictByHour(organism, days * 24); }
 };
 
 

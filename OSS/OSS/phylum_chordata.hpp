@@ -1,3 +1,5 @@
+// 작성자 : 신종하
+
 #pragma once
 #include "kingdom_animalia.hpp"
 #include "phylum_chordata.hpp"
