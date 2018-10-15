@@ -144,17 +144,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="algorithm.h" />
+    <ClInclude Include="family_balaenopteridae.hpp" />
+    <ClInclude Include="genus_megaptera.hpp" />
     <ClInclude Include="kingdom_animalia.hpp" />
+    <ClInclude Include="order_cetacea.hpp" />
     <ClInclude Include="phylum_chordata.hpp" />
-    <ClInclude Include="Class.hpp" />
+    <ClInclude Include="species_humpback_whale.hpp" />
+    <ClInclude Include="tax_class.hpp" />
     <ClInclude Include="db_origin.hpp" />
     <ClInclude Include="tax_domain.hpp" />
-    <ClInclude Include="Eukaryotes.hpp" />
+    <ClInclude Include="domain_eukaryotes.hpp" />
     <ClInclude Include="db_field.hpp" />
     <ClInclude Include="humpback_whale_mp.hpp" />
     <ClInclude Include="tax_kingdom.hpp" />
     <ClInclude Include="location_origin.hpp" />
-    <ClInclude Include="Mammalia.hpp" />
+    <ClInclude Include="class_mammalia.hpp" />
     <ClInclude Include="lib_manager.hpp" />
     <ClInclude Include="tax_organism.hpp" />
     <ClInclude Include="db_organism.hpp" />
