@@ -1,3 +1,5 @@
+// 작성자 : 신종하
+
 #pragma once
 #include "tax_organism.hpp"
 #include "db_origin.hpp"

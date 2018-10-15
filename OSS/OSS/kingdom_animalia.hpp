@@ -1,3 +1,5 @@
+// 작성자 : 신종하
+
 #pragma once
 #include "domain_eukaryotes.hpp"
 #include "tax_kingdom.hpp"

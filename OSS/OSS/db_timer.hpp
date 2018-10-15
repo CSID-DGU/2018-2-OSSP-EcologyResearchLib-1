@@ -1,4 +1,4 @@
-#pragma once
+// 작성자 : 홍사민
 
 /* 2018. 10. 14. Timer 클래스 구현
 
@@ -37,33 +37,16 @@
 
 */
 
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <algorithm>
 #include <cassert>  // assert
 
-//#define M_TYPE
-#ifdef M_TYPE       // Type 1
-
 class Timer
 {
-private:
-    int m_year;
-    int m_month;
-    int m_day;
-    int m_hour;
-    int m_minute;
-    int m_second;
-
-public:
-    Timer() {}
-};
-
-#else               // Type 2
-
-class Timer
-{
-    enum DATE_TIME
+    enum DateTime
     {
         YEAR, MONTH,  DAY,
         HOUR, MINUTE, SECOND,
@@ -71,30 +54,30 @@ class Timer
     };
 
 private:
-    int* time;                                                      // 연-월-일 시:분:초
+    int* time = nullptr;                                            // 연-월-일 시:분:초
 
     // 해당 월의 일수 : 0월은 12월로 간주, 31일로 세팅(Subtraction 연산 고려)
     const int daysOfMonth[13] = { 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    bool isDigit       (char ch){ return ('0' <= ch && ch <= '9'); }// 해당 문자가 숫자인지 검사
-    bool isLeapYear    () { return (this->time[YEAR] % 4 == 0); }   // 윤년 검사
+    bool isDigit    (char ch){ return ('0' <= ch && ch <= '9'); }   // 해당 문자가 숫자인지 검사
+    bool isLeapYear () { return (this->time[YEAR] % 4 == 0); }      // 윤년 검사
 
-    int  wrapCycle     (int, int, int);                             // 상한,하한을 벗어나면 나머지 연산을 이용해
+    int  wrapCycle  (int, int, int);                                // 상한,하한을 벗어나면 나머지 연산을 이용해
     //                                                                 기준 값으로 돌아오도록 하는 순환형 Wrapper
     int  getDaysOfMonth();                                          // 해당 월의 일수 리턴
     int  getDaysOfLastMonth();                                      // 지난 달의 일수 리턴
 
-    void zeroConcat    (std::string&, char, int&, std::string);     // 날짜 및 시간 스트링 연결용 함수
-    void timeAssert    ();                                          // 제약사항 검사
-    void timeCycle     (int&, int&, int, int);                      // arrangeTime을 위한, 날짜 상한/하한 루프 함수
-    void arrangeTime   (bool repeat = true);                        // 시간 계산 시, 범위에 맞게 각각 조정
+    void zeroConcat (std::string&, char, int&, std::string);        // 날짜 및 시간 스트링 연결용 함수
+    void timeAssert ();                                             // 제약사항 검사
+    void timeCycle  (int&, int&, int, int);                         // arrangeTime을 위한, 날짜 상한/하한 루프 함수
+    void arrangeTime(bool repeat = true);                           // 시간 계산 시, 범위에 맞게 각각 조정
 
 public:
     Timer() { this->time = new int[TIMER_SIZE] { 2000, 01, 01, 00, 00, 00 }; }  // 기본 생성자
     Timer(int time[]);                                                          // 배열 매개변수 생성자
     Timer(int year, int month, int day, int hour, int minute, int second);      // 개별 매개변수 생성자
     Timer(std::string time);                                                    // 스트링 매개변수 생성자
-    ~Timer() { delete [] this->time; }                                          // 소멸자
+    ~Timer() { if(this->time != nullptr) delete [] this->time; }                // 소멸자
 
     void setTime(int time[]);             // Setter
     void setTime(int year, int month, int day, int hour, int minute, int second);
@@ -143,17 +126,11 @@ public:
 /* Implementation */
 
 
-
 #pragma region Constructors
 
 Timer::Timer(int time[])
 {
-    this->time = new int[TIMER_SIZE];
-
-    for (int i = YEAR; i < TIMER_SIZE; i++)
-        this->time[i] = time[i];
-
-    timeAssert();
+    setTime(time);
 }
 
 Timer::Timer(int year, int month, int day, int hour, int minute, int second)
@@ -174,10 +151,8 @@ int Timer::wrapCycle(int value, int min, int max)
 {
     while(value < min)
         value += max;
-    
-    value %= max;
 
-    return value;
+    return value % max;
 }
 
 int Timer::getDaysOfMonth()
@@ -280,6 +255,8 @@ void Timer::arrangeTime(bool repeat)
 
 void Timer::setTime(int time[])
 {
+    this->time = new int[TIMER_SIZE];
+
     for (int i = YEAR; i < TIMER_SIZE; i++)
         this->time[i] = time[i];
 
@@ -305,8 +282,8 @@ void Timer::setTime(std::string time)
     this->time = new int[TIMER_SIZE];
 
     std::string strTime[TIMER_SIZE] = { "", };
-    int timeIterator = YEAR;
-    bool nextIter = false;
+    int         timeIterator        = YEAR;
+    bool        nextIter            = false;
 
     for(const auto& ch : time)
     {
@@ -494,5 +471,3 @@ Timer Timer::operator - (std::string timerString);
 */
 
 #pragma endregion
-
-#endif
