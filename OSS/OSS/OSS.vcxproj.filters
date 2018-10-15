@@ -27,15 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Eukaryotes.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="Mammalia.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
     <ClInclude Include="algorithm.h">
       <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
@@ -76,6 +67,27 @@
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
     <ClInclude Include="tax_organism.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="domain_eukaryotes.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="class_mammalia.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="tax_class.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="genus_megaptera.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="family_balaenopteridae.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="order_cetacea.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
+    <ClInclude Include="species_humpback_whale.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
   </ItemGroup>
