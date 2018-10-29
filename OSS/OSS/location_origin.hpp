@@ -5,6 +5,7 @@
 
 class Location 
 {
-public:
 	FieldDataBase m_FDB;
+public:
+	
 };

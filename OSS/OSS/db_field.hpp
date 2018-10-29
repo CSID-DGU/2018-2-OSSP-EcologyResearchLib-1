@@ -1,25 +1,32 @@
-// 작성자 : 신종하
+// Coded by : 신종하
 
 #pragma once
 #include "db_origin.hpp"
+#include "db_timer.hpp"
+#include "db_environment.hpp"
+#include "db_organism.hpp"
 
 class FieldDataBase : public DataBase
 {
-	enum WHETHERSTATUS
+	struct LocalInfo
 	{
-		SUNNEY, CLOUDY, RAINY, SNOWY
-	};
-
-	struct Whether
-	{
-		int temperature;
-		int wind_speed;
-		WHETHERSTATUS status;
+		Position pos;
+		Environment environment;
+		std::vector<Organism> organisms;
 	};
 
 private:
+	Timer * m_timer; // Local Time
+	std::vector<LocalInfo> m_localArray; // Location info
 	
 public:
-	std::vector<Position> coordinate;
-	Whether whether;
+	FieldDataBase()
+	{
+		m_timer = new Timer();
+	}
+
+	~FieldDataBase()
+	{
+		delete[] m_timer;
+	}
 };
