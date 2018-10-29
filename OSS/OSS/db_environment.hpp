@@ -4,14 +4,14 @@
 
 class Environment
 {
-	enum WHETHERSTATUS
+	enum WEATHERSTATUS
 	{
 		SUNNEY, CLOUDY, RAINY, SNOWY
 	};
 
 	int temperature;
 	int wind_speed;
-	WHETHERSTATUS status;
+	WEATHERSTATUS status;
 
 public:
 	Environment() {}
