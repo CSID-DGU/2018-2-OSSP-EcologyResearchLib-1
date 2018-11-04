@@ -25,14 +25,35 @@
     <Filter Include="Header Files\Algorithm">
       <UniqueIdentifier>{c19622f2-aef6-4ca4-adec-ff2ee89a0de1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Organism">
+      <UniqueIdentifier>{a218b08d-0af7-4b36-8305-397dfbdf8679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\class">
+      <UniqueIdentifier>{d705049b-3186-4ce7-ba70-5e548ade402b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\species">
+      <UniqueIdentifier>{d049b0c5-fa2d-4eae-adfb-3f95a9aa1912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\domain">
+      <UniqueIdentifier>{5cd7cfec-a2d2-470a-85c3-de0e1689968a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\family">
+      <UniqueIdentifier>{e335617a-0c5d-4c4d-8934-9dd7ee5a55c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\genus">
+      <UniqueIdentifier>{c081179f-21fb-4ad1-a7ca-c72389f64697}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\kingdom">
+      <UniqueIdentifier>{a4ef0781-de6f-4599-b0f8-08a1ead715a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\order">
+      <UniqueIdentifier>{811791e4-0733-4924-9538-152ab7443e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\phylum">
+      <UniqueIdentifier>{de49e19a-ba51-48fd-aa25-9af11e0b45bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algorithm.h">
-      <Filter>Header Files\Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="humpback_whale_mp.hpp">
-      <Filter>Header Files\Algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="db_origin.hpp">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
@@ -54,12 +75,6 @@
     <ClInclude Include="tax_phylum.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
-    <ClInclude Include="kingdom_animalia.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="phylum_chordata.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
     <ClInclude Include="tax_domain.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
@@ -69,29 +84,41 @@
     <ClInclude Include="tax_organism.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
-    <ClInclude Include="domain_eukaryotes.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="class_mammalia.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
     <ClInclude Include="tax_class.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="genus_megaptera.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="family_balaenopteridae.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="order_cetacea.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="species_humpback_whale.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
     <ClInclude Include="db_environment.hpp">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="al_humpback_whale_mp.hpp">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="al_algorithm.hpp">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="class_mammalia.hpp">
+      <Filter>Header Files\Organism\class</Filter>
+    </ClInclude>
+    <ClInclude Include="species_humpback_whale.hpp">
+      <Filter>Header Files\Organism\species</Filter>
+    </ClInclude>
+    <ClInclude Include="domain_eukaryotes.hpp">
+      <Filter>Header Files\Organism\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="family_balaenopteridae.hpp">
+      <Filter>Header Files\Organism\family</Filter>
+    </ClInclude>
+    <ClInclude Include="genus_megaptera.hpp">
+      <Filter>Header Files\Organism\genus</Filter>
+    </ClInclude>
+    <ClInclude Include="kingdom_animalia.hpp">
+      <Filter>Header Files\Organism\kingdom</Filter>
+    </ClInclude>
+    <ClInclude Include="order_cetacea.hpp">
+      <Filter>Header Files\Organism\order</Filter>
+    </ClInclude>
+    <ClInclude Include="phylum_chordata.hpp">
+      <Filter>Header Files\Organism\phylum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

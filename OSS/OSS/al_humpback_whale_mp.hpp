@@ -1,4 +1,4 @@
-// 작성자 : 홍사민
+// Coded by : Sa Min Hong 
 
 // 이동 경로 예측 알고리즘
 // 혹등 고래
@@ -6,7 +6,7 @@
 #ifndef _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
 #define _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
 
-#include "algorithm.h"
+#include "al_algorithm.hpp"
 
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘

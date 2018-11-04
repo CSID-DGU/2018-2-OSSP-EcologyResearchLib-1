@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="algorithm.h" />
+    <ClInclude Include="al_algorithm.hpp" />
     <ClInclude Include="db_environment.hpp" />
     <ClInclude Include="family_balaenopteridae.hpp" />
     <ClInclude Include="genus_megaptera.hpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="tax_domain.hpp" />
     <ClInclude Include="domain_eukaryotes.hpp" />
     <ClInclude Include="db_field.hpp" />
-    <ClInclude Include="humpback_whale_mp.hpp" />
+    <ClInclude Include="al_humpback_whale_mp.hpp" />
     <ClInclude Include="tax_kingdom.hpp" />
     <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="class_mammalia.hpp" />

@@ -6,18 +6,27 @@
 #include "db_environment.hpp"
 #include "db_organism.hpp"
 
+#define MAX_FIELD_WIDTH_SIZE 100
+#define MAX_FIELD_HEIGHT_SIZE 100
+
 class FieldDataBase : public DataBase
 {
+	enum LOCALSTATE
+	{
+		AIR_MOVABLE, SEA_MOVABLE, GROUND_MOVABLE, NONE
+	};
+
 	struct LocalInfo
 	{
-		Position pos;
-		Environment environment;
-		std::vector<Organism> organisms;
+		LOCALSTATE localState[3] = { NONE, NONE, NONE }; // AIR, SEA, GROUND
+		Position pos;	// Real value of Position in earth
+		Environment* environment;	// Environment information for algorithm
+		std::vector<Organism>* organisms; // Organism list for algorithm
 	};
 
 private:
 	Timer * m_timer; // Local Time
-	std::vector<LocalInfo> m_localArray; // Location info
+	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE];
 	
 public:
 	FieldDataBase()
@@ -29,4 +38,11 @@ public:
 	{
 		delete[] m_timer;
 	}
+
+	void changeLocalState(int x, int y); // Update Local State
 };
+
+void FieldDataBase::changeLocalState(int x, int y)
+{
+
+}

@@ -1,4 +1,4 @@
-// 작성자 : 신종하
+// Coded by : Byung Suk Oh
 
 #pragma once
 #include "domain_eukaryotes.hpp"
@@ -10,6 +10,15 @@
 설명 : https://namu.wiki/w/%EB%8F%99%EB%AC%BC
 */
 
+enum STATUS
+{
+	FULL, SLEEPY, FEARED, HIBERNATION, HIDING
+};
+
+enum ACTION
+{
+	SLEEPING, EATING
+};
 
 class Animalia : public Eukaryotes
 {

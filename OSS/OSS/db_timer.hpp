@@ -1,4 +1,4 @@
-// 작성자 : 홍사민
+// Coded by : Sa Min Hong
 
 /* 2018. 10. 14. Timer 클래스 구현
 

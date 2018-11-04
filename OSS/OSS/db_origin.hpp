@@ -1,4 +1,4 @@
-// Coded by : Ω≈¡æ«œ
+// Coded by : JONG HA SIN 
 
 #pragma once
 #include <iostream>
