@@ -10,17 +10,33 @@
 Ό³Έν : https://namu.wiki/w/%EB%8F%99%EB%AC%BC
 */
 
-enum STATUS
+enum ANIMALIA_ACTION
 {
-	FULL, SLEEPY, FEARED, HIBERNATION, HIDING
-};
-
-enum ACTION
-{
-	SLEEPING, EATING
+	
 };
 
 class Animalia : public Eukaryotes
 {
+public:
+
+#pragma region ANUMALIA_STATUS
+	enum STATUS
+	{
+		// Something to add
+		FULL = Eukaryotes::STATUS::LAST + 1,
+		SLEEPY, FEARED, HIBERNATION, HIDING, 
+		
+		LAST
+	};
+
+	enum ACTION
+	{
+		// Something to add
+		SLEEPING = Eukaryotes::ACTION::LAST + 1,
+		EATING, 
+		
+		LAST
+	};
+#pragma endregion
 
 };

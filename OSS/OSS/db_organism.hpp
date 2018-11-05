@@ -1,26 +1,17 @@
 // Coded by : Jong Ha Sin
 
 #pragma once
-#include "tax_organism.hpp"
+#include "org_orgbase.hpp"
 #include "db_origin.hpp"
 
 class OrgDataBase : public DataBase
 {
+public:
 	// Organism status
-	enum class STATUS { ALIVE, DEAD, HUNGRY };
-	enum ACTION { MOVING, HUNTING, MATING, STOPED };
+	enum STATUS { ALIVE, DEAD, HUNGRY, LAST };
+	enum ACTION { MOVING, HUNTING, MATING, STOPED, LAST };
 	enum SEX { NONE, MALE, FEMALE };
 
-private:
-	int m_Age;
-	SEX m_Sex;
-
-	STATUS m_Status;
-	ACTION m_Action;
-	
-	Position m_Position; // Current Position
-	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
-public:
 	// Setup Func
 	void SetAge(int age) { m_Age = age; }
 	void SetSex(SEX sex) { m_Sex = sex; }
@@ -37,4 +28,14 @@ public:
 	ACTION GetAction() const { return m_Action; }
 	Position GetPosition() const { return m_Position; }
 	std::vector<Organism> GetPreyList() const { return m_Prey; }
+
+protected:
+	int m_Age;
+	SEX m_Sex;
+
+	STATUS m_Status;
+	ACTION m_Action;
+
+	Position m_Position; // Current Position
+	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
 };

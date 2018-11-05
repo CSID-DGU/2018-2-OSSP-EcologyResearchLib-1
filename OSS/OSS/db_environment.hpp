@@ -1,4 +1,4 @@
-// Coded by : Ω≈¡æ«œ
+// Coded by : Jong Ha Sin
 
 #pragma once
 

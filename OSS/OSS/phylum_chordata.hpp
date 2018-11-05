@@ -1,4 +1,4 @@
-// 작성자 : 신종하
+// Coded by : Byung Suk Oh
 
 #pragma once
 #include "kingdom_animalia.hpp"
@@ -12,8 +12,19 @@
 
 class Chordata : public Animalia
 {
-private:
-
 public:
+#pragma region CHORDATA_STATUS
+	enum STATUS
+	{
+		// Something to add
+		LAST = Animalia::STATUS::LAST + 1
+	};
+
+	enum ACTION
+	{
+		// Something to add
+		LAST = Animalia::ACTION::LAST + 1
+	};
+#pragma endregion
 
 };

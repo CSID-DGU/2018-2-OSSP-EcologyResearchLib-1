@@ -1,4 +1,4 @@
-// Coded by : SIN JONG HA
+// Coded by : JONG HA SIN 
 
 #pragma once
 #include "db_field.hpp"

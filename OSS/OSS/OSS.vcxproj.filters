@@ -52,6 +52,9 @@
     <Filter Include="Header Files\Organism\phylum">
       <UniqueIdentifier>{de49e19a-ba51-48fd-aa25-9af11e0b45bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Organism\organism">
+      <UniqueIdentifier>{af77c0dc-8bf9-44ba-ad0e-a077b3480f97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="db_origin.hpp">
@@ -79,9 +82,6 @@
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
     <ClInclude Include="tax_kingdom.hpp">
-      <Filter>Header Files\Taxonomy</Filter>
-    </ClInclude>
-    <ClInclude Include="tax_organism.hpp">
       <Filter>Header Files\Taxonomy</Filter>
     </ClInclude>
     <ClInclude Include="tax_class.hpp">
@@ -119,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="phylum_chordata.hpp">
       <Filter>Header Files\Organism\phylum</Filter>
+    </ClInclude>
+    <ClInclude Include="org_orgbase.hpp">
+      <Filter>Header Files\Organism\organism</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

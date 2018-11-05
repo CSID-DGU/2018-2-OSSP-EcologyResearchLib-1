@@ -1,4 +1,4 @@
-// 작성자 : 신종하
+// Coded by : Byung Suk Oh
 
 #pragma once
 

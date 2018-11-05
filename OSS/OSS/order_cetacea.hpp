@@ -1,4 +1,4 @@
-// 작성자 : 신종하
+// Coded by : Byung Suk Oh
 
 #pragma once
 
@@ -12,5 +12,18 @@
 
 class Cetacea : public Mammalia
 {
+public:
+#pragma region CETACEA_STATUS
+	enum STATUS
+	{
+		// Something to add
+		LAST = Mammalia::STATUS::LAST + 1
+	};
 
+	enum ACTION
+	{
+		// Something to add
+		LAST = Mammalia::ACTION::LAST + 1
+	};
+#pragma endregion
 };
