@@ -24,13 +24,13 @@ SOFTWARE. */
  Coded by : Sa Min Hong
  Last Updated : 18-11-05
 
+ [ HumpbackWhaleMP ] 
 
+ <Explanation>
+ - 흑동 고래 이동 경로 예측 알고리즘. [ MovementPrediction ] 클래스 상속
 
- HumpbackWhaleMP
-
- 흑동 고래 이동 경로 예측 알고리즘
-
- .. 설명
+ <To do>
+ - RandomWalk 클래스 적용할 것.
 
 */
 

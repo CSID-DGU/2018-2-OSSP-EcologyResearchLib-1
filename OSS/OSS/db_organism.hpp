@@ -25,7 +25,11 @@ Coded by : Jong Ha Sin
 Last Updated : 18-11-05
 
 
-OrgDataBase
+[ OrgDataBase ]
+
+<Explanation>
+
+<To do>
 ...
 
 */
@@ -33,8 +37,6 @@ OrgDataBase
 #pragma once
 #include "org_orgbase.hpp"
 #include "db_origin.hpp"
-
-#define DIRECTION_NUMBER 8
 
 class OrgDataBase : public DataBase
 {
@@ -62,10 +64,6 @@ public:
 	Position GetPosition() const { return m_Position; }
 	std::vector<Organism> GetPreyList() const { return m_Prey; }
 
-	// Random Walk 
-	void setMovingPossibility(const float& pArray);
-	float* getMovingPossibility();
-
 private:
 	int m_Age;
 	SEX m_Sex;
@@ -75,18 +73,5 @@ private:
 
 	Position m_Position; // Current Position
 	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
-
-	float movePosibility[DIRECTION_NUMBER]; // Moving algorithm data
 };
 
-#pragma region RANDOM_WALK
-void OrgDataBase::setMovingPossibility(const float& pArray)
-{
-	// To do
-}
-
-float* OrgDataBase::getMovingPossibility()
-{
-	// To do
-}
-#pragma endregion

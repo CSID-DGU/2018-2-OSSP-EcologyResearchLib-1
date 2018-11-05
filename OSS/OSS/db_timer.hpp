@@ -26,7 +26,9 @@ SOFTWARE. */
 Coded by : Sa Min Hong
 Last Updated : 18-11-05
 
+[ Timer ]
 
+<Explanation>
 2018. 10. 14. Timer 클래스 구현
 
 기본 형태 : int[6] 배열
@@ -61,6 +63,10 @@ Last Updated : 18-11-05
 
 9. std::cout을 위한 << 연산자 오버로딩
 10. 두 시간의 일치여부를 판단하기 위한 ==, != 연산자 오버로딩
+
+
+
+<To do>
 
 */
 
