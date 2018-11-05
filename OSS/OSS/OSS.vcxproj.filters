@@ -123,6 +123,9 @@
     <ClInclude Include="org_orgbase.hpp">
       <Filter>Header Files\Organism\organism</Filter>
     </ClInclude>
+    <ClInclude Include="al_randomwalk.hpp">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp">

@@ -1,39 +1,66 @@
-// Coded by : Sa Min Hong
+/* MIT License
 
-/* 2018. 10. 14. Timer 클래스 구현
+Copyright (c) 2018 CSID-DGU
 
-    기본 형태 : int[6] 배열
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    0 - YEAR
-    1 - MONTH
-    2 - DAY
-    3 - HOUR
-    4 - MINUTE
-    5 - SECOND
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-    <<기능>>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
 
-    *. 내부 동작을 위한 private 함수들 구현(설명 생략)
 
-      이하 public 함수들
 
-    1. int 배열 매개변수, 6개의 int 매개변수, string 매개변수
-       세 가지의 생성자 구현
+/*
+Coded by : Sa Min Hong
+Last Updated : 18-11-05
 
-    2. 1과 같은 세 가지의 Setter
 
-    3. int 배열을 리턴하는 Getter
-    4. 날짜(YYYY-MM-DD) 스트링을 리턴하는 Getter
-    5. 시간(hh:mm:ss) 스트링을 리턴하는 Getter
-    6. 날짜+시간 (YYYY-MM-DD hh:mm:ss) 스트링을 리턴하는 Getter
+2018. 10. 14. Timer 클래스 구현
 
-    7. 연, 월, 일, 시, 분, 초 각각의 Add, Sub 연산 함수 구현
+기본 형태 : int[6] 배열
 
-    8. 표준 형태(YYYY-MM-DD hh:mm:ss)로 화면에 즉각 출력하는
-       show() 함수 구현
+0 - YEAR
+1 - MONTH
+2 - DAY
+3 - HOUR
+4 - MINUTE
+5 - SECOND
 
-    9. std::cout을 위한 << 연산자 오버로딩
-    10. 두 시간의 일치여부를 판단하기 위한 ==, != 연산자 오버로딩
+<<기능>>
+
+*. 내부 동작을 위한 private 함수들 구현(설명 생략)
+
+	이하 public 함수들
+
+1. int 배열 매개변수, 6개의 int 매개변수, string 매개변수
+	세 가지의 생성자 구현
+
+2. 1과 같은 세 가지의 Setter
+
+3. int 배열을 리턴하는 Getter
+4. 날짜(YYYY-MM-DD) 스트링을 리턴하는 Getter
+5. 시간(hh:mm:ss) 스트링을 리턴하는 Getter
+6. 날짜+시간 (YYYY-MM-DD hh:mm:ss) 스트링을 리턴하는 Getter
+
+7. 연, 월, 일, 시, 분, 초 각각의 Add, Sub 연산 함수 구현
+
+8. 표준 형태(YYYY-MM-DD hh:mm:ss)로 화면에 즉각 출력하는
+	show() 함수 구현
+
+9. std::cout을 위한 << 연산자 오버로딩
+10. 두 시간의 일치여부를 판단하기 위한 ==, != 연산자 오버로딩
 
 */
 

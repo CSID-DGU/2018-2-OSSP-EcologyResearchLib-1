@@ -21,33 +21,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 /*
-Coded by : Jong Ha Sin
+Coded by : 
 Last Updated : 18-11-05
 
 
-DataBase
+Random Walk
 
-
+.. Ό³Έν ..
 
 */
 
 #pragma once
-#include <iostream>
-#include <vector>
 
-// Position data struct
-typedef struct Position
-{
-	float fLatitude, fLongitude, fAltitude;
-} Position;
-
-class DataBase
+class RandomWalk
 {
 public:
-	// File I/O stream
-	std::ofstream *ofs;
-	std::ifstream *ifs;
 
-	DataBase() {}
-	virtual ~DataBase(){}
+private:
+	float possibility[9]; // Moving possibility , 9 Direction
 };
