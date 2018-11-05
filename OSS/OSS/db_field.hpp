@@ -29,7 +29,26 @@ Last Updated : 18-11-05
 
 <Explanation>
 
+@ 좌표계 - 지도
+: 충분히 넓은 지도 좌표계(실제 지형 정보를 담는다)
+- 이차원의 지도이므로 이차원 배열로 이루어짐
+
+- 각 좌표가 갖는 데이터
+  1) 실제 위도+경도(+고도)
+  2) 지형의 특성(육지/바다, 혹은 이동 가능/불가능 여부
+	=> e.g. 해양 생물은 육지에서 이동 불가능
+    -> 육지/바다 정도의 데이터만 기록하고  이동 가능/불가능 여부는 생물과 결합하여 판단)
+  3) 기후
+  4) 서식 생명체 배열
+
+@ Timer - 시간 
+ : 알고리즘에 활용될 지역 시간 연산을 저장 및 처리한다.
+
+
 <To do>
+void updateGlobalState(); // Update whole Local State
+void updateLocalState(int x, int y); // Update each local state
+랜덤워크와 딥러닝을 위해 지역 상태가 업데이트 되어야한다.
 
 */
 

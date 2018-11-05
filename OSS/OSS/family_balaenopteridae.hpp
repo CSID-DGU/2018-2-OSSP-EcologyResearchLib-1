@@ -37,17 +37,21 @@ Last Updated : 18-11-05
 class Balaenopteridae : public Cetacea
 {
 public:
-#pragma region BALAENOPTERIDAE_STATUS
 	enum STATUS
 	{
+		ENUM_FIRST = Cetacea::STATUS::ENUM_LAST,
+
 		// Something to add
-		LAST = Cetacea::STATUS::LAST + 1
+
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Cetacea::ACTION::ENUM_LAST,
+
 		// Something to add
-		LAST = Cetacea::ACTION::LAST + 1
+
+		ENUM_LAST
 	};
-#pragma endregion
 };

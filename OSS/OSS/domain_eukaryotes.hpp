@@ -38,23 +38,22 @@ Last Updated : 18-11-05
 class Eukaryotes : public Organism
 {
 public:
-#pragma region EUKARYOTES_STATUS
 	enum STATUS
 	{
+		ENUM_FIRST = Organism::STATUS::ENUM_LAST,
+		
 		// Something to add
 
-
-		LAST = Organism::STATUS::LAST + 1
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Organism::ACTION::ENUM_LAST,
+
 		// Something to add
 
-
-		LAST = Organism::ACTION::LAST + 1
+		ENUM_LAST
 	};
-#pragma endregion
-
 
 };

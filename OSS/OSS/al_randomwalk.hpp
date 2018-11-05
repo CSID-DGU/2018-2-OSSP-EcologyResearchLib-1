@@ -78,13 +78,23 @@ Last Updated : 18-11-05
 
 class RandomWalk
 {
-public:
+	// Result of RandomWalk 
+	struct RWResult
+	{
 
-private:
-	float possibility[DIRECTION_NUMBER]; // Moving possibility , 9 Direction
+	};
+
+
+public:
+	RandomWalk();
+	~RandomWalk() {};
 
 	void setMovingPossibility(const float& pArray);
 	float* getMovingPossibility();
+
+private:
+	float possibility[DIRECTION_NUMBER] = { 0 }; 
+	// Moving possibility , 9 Direction
 };
 
 
@@ -98,4 +108,13 @@ float* RandomWalk::getMovingPossibility()
 {
 	// To do
 }
+#pragma endregion
+
+
+#pragma region RANDOMWALK_CONSTRUCTOR
+RandomWalk::RandomWalk()
+{
+	// TO do
+}
+
 #pragma endregion

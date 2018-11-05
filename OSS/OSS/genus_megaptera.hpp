@@ -37,17 +37,21 @@ class Megaptera : public Balaenopteridae
 {
 
 public:
-#pragma region MEGAPTERA_STATUS
 	enum STATUS
 	{
+		ENUM_FIRST = Balaenopteridae::STATUS::ENUM_LAST,
+
 		// Something to add
-		LAST = Balaenopteridae::STATUS::LAST + 1
+
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Balaenopteridae::ACTION::ENUM_LAST,
+
 		// Something to add
-		LAST = Balaenopteridae::ACTION::LAST + 1
+
+		ENUM_LAST
 	};
-#pragma endregion
 };

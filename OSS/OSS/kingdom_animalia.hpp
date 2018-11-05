@@ -38,25 +38,26 @@ Last Updated : 18-11-05
 class Animalia : public Eukaryotes
 {
 public:
-
-#pragma region ANUMALIA_STATUS
 	enum STATUS
 	{
-		// Something to add
-		FULL = Eukaryotes::STATUS::LAST + 1,
-		SLEEPY, FEARED, HIBERNATION, HIDING, 
+		ENUM_FIRST = Eukaryotes::STATUS::ENUM_LAST,
 		
-		LAST
+		// Something to add
+		
+		FULL, SLEEPY, FEARED, HIBERNATION, HIDING, 
+		
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Eukaryotes::ACTION::ENUM_LAST,
+
 		// Something to add
-		SLEEPING = Eukaryotes::ACTION::LAST + 1,
+		SLEEPING,
 		EATING, 
 		
-		LAST
+		ENUM_LAST
 	};
-#pragma endregion
 
 };

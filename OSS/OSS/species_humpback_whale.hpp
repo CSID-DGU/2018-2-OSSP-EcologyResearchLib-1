@@ -35,19 +35,23 @@ Last Updated : 18-11-05
 class HumpBackWhale : public Megaptera
 {
 public:
-#pragma region HUMPBACKWHALE_STATUS
 	enum STATUS
 	{
+		ENUM_FIRST = Megaptera::STATUS::ENUM_LAST,
+
 		// Something to add
-		LAST = Megaptera::STATUS::LAST + 1
+
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Megaptera::ACTION::ENUM_LAST,
+
 		// Something to add
-		LAST = Megaptera::ACTION::LAST + 1
+
+		ENUM_LAST
 	};
-#pragma endregion
 
 
 

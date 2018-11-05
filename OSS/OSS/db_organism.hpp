@@ -28,6 +28,11 @@ Last Updated : 18-11-05
 [ OrgDataBase ]
 
 <Explanation>
+- 생명체의 기본 속성을 가진 DB API 클래스
+- 최대한 모든 생명체들이 공통적으로 가질 수 있는 특성만을 보유
+
+- 이 DB를 멤버로 가진 Organism 클래스가 있다.
+- 더 추가되는 생명체의 속성은
 
 <To do>
 ...
@@ -42,10 +47,10 @@ class OrgDataBase : public DataBase
 {
 public:
 	// Organism status
-	enum STATUS { ALIVE, DEAD, HUNGRY, LAST };
-	enum ACTION { MOVING, HUNTING, MATING, STOPED, LAST };
+	enum STATUS { ALIVE, DEAD, HUNGRY, ENUM_LAST };
+	enum ACTION { MOVING, HUNTING, MATING, STOPED, ENUM_LAST };
 	enum SEX { NONE, MALE, FEMALE };
-
+	
 	// Setup Func
 	void setAge(int age) { m_Age = age; }
 	void setSex(SEX sex) { m_Sex = sex; }

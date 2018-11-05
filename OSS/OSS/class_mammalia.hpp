@@ -39,17 +39,21 @@ Mammalia
 class Mammalia : public Chordata
 {
 public:
-#pragma region MAMMALIA_STATUS
 	enum STATUS
 	{
+		ENUM_FIRST = Chordata::STATUS::ENUM_LAST,
+
 		// Something to add
-		LAST = Chordata::STATUS::LAST + 1
+
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = Chordata::ACTION::ENUM_LAST,
+
 		// Something to add
-		LAST = Chordata::ACTION::LAST + 1
+
+		ENUM_LAST
 	};
-#pragma endregion
 };

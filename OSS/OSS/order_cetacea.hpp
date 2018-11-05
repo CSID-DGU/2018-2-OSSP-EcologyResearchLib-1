@@ -36,19 +36,25 @@ Last Updated : 18-11-05
 class Cetacea : public Mammalia
 {
 public:
-#pragma region CETACEA_STATUS
+
 	enum STATUS
 	{
+		ENUM_FIRST = Chordata::STATUS::ENUM_LAST,
+
 		// Something to add
 		DIVE, FLOATING,
-		LAST = Mammalia::STATUS::LAST + 1
+		
+		ENUM_LAST
 	};
 
 	enum ACTION
 	{
+		ENUM_FIRST = OrgDataBase::ACTION::ENUM_LAST,
+
 		// Something to add
 		DIVING, SPOUTING,
-		LAST = Mammalia::ACTION::LAST + 1
+
+		ENUM_LAST
 	};
 #pragma endregion
 };
