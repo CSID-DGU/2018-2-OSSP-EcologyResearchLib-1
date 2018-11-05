@@ -14,8 +14,8 @@ class HumpbackWhaleMP : public MovementPrediction
 {
 
 public:
-    virtual void predictByHour(Organism& organism, int hours) override;
-    virtual void predictByDay (Organism& organism, int days ) override { predictByHour(organism, days * 24); }
+    virtual void predictByHour(Location& loc, Organism& organism) override;
+    virtual void predictByDay (Location& loc, Organism& organism) override {  }
 };
 
 
@@ -23,7 +23,7 @@ public:
 
 // 기존의 데이터들을 바탕으로 1시간 이후 ~ 입력 받은 시간 까지의 데이터를
 // 예측하여 데이터베이스에 삽입
-void HumpbackWhaleMP::predictByHour(Organism& organism, int hours = 1)
+void HumpbackWhaleMP::predictByHour(Location& loc, Organism& organism)
 {
     // 데이터베이스 형태가 결정된 후 구현
 

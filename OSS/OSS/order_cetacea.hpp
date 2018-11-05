@@ -17,12 +17,14 @@ public:
 	enum STATUS
 	{
 		// Something to add
+		DIVE, FLOATING,
 		LAST = Mammalia::STATUS::LAST + 1
 	};
 
 	enum ACTION
 	{
 		// Something to add
+		DIVING, SPOUTING,
 		LAST = Mammalia::ACTION::LAST + 1
 	};
 #pragma endregion

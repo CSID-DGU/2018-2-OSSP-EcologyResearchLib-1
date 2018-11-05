@@ -10,11 +10,6 @@
 Ό³Έν : https://namu.wiki/w/%EB%8F%99%EB%AC%BC
 */
 
-enum ANIMALIA_ACTION
-{
-	
-};
-
 class Animalia : public Eukaryotes
 {
 public:

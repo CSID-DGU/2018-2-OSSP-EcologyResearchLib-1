@@ -4,6 +4,8 @@
 #include "org_orgbase.hpp"
 #include "db_origin.hpp"
 
+#define DIRECTION_NUMBER 8
+
 class OrgDataBase : public DataBase
 {
 public:
@@ -13,13 +15,14 @@ public:
 	enum SEX { NONE, MALE, FEMALE };
 
 	// Setup Func
-	void SetAge(int age) { m_Age = age; }
-	void SetSex(SEX sex) { m_Sex = sex; }
-	void SetStatus(STATUS status) { m_Status = status; }
-	void SetAction(ACTION action) { m_Action = action; }
-	void SetPosition(Position pos) { m_Position = pos; }
-	void SetPreyList(const std::vector<Organism>& preylist) { /* 구상 중 */ }
-	void AddPrey(const Organism& prey) { m_Prey.push_back(prey); }
+	void setAge(int age) { m_Age = age; }
+	void setSex(SEX sex) { m_Sex = sex; }
+	void setStatus(STATUS status) { m_Status = status; }
+	void setAction(ACTION action) { m_Action = action; }
+	void setPosition(Position pos) { m_Position = pos; }
+	void setPreyList(const std::vector<Organism>& preylist) { /* 구상 중 */ }
+	void addPrey(const Organism& prey) { m_Prey.push_back(prey); }
+	
 
 	// Get Func
 	int GetAge() const { return m_Age; }
@@ -29,7 +32,11 @@ public:
 	Position GetPosition() const { return m_Position; }
 	std::vector<Organism> GetPreyList() const { return m_Prey; }
 
-protected:
+	// Random Walk 
+	void setMovingPossibility(const float& pArray);
+	float* getMovingPossibility();
+
+private:
 	int m_Age;
 	SEX m_Sex;
 
@@ -38,4 +45,18 @@ protected:
 
 	Position m_Position; // Current Position
 	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
+
+	float movePosibility[DIRECTION_NUMBER]; // Moving algorithm data
 };
+
+#pragma region RANDOM_WALK
+void OrgDataBase::setMovingPossibility(const float& pArray)
+{
+	// To do
+}
+
+float* OrgDataBase::getMovingPossibility()
+{
+	// To do
+}
+#pragma endregion

@@ -7,7 +7,8 @@
 class Organism
 {
 private:
-	OrgDataBase m_ODB;
+	OrgDataBase* m_ODB;
+	int xPoint, yPoint; // coordinates of organism at location
 	
 public:
 	
@@ -23,14 +24,14 @@ public:
 	};
 #pragma endregion
 
-	Organism()
+	Organism(int x, int y) : xPoint(x), yPoint(y)
 	{
-
+		m_ODB = new OrgDataBase();
 	}
 
-	~Organism()
+	virtual ~Organism()
 	{
-
+		delete[] m_ODB;
 	}
 
 	

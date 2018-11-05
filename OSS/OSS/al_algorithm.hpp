@@ -23,8 +23,8 @@
 #ifndef _ALGORITHM_H__
 #define _ALGORITHM_H__
 
-#include "db_organism.hpp"
-
+#include "org_orgbase.hpp"
+#include "location_origin.hpp"
 
 // 생물 이동경로 예측 알고리즘
 // 인터페이스를 제공하며,
@@ -34,12 +34,12 @@ class MovementPrediction
 
 public:
     // 한 시간 단위로 예측
-    virtual void predictByHour(Organism& organism, int hours) = 0;
+    virtual void predictByHour(Location& loc ,Organism& organism) = 0;
 
     // 하루 단위로 예측
     // 24시간으로 변환하여 알고리즘 수행
     // 또는 (생물에 따라) 시간 단위 대신 하루 단위를 기본으로 사용
-    virtual void predictByDay (Organism& organism, int days)  = 0;
+    virtual void predictByDay (Location& loc, Organism& organism)  = 0;
 };
 
 
