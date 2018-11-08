@@ -67,6 +67,7 @@ void Location::setTarget(Organism* org)
 
 Organism* Location::getTarget()
 {
+	return nullptr;
 	// TO DO
 }
 #pragma endregion

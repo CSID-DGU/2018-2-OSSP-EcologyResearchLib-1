@@ -32,28 +32,11 @@ Last Updated : 18-11-05
 
 #pragma once
 
-#include "org_orgbase.hpp"
 #include "tax_domain.hpp"
+#include "db_organism.hpp"
 
 class Eukaryotes : public Organism
 {
-public:
-	enum STATUS
-	{
-		ENUM_FIRST = Organism::STATUS::ENUM_LAST,
-		
-		// Something to add
 
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Organism::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
 
 };

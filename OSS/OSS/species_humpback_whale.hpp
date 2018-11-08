@@ -35,24 +35,6 @@ Last Updated : 18-11-05
 class HumpBackWhale : public Megaptera
 {
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Megaptera::STATUS::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Megaptera::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
 
 
 };

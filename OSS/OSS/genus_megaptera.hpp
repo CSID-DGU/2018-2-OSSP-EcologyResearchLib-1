@@ -37,21 +37,5 @@ class Megaptera : public Balaenopteridae
 {
 
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Balaenopteridae::STATUS::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Balaenopteridae::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
+	
 };

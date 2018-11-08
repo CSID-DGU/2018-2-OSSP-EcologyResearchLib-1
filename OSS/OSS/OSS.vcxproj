@@ -163,7 +163,6 @@
     <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="class_mammalia.hpp" />
     <ClInclude Include="lib_manager.hpp" />
-    <ClInclude Include="org_orgbase.hpp" />
     <ClInclude Include="db_organism.hpp" />
     <ClInclude Include="tax_phylum.hpp" />
     <ClInclude Include="db_timer.hpp" />

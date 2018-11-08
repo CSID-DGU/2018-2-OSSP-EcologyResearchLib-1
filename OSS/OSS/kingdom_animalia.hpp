@@ -38,26 +38,7 @@ Last Updated : 18-11-05
 class Animalia : public Eukaryotes
 {
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Eukaryotes::STATUS::ENUM_LAST,
-		
-		// Something to add
-		
-		FULL, SLEEPY, FEARED, HIBERNATION, HIDING, 
-		
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Eukaryotes::ACTION::ENUM_LAST,
-
-		// Something to add
-		SLEEPING,
-		EATING, 
-		
-		ENUM_LAST
-	};
+	
+	Animalia() {}
 
 };

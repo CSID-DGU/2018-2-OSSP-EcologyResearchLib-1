@@ -30,7 +30,7 @@ Last Updated : 18-11-05
 #pragma once
 
 #include "location_origin.hpp"
-
+#include "al_algorithm.hpp"
 
 class Manager
 {

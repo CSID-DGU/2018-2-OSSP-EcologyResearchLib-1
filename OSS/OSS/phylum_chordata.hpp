@@ -37,22 +37,6 @@ Last Updated : 18-11-05
 class Chordata : public Animalia
 {
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Animalia::STATUS::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Animalia::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
+	
 
 };

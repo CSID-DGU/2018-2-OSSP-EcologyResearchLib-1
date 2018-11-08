@@ -39,21 +39,5 @@ Mammalia
 class Mammalia : public Chordata
 {
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Chordata::STATUS::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Chordata::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
+	
 };

@@ -37,21 +37,5 @@ Last Updated : 18-11-05
 class Balaenopteridae : public Cetacea
 {
 public:
-	enum STATUS
-	{
-		ENUM_FIRST = Cetacea::STATUS::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
-
-	enum ACTION
-	{
-		ENUM_FIRST = Cetacea::ACTION::ENUM_LAST,
-
-		// Something to add
-
-		ENUM_LAST
-	};
+	
 };
