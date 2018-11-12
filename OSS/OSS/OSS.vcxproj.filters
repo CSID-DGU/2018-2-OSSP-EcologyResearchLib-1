@@ -120,6 +120,9 @@
     <ClInclude Include="al_randomwalk.hpp">
       <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="db_preference.hpp">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp">

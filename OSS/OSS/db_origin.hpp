@@ -37,11 +37,21 @@ Last Updated : 18-11-05
 #include <iostream>
 #include <vector>
 
+#define RW_POSSIBILITY float*
+#define DIRECTION_NUMBER 9
+
+
 // Position data struct
 typedef struct Position
 {
 	float fLatitude, fLongitude, fAltitude;
 } Position;
+
+// The states shows that organisms can move or not to the location
+enum LOCALSTATE
+{
+	AIR_MOVABLE, SEA_MOVABLE, GROUND_MOVABLE, NONE
+};
 
 class DataBase
 {

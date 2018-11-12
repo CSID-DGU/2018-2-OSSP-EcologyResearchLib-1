@@ -54,8 +54,8 @@ SOFTWARE. */
 #ifndef _ALGORITHM_H__
 #define _ALGORITHM_H__
 
-#include "org_orgbase.hpp"
 #include "location_origin.hpp"
+#include "al_randomwalk.hpp"
 
 // 생물 이동경로 예측 알고리즘
 // 인터페이스를 제공하며,

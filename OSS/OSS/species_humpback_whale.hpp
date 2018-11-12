@@ -35,6 +35,16 @@ Last Updated : 18-11-05
 class HumpBackWhale : public Megaptera
 {
 public:
+	HumpBackWhale() 
+	{
+
+	}
+		
+	~HumpBackWhale()
+	{
+
+	}
+
 
 
 };

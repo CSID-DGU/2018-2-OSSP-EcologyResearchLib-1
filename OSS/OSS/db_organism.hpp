@@ -49,7 +49,7 @@ enum STATUS { ALIVE, DEAD, HUNGRY, FULL, SLEEPY, FEARED,
 			  HIBERNATION, HIDING, DIVE, FLOATING };
 enum ACTION { MOVING, HUNTING, MATING, STOPED, SLEEPING, 
 	          EATING, DIVING, SPOUTING };
-enum SEX { NONE, MALE, FEMALE };
+enum SEX { MALE, FEMALE, BOTH };
 
 class OrgDataBase : public DataBase
 {
@@ -65,12 +65,13 @@ public:
 	
 
 	// Get Func
-	int GetAge() const { return m_Age; }
-	int GetSex() const { return m_Sex; }
-	STATUS GetStatus() const { return m_Status; }
-	ACTION GetAction() const { return m_Action; }
-	Position GetPosition() const { return m_Position; }
-	std::vector<Organism> GetPreyList() const { return m_Prey; }
+	int getAge() const { return m_Age; }
+	int getSex() const { return m_Sex; }
+	STATUS getStatus() const { return m_Status; }
+	ACTION getAction() const { return m_Action; }
+	Position getPosition() const { return m_Position; }
+	std::vector<Organism> getPreyList() const { return m_Prey; }
+
 
 private:
 	int m_Age;
@@ -107,4 +108,9 @@ public:
 	}
 
 
+	// Moving
+	virtual void moving() = 0;
 };
+
+
+

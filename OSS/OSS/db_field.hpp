@@ -58,41 +58,42 @@ void updateLocalState(int x, int y); // Update each local state
 #include "db_environment.hpp"
 #include "db_organism.hpp"
 
-#define MAX_FIELD_WIDTH_SIZE 100
-#define MAX_FIELD_HEIGHT_SIZE 100
+#define MAX_FIELD_WIDTH_SIZE 1000
+#define MAX_FIELD_HEIGHT_SIZE 1000
+
+
+struct LocalInfo
+{
+	LOCALSTATE localState[3] = { NONE, NONE, NONE }; // AIR, SEA, GROUND
+	Position pos;	// Real value of Position in earth
+	Environment environment;	// Environment information for algorithm
+	std::vector<Organism>* organisms; // Organism list for algorithm
+};
 
 class FieldDataBase : public DataBase
 {
-	enum LOCALSTATE
-	{
-		AIR_MOVABLE, SEA_MOVABLE, GROUND_MOVABLE, NONE
-	};
-
-	struct LocalInfo
-	{
-		LOCALSTATE localState[3] = { NONE, NONE, NONE }; // AIR, SEA, GROUND
-		Position pos;	// Real value of Position in earth
-		Environment environment;	// Environment information for algorithm
-		std::vector<Organism>* organisms; // Organism list for algorithm
-	};
-
 private:
-	Timer * m_timer; // Global Time
+	Environment* localEnvirnment;
 	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Map array 
 
 public:
 	FieldDataBase()
 	{
-		m_timer = new Timer();
+		
 	}
 
 	~FieldDataBase()
 	{
-		delete[] m_timer;
+
 	}
 
 	void updateGlobalState(); // Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
+
+	void updateOrganismList(int x, int y); // Update Organism list of location
+
+	LOCALSTATE getLocalState(int x, int y);
+	std::vector<Organism>* getOrganismList(int x, int y);
 };
 
 
@@ -106,5 +107,24 @@ void FieldDataBase::updateGlobalState()
 void FieldDataBase::updateLocalState(int x, int y)
 {
 	// TO DO 
+}
+
+void FieldDataBase::updateOrganismList(int x, int y)
+{
+	// to do
+}
+
+#pragma endregion
+
+
+#pragma region LOAD_INFORMATION
+LOCALSTATE FieldDataBase::getLocalState(int x, int y)
+{
+	// to do
+}
+
+std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
+{
+	// to do
 }
 #pragma endregion

@@ -40,24 +40,25 @@ Last Updated : 18-11-05
 
 #pragma once
 
+// ³¯¾¾ »óÅÂ
+enum WEATHERSTATUS
+{
+	SUNNEY, CLOUDY, RAINY, SNOWY
+};
+
+enum SEASON
+{
+	SPRING, SUMMER, FALL, WINTER
+};
+
 class Environment
 {
-	// ³¯¾¾ »óÅÂ
-	enum WEATHERSTATUS
-	{
-		SUNNEY, CLOUDY, RAINY, SNOWY
-	};
-
-	enum SEASON
-	{
-		SPRING, SUMMER, FALL, WINTER
-	};
-
 	int airTemperature; // ±â¿Â
 	int waterTemperature; // ¼ö¿Â
 	int wind_speed;  // Ç³¼Ó
 	WEATHERSTATUS status; 
 	SEASON season;
+	Timer * m_timer; // Global Time
 
 public:
 	Environment() {}
