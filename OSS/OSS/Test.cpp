@@ -15,7 +15,7 @@ int main()
 	enum ACTION
 	{
 		SLEEPING,
-		EATING,
+		EATING,hh
 	};
 		
 		
