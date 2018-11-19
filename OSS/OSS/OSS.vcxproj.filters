@@ -40,9 +40,6 @@
     <Filter Include="Header Files\Organism\family">
       <UniqueIdentifier>{e335617a-0c5d-4c4d-8934-9dd7ee5a55c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Organism\genus">
-      <UniqueIdentifier>{c081179f-21fb-4ad1-a7ca-c72389f64697}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Organism\kingdom">
       <UniqueIdentifier>{a4ef0781-de6f-4599-b0f8-08a1ead715a2}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,9 @@
     </Filter>
     <Filter Include="Header Files\Organism\phylum">
       <UniqueIdentifier>{de49e19a-ba51-48fd-aa25-9af11e0b45bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Organism\genus">
+      <UniqueIdentifier>{c081179f-21fb-4ad1-a7ca-c72389f64697}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
