@@ -147,6 +147,7 @@
     <ClInclude Include="al_algorithm.hpp" />
     <ClInclude Include="al_randomwalk.hpp" />
     <ClInclude Include="db_environment.hpp" />
+    <ClInclude Include="db_preference.hpp" />
     <ClInclude Include="family_balaenopteridae.hpp" />
     <ClInclude Include="genus_megaptera.hpp" />
     <ClInclude Include="kingdom_animalia.hpp" />
@@ -163,7 +164,6 @@
     <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="class_mammalia.hpp" />
     <ClInclude Include="lib_manager.hpp" />
-    <ClInclude Include="org_orgbase.hpp" />
     <ClInclude Include="db_organism.hpp" />
     <ClInclude Include="tax_phylum.hpp" />
     <ClInclude Include="db_timer.hpp" />

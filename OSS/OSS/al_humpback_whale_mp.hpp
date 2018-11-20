@@ -44,6 +44,8 @@ SOFTWARE. */
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
 {
+private:
+	RandomWalk* rdwalk; // RandomWalk class for Predict Movement
 
 public:
     virtual void predictByHour(Location& loc, Organism& organism) override;
@@ -59,11 +61,9 @@ void HumpbackWhaleMP::predictByHour(Location& loc, Organism& organism)
 {
     // 데이터베이스 형태가 결정된 후 구현
 
-
-
-
-
-
+	rdwalk->randomWalk(loc);
+	
+	// to do
 
     // Implements..
 }

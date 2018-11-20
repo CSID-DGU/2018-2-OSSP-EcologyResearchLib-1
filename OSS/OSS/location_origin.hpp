@@ -36,6 +36,7 @@ Last Updated : 18-11-05
 
 #pragma once
 #include "db_field.hpp"
+#include "db_environment.hpp"
 
 class Location 
 {
@@ -67,6 +68,7 @@ void Location::setTarget(Organism* org)
 
 Organism* Location::getTarget()
 {
+	return nullptr;
 	// TO DO
 }
 #pragma endregion

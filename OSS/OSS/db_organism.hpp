@@ -40,17 +40,20 @@ Last Updated : 18-11-05
 */
 
 #pragma once
-#include "org_orgbase.hpp"
 #include "db_origin.hpp"
+
+class Organism;
+
+// Organism status
+enum STATUS { ALIVE, DEAD, HUNGRY, FULL, SLEEPY, FEARED, 
+			  HIBERNATION, HIDING, DIVE, FLOATING };
+enum ACTION { MOVING, HUNTING, MATING, STOPED, SLEEPING, 
+	          EATING, DIVING, SPOUTING };
+enum SEX { MALE, FEMALE, BOTH };
 
 class OrgDataBase : public DataBase
 {
 public:
-	// Organism status
-	enum STATUS { ALIVE, DEAD, HUNGRY, ENUM_LAST };
-	enum ACTION { MOVING, HUNTING, MATING, STOPED, ENUM_LAST };
-	enum SEX { NONE, MALE, FEMALE };
-	
 	// Setup Func
 	void setAge(int age) { m_Age = age; }
 	void setSex(SEX sex) { m_Sex = sex; }
@@ -62,12 +65,13 @@ public:
 	
 
 	// Get Func
-	int GetAge() const { return m_Age; }
-	int GetSex() const { return m_Sex; }
-	STATUS GetStatus() const { return m_Status; }
-	ACTION GetAction() const { return m_Action; }
-	Position GetPosition() const { return m_Position; }
-	std::vector<Organism> GetPreyList() const { return m_Prey; }
+	int getAge() const { return m_Age; }
+	int getSex() const { return m_Sex; }
+	STATUS getStatus() const { return m_Status; }
+	ACTION getAction() const { return m_Action; }
+	Position getPosition() const { return m_Position; }
+	std::vector<Organism> getPreyList() const { return m_Prey; }
+
 
 private:
 	int m_Age;
@@ -78,5 +82,35 @@ private:
 
 	Position m_Position; // Current Position
 	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
+
+	int xPoint, yPoint; // coordinates of organism at location
 };
+
+
+class Organism
+{
+private:
+	OrgDataBase* m_ODB;
+
+public:
+
+	Organism() {}
+
+	Organism(int x, int y)
+	{
+		m_ODB = new OrgDataBase();
+		
+	}
+
+	virtual ~Organism()
+	{
+		delete[] m_ODB;
+	}
+
+
+	// Moving
+	virtual void moving() = 0;
+};
+
+
 
