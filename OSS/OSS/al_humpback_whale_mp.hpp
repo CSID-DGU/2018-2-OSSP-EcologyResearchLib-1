@@ -39,34 +39,50 @@ SOFTWARE. */
 #define _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
 
 #include "al_algorithm.hpp"
+#include <vector>
 
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
 {
+/*
+protected:
+    Location& m_location; // 초기 Location( 배열의 0번 인덱스 )
+    int m_predictCount;   // 예측 루틴 실행 횟수
+*/
+
 private:
-	RandomWalk* rdwalk; // RandomWalk class for Predict Movement
+    // 랜덤워커 배열 = 예측된 이동 경로
+	std::vector<RandomWalk> m_randomWalk; 
 
 public:
-    virtual void predictByHour(Location& loc, Organism& organism) override;
-    virtual void predictByDay (Location& loc, Organism& organism) override {  }
+    virtual void initiate() override;
+    virtual void predict() override;
+
+    // 9방향의 확률 계산 메소드
+    void calculate();
 };
 
-
-// 메소드 구현
-
-// 기존의 데이터들을 바탕으로 1시간 이후 ~ 입력 받은 시간 까지의 데이터를
-// 예측하여 데이터베이스에 삽입
-void HumpbackWhaleMP::predictByHour(Location& loc, Organism& organism)
+void HumpbackWhaleMP::initiate()
 {
-    // 데이터베이스 형태가 결정된 후 구현
+    m_randomWalk.push_back(RandomWalk());   // 랜덤워커 배열의 0번 객체 초기화
 
-	rdwalk->randomWalk(loc);
-	
-	// to do
-
-    // Implements..
+    //To Do
 }
 
+void HumpbackWhaleMP::predict()
+{
+    // 한 번 수행될 때마다, 랜덤 워커 객체를 하나 생성하여 벡터에 추가한다.
+
+    //To Do
+}
+
+void HumpbackWhaleMP::calculate()
+{
+    // 9방향 각각에 대한 이동 확률을 계산한다.
+    // predict() 내부에서 실행된다.
+
+    //To Do
+}
 
 #endif // _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__

@@ -129,10 +129,42 @@ Last Updated : 18-11-05
 
 15. 목표한 날짜/시각까지 벡터 생성을 완료한 경우, 이를 데이터베이스에 '예측 이동 경로 데이터'로써 저장
 16. 따라서, '이동 경로 데이터'는 랜덤 워커 벡터의 형식을 갖는다.
-    => 랜덤 워커 벡터의 첫 번째 원소([0]) = 이동 경로의 시작 원소(예측한 데이터가 아닌, 실제 값일 수 있음)
-    => 랜덤 워커 벡터의 [1] 원소 ~ = 예측 값들
+    => 랜덤 워커 벡터의 첫 번째 원소([0]) = 이동 경로의 시작 원소(예측한 데이터가 아닌, 실제 값)
+    => 랜덤 워커 벡터의 [1] 원소 ~ [2], [3], ... = 예측 값들
 
 - al_humpback_whale.hpp 에서 쓰일 예정
+
+*/
+
+/*
+
+SEQUENCE
+
+1. 매니저 객체 생성
+
+2. Location DB 로드
+
+3. 알고리즘 객체 생성 (location, predictCount 전달=>생성자)
+
+  [생성자 내부에서 initiate() 실행하여, 초기 객체(인덱스 0) 초기화]
+
+4. 매니저가 알고리즘 객체의 predict() 메소드 실행
+
+5. predict() 내부에서 calcuate() 수행
+
+  [calculate() 메소드가 랜덤워커의 계산 기능 수행]
+   => 계산 후, 이동할 방향을 확정
+
+6. 계산이 끝난 후 벡터 내에 결과 저장
+
+7. 계산 결과를 바탕으로 혹등고래의 location 업데이트
+
+8. 반복 횟수가 남았다면 predict() 메소드 실행
+
+  [predict() 호출될 때마다 predictCount--]
+
+9. 반복이 모두 끝난 경우 완성된 이동 경로 데이터(벡터)를
+   DB에 저장, 클라이언트에 출력
 
 */
 
@@ -140,51 +172,58 @@ Last Updated : 18-11-05
 
 #include "db_organism.hpp"
 #include "al_algorithm.hpp"
+#include <algorithm>
 
 class RandomWalk
 {
-public:
-	RandomWalk();
-	~RandomWalk() {};
-
-	void setMovingPossibility(const float& pArray);
-	RW_POSSIBILITY getMovingPossibility();
-
-	void randomWalk(const Location& loc); // randomWalk algorithm
+    /* 메모 : 해류의 이동 방향 설정 위해, db_origin으로 옮길 예정 */
+    // 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서
+    enum Direction
+    {
+        STOP,
+        NORTH, NORTH_EAST, EAST, SOUTH_EAST,
+        SOUTH, SOUTH_WEST, WEST, NOTRH_WEST
+    };
 
 private:
 
-	float possibility[DIRECTION_NUMBER] = { 0 }; 
-	// Moving possibility , 9 Direction : 동서남북 + 북동 북서 남동 남서 + 정지
+    // 9방향 각각에 대한 이동 확률을 저장하는 배열
+	float possibility[DIRECTION_NUMBER];
+
+public:
+    RandomWalk();
+    ~RandomWalk() {}
+
+    // 알고리즘 클래스의 calculate() 내부에서 실행된다.
+    // 9방향 각각에 대한 이동 확률 계산 및 설정 메소드
+    void setMovingPossibility(const float& pArray);
+
+    // 특정 방향(1방향)에 대한 이동 확률 설정 메소드
+    //void setMovingPossibility(Direction direction, float posibility);
 
 };
 
+// 생 성 자
+#pragma region RANDOMWALK_CONSTRUCTOR
 
+RandomWalk::RandomWalk()
+{
+    std::fill_n(possibility, 9, 0); // 9방향 확률 모두 0으로 초기화
+}
+
+#pragma endregion
+
+// 이동 확률 계산 및 설정
 #pragma region RANDOM_WALK_POSSIBILITY
+
 void RandomWalk::setMovingPossibility(const float& pArray)
 {
 	// To do
 }
 
-float* RandomWalk::getMovingPossibility()
-{
-	// To do
-}
 #pragma endregion
 
 
-#pragma region RANDOMWALK_CONSTRUCTOR
-RandomWalk::RandomWalk()
-{
-	// TO do
-}
-
-#pragma endregion
 
 
-#pragma region RANDOMWALK_ALGORITHM
-void RandomWalk::randomWalk(const Location& loc)
-{
-	// to do
-}
-#pragma endregion
+

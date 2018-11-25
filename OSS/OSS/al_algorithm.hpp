@@ -62,15 +62,33 @@ SOFTWARE. */
 // 예측 알고리즘은 각 생물마다 구현한다.
 class MovementPrediction
 {
+protected:  // 하위 클래스에서 자신의 멤버처럼 사용하기 위해
+    Location& m_location; // 초기 Location( 배열의 0번 인덱스 )
+    int m_predictCount;   // 예측 루틴 실행 횟수
 
 public:
-    // 한 시간 단위로 예측
-    virtual void predictByHour(Location& loc ,Organism& organism) = 0;
 
-    // 하루 단위로 예측
-    // 24시간으로 변환하여 알고리즘 수행
-    // 또는 (생물에 따라) 시간 단위 대신 하루 단위를 기본으로 사용
-    virtual void predictByDay (Location& loc, Organism& organism)  = 0;
+    /* Procedure
+     * 
+     * 생성자 실행 : initiate()를 통해 초기 Location(좌표, 시간, 상태 등) 생성
+     * 
+     * predict() : 1회의 예측 루틴 (predictCount만큼 반복)
+     * 
+     */
+
+    // 생성자 : 초기 Location, 예측 루틴 반복 횟수(기본값 = 1) 초기화
+    MovementPrediction(const Location& location, int predictCount = 1)
+        : m_location(location), m_predictCount(predictCount){}
+
+    // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
+    virtual void initiate() = 0;
+
+    // predict 메소드는 Prediction 클래스의 핵심 루틴으로,
+    // predictCount 횟수만큼 반복적으로 실행된다.
+    virtual void predict() = 0;
+
+    // 예측 루틴 실행 횟수를 설정
+    virtual void setPredictCount(const int& predictCount) = 0;
 };
 
 
