@@ -84,6 +84,8 @@ private:
 	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
 
 	int xPoint, yPoint; // coordinates of organism at location
+
+	int energy; // calories % for survive
 };
 
 

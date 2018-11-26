@@ -20,54 +20,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-/*
-Coded by : Jong Ha Sin
-Last Updated : 18-11-05
-
-
-[ Environment ] 
-
-<Explanation>
-- 알고리즘에 필요한 환경 변수 관리 클래스
-- Location 클래스의 subset
-
-<To do>
-- RandomWalk 클래스에서 혹등고래의 움직임 예측을 할 때 waterTemperature 활용
-- 겨울에는 따뜻한 적도로 이동해 포육활동 => 여름에는 극지방으로 이동해 섭식과 지방축적
-   ==> season 활용
-
-*/
 
 #pragma once
 
-// 날씨 상태
-enum WEATHERSTATUS
-{
-	SUNNEY, CLOUDY, RAINY, SNOWY
-};
+#include "al_randomwalk.hpp"
 
-enum SEASON
+class RandomWalkMovementPathDB
 {
-	SPRING, SUMMER, FALL, WINTER
-};
+	/*struct PATH
+	{
+		time_t time;
+		Position position;
+	};*/
 
-class Environment
-{
-	int airTemperature; // 기온
-	int waterTemperature; // 수온
-	int wind_speed;  // 풍속
-	WEATHERSTATUS status; 
-	SEASON season;
-	
+
+private:
+	//std::vector<PATH> randomWalkLog;
 
 public:
-	Environment() {}
-	~Environment() {}
-
-	void setAirTemperature(int temp) { airTemperature = temp; }
-	int getAirTemperature() { return airTemperature; }
-
-	void setWaterTemperature(int temp) { waterTemperature = temp; }
-	int getWaterTemperature() { return waterTemperature; }
+	void pushData(RandomWalk randomWalk);
+	RandomWalk popData();
 
 };

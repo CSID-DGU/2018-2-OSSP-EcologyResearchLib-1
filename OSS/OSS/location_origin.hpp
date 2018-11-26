@@ -54,9 +54,17 @@ public:
 		delete[] m_FDB;
 	}
 
-
+	// organism
 	void setTarget(Organism* org);
 	Organism* getTarget();
+
+	// DB Setup
+	void setUpFieldDB();
+	
+	// DB Access
+	void getTime();
+
+
 };
 
 
@@ -71,4 +79,11 @@ Organism* Location::getTarget()
 	return nullptr;
 	// TO DO
 }
+#pragma endregion
+
+
+#pragma region FDB
+
+
+
 #pragma endregion

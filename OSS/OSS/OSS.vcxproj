@@ -147,6 +147,7 @@
     <ClInclude Include="al_algorithm.hpp" />
     <ClInclude Include="al_randomwalk.hpp" />
     <ClInclude Include="db_environment.hpp" />
+    <ClInclude Include="db_movementpath.hpp" />
     <ClInclude Include="db_preference.hpp" />
     <ClInclude Include="family_balaenopteridae.hpp" />
     <ClInclude Include="genus_megaptera.hpp" />
