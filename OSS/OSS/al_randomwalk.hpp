@@ -176,15 +176,6 @@ SEQUENCE
 
 class RandomWalk
 {
-    /* 메모 : 해류의 이동 방향 설정 위해, db_origin으로 옮길 예정 */
-    // 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서
-    enum Direction
-    {
-        STOP,
-        NORTH, NORTH_EAST, EAST, SOUTH_EAST,
-        SOUTH, SOUTH_WEST, WEST, NOTRH_WEST
-    };
-
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열

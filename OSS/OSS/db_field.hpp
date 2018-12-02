@@ -68,7 +68,6 @@ struct LocalInfo
 	Position pos;	// Real value of Position in earth
 	Environment environment;	// Environment information for algorithm
 	std::vector<Organism>* organisms; // Organism list for algorithm
-	Timer * m_timer; // Global Time
 };
 
 class FieldDataBase : public DataBase
@@ -76,6 +75,7 @@ class FieldDataBase : public DataBase
 private:
 	Environment* localEnvirnment;
 	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Map array 
+	Timer * m_timer; // Global Time
 
 public:
 	FieldDataBase()
