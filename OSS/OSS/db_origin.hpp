@@ -36,6 +36,7 @@ Last Updated : 18-11-05
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
@@ -55,11 +56,12 @@ enum LOCALSTATE
 
 class DataBase
 {
-public:
+private:
 	// File I/O stream
 	std::ofstream *ofs;
 	std::ifstream *ifs;
 
+public:
 	DataBase() {}
 	virtual ~DataBase(){}
 };

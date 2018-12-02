@@ -68,6 +68,7 @@ struct LocalInfo
 	Position pos;	// Real value of Position in earth
 	Environment environment;	// Environment information for algorithm
 	std::vector<Organism>* organisms; // Organism list for algorithm
+	Timer * m_timer; // Global Time
 };
 
 class FieldDataBase : public DataBase
@@ -113,7 +114,6 @@ void FieldDataBase::updateOrganismList(int x, int y)
 {
 	// to do
 }
-
 #pragma endregion
 
 
