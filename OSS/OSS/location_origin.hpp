@@ -99,6 +99,7 @@ LocalInfo* Location::getLocalInfo()
 		9개의 LocalInfo를 계산하고자 하는 알고리즘에 넘겨주는 함수
 	*/
 	
+	return NULL;
 }
 
 

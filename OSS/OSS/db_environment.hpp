@@ -39,6 +39,7 @@ Last Updated : 18-11-05
 */
 
 #pragma once
+#include "db_watertemperature.hpp"
 
 // 날씨 상태
 //enum WEATHERSTATUS
@@ -54,7 +55,7 @@ Last Updated : 18-11-05
 class Environment
 {
 	//int airTemperature; // 기온
-	int waterTemperature; // 수온
+	WaterTemperatureDB waterTemperature; // 수온
 	//int wind_speed;  // 풍속
 	//WEATHERSTATUS status; 
 	//SEASON season;
@@ -67,7 +68,7 @@ public:
 	//void setAirTemperature(int temp) { airTemperature = temp; }
 	//int getAirTemperature() { return airTemperature; }
 
-	void setWaterTemperature(int temp) { waterTemperature = temp; }
-	int getWaterTemperature() { return waterTemperature; }
+	void setWaterTemperature(int temp) {  }
+	WaterTemperatureDB getWaterTemperature() { return waterTemperature; }
 
 };

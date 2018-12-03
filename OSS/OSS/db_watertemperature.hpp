@@ -20,80 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-/*
-Coded by : Jong Ha Sin
-Last Updated : 18-11-05
-
-
-[ DataBase ]
-
-<Explanation>
-
-<To do>
-
-*/
-
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <algorithm>
+#include "db_origin.hpp"
 
-#define RW_POSSIBILITY float*
-#define DIRECTION_NUMBER 9
-#define MAX_STRING 50
-
-
-// Position data struct
-typedef struct Position
+struct WaterTemperature
 {
-	float fLatitude, fLongitude, fAltitude;
-} Position;
-
-// The states shows that organisms can move or not to the location
-enum LOCALSTATE
-{
-	AIR_MOVABLE, SEA_MOVABLE, GROUND_MOVABLE, NONE
+	Position pos;
+	int watertemperature;
 };
 
-/* 메모 : 해류의 이동 방향 설정 위해, db_origin으로 옮길 예정 */
-   // 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서
-enum Direction
+class WaterTemperatureDB
 {
-	STOP,
-	NORTH, NORTH_EAST, EAST, SOUTH_EAST,
-	SOUTH, SOUTH_WEST, WEST, NOTRH_WEST
-};
-
-class DataBase
-{
-protected:
-	// File I/O stream
-	std::ofstream ofs;
-	std::ifstream ifs;
+private:
+	std::vector<WaterTemperature> m_watertempArray;
 
 public:
-	DataBase();
-	virtual ~DataBase();
-	virtual void readDB(std::string fileName) {};
+
 };
-
-
-#pragma region DATABASE_CONSTURCTOR
-
-DataBase::DataBase()
-{
-
-}
-
-#pragma endregion 
-
-
-#pragma region DATABASE_DESTURCTOR
-
-DataBase::~DataBase()
-{
-
-}
-
-#pragma endregion 

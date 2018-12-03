@@ -1,8 +1,11 @@
 #include "lib_manager.hpp"
-#include "kingdom_animalia.hpp"
+
 
 int main()
 {
+	OrgDataBase testDB;
+	testDB.readDB("test.txt");
+
 
 	return 0;
 }

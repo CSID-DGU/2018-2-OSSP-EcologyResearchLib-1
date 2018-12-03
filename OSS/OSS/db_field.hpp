@@ -120,10 +120,12 @@ void FieldDataBase::updateOrganismList(int x, int y)
 LOCALSTATE FieldDataBase::getLocalState(int x, int y)
 {
 	// to do
+	return LOCALSTATE();
 }
 
 std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
 {
 	// to do
+	return NULL;
 }
 #pragma endregion

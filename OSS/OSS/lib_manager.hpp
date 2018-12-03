@@ -45,6 +45,7 @@ public:
 	void setLocation();
 	
 	void executeAlgorithm();
+
 };
 
 
@@ -58,7 +59,7 @@ void Manager::setMpAlgorithm(MovementPrediction* mpAlgo)
 void Manager::setLocation()
 {
 	// location DB setup
-	location->setUpFieldDB();
+	// location->setUpFieldDB();
 }
 
 void Manager::executeAlgorithm()

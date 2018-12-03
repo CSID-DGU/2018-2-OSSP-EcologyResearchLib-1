@@ -95,11 +95,11 @@ Last Updated : 18-11-12
 #include "db_organism.hpp"
 #include "db_environment.hpp"
 
-class Preference : public DataBase
+class Preference
 {
 private:
 	LOCALSTATE movable[3] = {NONE, NONE, NONE}; // prefetr to go somewhere
-	std::vector<Organism>* preylist; // prefer to eat something
+	//std::vector<Organism>* preylist; // prefer to eat something
 	Environment* preferEnvironment; // prefer to be in some environment 
 	/*
 		알고리즘 내부에서 각 지역 데이터 <=> Organism 내부의 Preference 비교. 

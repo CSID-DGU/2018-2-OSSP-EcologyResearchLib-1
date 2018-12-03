@@ -73,6 +73,8 @@ public:
 	Position getPosition() const { return m_Position; }
 	std::vector<Organism> getPreyList() const { return m_Prey; }
 
+	// File Read
+	virtual void readDB(std::string fileName);
 
 private:
 	std::string name;
@@ -116,8 +118,33 @@ public:
 
 
 	// Moving
-	virtual void moving() = 0;
+	// virtual void moving() = 0;
 };
 
 
 
+#pragma region ORGDATABASE_FILE
+void OrgDataBase::readDB(std::string fileName)
+{
+	using namespace std;
+
+	char readData[MAX_STRING]; // data line
+	
+	// file open to stream
+	ifs.open(fileName);
+	
+	// Data Read
+	while (!ifs.eof())
+	{
+		ifs.getline(readData, MAX_STRING);
+
+		// test
+		cout << readData << endl;
+	}
+
+	// file close
+	ifs.close();
+}
+
+
+#pragma region

@@ -77,7 +77,7 @@ public:
      */
 
     // 생성자 : 초기 Location, 예측 루틴 반복 횟수(기본값 = 1) 초기화
-    MovementPrediction(const Location& location, int predictCount = 1)
+    MovementPrediction(Location& location, int predictCount = 1)
         : m_location(location), m_predictCount(predictCount){}
 
     // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
