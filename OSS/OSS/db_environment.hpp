@@ -41,31 +41,31 @@ Last Updated : 18-11-05
 #pragma once
 
 // ³¯¾¾ »óÅÂ
-enum WEATHERSTATUS
-{
-	SUNNEY, CLOUDY, RAINY, SNOWY
-};
+//enum WEATHERSTATUS
+//{
+//	SUNNEY, CLOUDY, RAINY, SNOWY
+//};
 
-enum SEASON
-{
-	SPRING, SUMMER, FALL, WINTER
-};
+//enum SEASON
+//{
+//	SPRING, SUMMER, FALL, WINTER
+//};
 
 class Environment
 {
-	int airTemperature; // ±â¿Â
+	//int airTemperature; // ±â¿Â
 	int waterTemperature; // ¼ö¿Â
-	int wind_speed;  // Ç³¼Ó
-	WEATHERSTATUS status; 
-	SEASON season;
+	//int wind_speed;  // Ç³¼Ó
+	//WEATHERSTATUS status; 
+	//SEASON season;
 	
 
 public:
 	Environment() {}
 	~Environment() {}
 
-	void setAirTemperature(int temp) { airTemperature = temp; }
-	int getAirTemperature() { return airTemperature; }
+	//void setAirTemperature(int temp) { airTemperature = temp; }
+	//int getAirTemperature() { return airTemperature; }
 
 	void setWaterTemperature(int temp) { waterTemperature = temp; }
 	int getWaterTemperature() { return waterTemperature; }

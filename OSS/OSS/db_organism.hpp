@@ -41,12 +41,13 @@ Last Updated : 18-11-05
 
 #pragma once
 #include "db_origin.hpp"
+#include "db_preference.hpp"
 
 class Organism;
 
 // Organism status
 enum STATUS { ALIVE, DEAD, HUNGRY, FULL, SLEEPY, FEARED, 
-			  HIBERNATION, HIDING, DIVE, FLOATING };
+			  HIBERNATION, HIDING, DIVE, FLOATING, BREEDING };
 enum ACTION { MOVING, HUNTING, MATING, STOPED, SLEEPING, 
 	          EATING, DIVING, SPOUTING };
 enum SEX { MALE, FEMALE, BOTH };
@@ -57,7 +58,7 @@ public:
 	// Setup Func
 	void setAge(int age) { m_Age = age; }
 	void setSex(SEX sex) { m_Sex = sex; }
-	void setStatus(STATUS status) { m_Status = status; }
+	void setStatus(STATUS status) { m_Status.push_back(status); }
 	void setAction(ACTION action) { m_Action = action; }
 	void setPosition(Position pos) { m_Position = pos; }
 	void setPreyList(const std::vector<Organism>& preylist) { /* ±¸»ó Áß */ }
@@ -67,25 +68,29 @@ public:
 	// Get Func
 	int getAge() const { return m_Age; }
 	int getSex() const { return m_Sex; }
-	STATUS getStatus() const { return m_Status; }
+	std::vector<STATUS> getStatus() const { return m_Status; }
 	ACTION getAction() const { return m_Action; }
 	Position getPosition() const { return m_Position; }
 	std::vector<Organism> getPreyList() const { return m_Prey; }
 
 
 private:
+	std::string name;
+
 	int m_Age;
-	SEX m_Sex;
-
-	STATUS m_Status;
-	ACTION m_Action;
-
-	Position m_Position; // Current Position
-	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
-
 	int xPoint, yPoint; // coordinates of organism at location
-
 	int energy; // calories % for survive
+
+	SEX m_Sex;
+	
+	ACTION m_Action;
+	Position m_Position; // Current Position
+
+	std::vector<STATUS> m_Status;
+	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
+	
+	Preference prefer; // preference of a organism
+
 };
 
 

@@ -58,8 +58,8 @@ void updateLocalState(int x, int y); // Update each local state
 #include "db_environment.hpp"
 #include "db_organism.hpp"
 
-#define MAX_FIELD_WIDTH_SIZE 1000
-#define MAX_FIELD_HEIGHT_SIZE 1000
+#define MAX_FIELD_WIDTH_SIZE 40
+#define MAX_FIELD_HEIGHT_SIZE 40
 
 
 struct LocalInfo
@@ -73,7 +73,6 @@ struct LocalInfo
 class FieldDataBase : public DataBase
 {
 private:
-	Environment* localEnvirnment;
 	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Map array 
 	Timer * m_timer; // Global Time
 

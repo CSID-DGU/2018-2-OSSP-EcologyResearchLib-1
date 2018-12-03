@@ -42,6 +42,11 @@ class Location
 {
 	FieldDataBase* m_FDB;
 	Organism* target; // searching target for algorithm (now assume one living thing)
+	                  /*
+						  target이 사용되는 용도
+						  1. 알고리즘 내부에서 target의 선호도 DB를 사용
+					      2. 알고리즘이 끝나고 target의 위치가 FieldDB에 update되어야함.   
+					  */ 
 
 public:
 	Location(FieldDataBase* fdb) 
@@ -63,6 +68,10 @@ public:
 	
 	// DB Access
 	void getTime();
+	void updateDB(LocalInfo* localInfo);
+	
+	// 9개의 방향에 있는 Local data 를 배열로 리턴
+	LocalInfo* getLocalInfo();
 
 
 };
@@ -83,7 +92,14 @@ Organism* Location::getTarget()
 
 
 #pragma region FDB
-
+LocalInfo* Location::getLocalInfo()
+{
+	// retrieve
+	/*
+		9개의 LocalInfo를 계산하고자 하는 알고리즘에 넘겨주는 함수
+	*/
+	
+}
 
 
 #pragma endregion
