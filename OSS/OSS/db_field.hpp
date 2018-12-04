@@ -77,15 +77,8 @@ private:
 	Timer * m_timer; // Global Time
 
 public:
-	FieldDataBase()
-	{
-		
-	}
-
-	~FieldDataBase()
-	{
-
-	}
+	FieldDataBase(); // constructor
+	~FieldDataBase(); // destructor
 
 	void updateGlobalState(); // Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
@@ -94,11 +87,34 @@ public:
 
 	LOCALSTATE getLocalState(int x, int y);
 	std::vector<Organism>* getOrganismList(int x, int y);
+
+	// DB Load
+	virtual void readDB(std::string fileName); // read DB file
+	void loadLocationName(char* name); // Load Location name from DB
+	void loadTime(char* time);	// Load Location time from DB
+	void loadLocationFeature(); // Load Location feature from DB
 };
 
+#pragma region FieldDataBase_CONSTRUCTOR
+
+FieldDataBase::FieldDataBase()
+{
+	m_timer = new Timer();
+}
+
+#pragma endregion
+
+#pragma region FieldDataBase_DESTRUCTOR
+
+FieldDataBase::~FieldDataBase()
+{
+	delete[] m_timer;
+}
+
+#pragma endregion
 
 
-#pragma region LOCATION_UPDATE
+#pragma region FieldDataBase_UPDATE
 void FieldDataBase::updateGlobalState()
 {
 	// TO Do
@@ -116,7 +132,7 @@ void FieldDataBase::updateOrganismList(int x, int y)
 #pragma endregion
 
 
-#pragma region LOAD_INFORMATION
+#pragma region FieldDataBase_INFORMATION
 LOCALSTATE FieldDataBase::getLocalState(int x, int y)
 {
 	// to do
@@ -128,4 +144,82 @@ std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
 	// to do
 	return NULL;
 }
+#pragma endregion
+
+
+#pragma region FieldDataBase_FILEIO
+void FieldDataBase::readDB(std::string fileName)
+{
+	using namespace std;
+	
+	char readData[MAX_STRING]; // data line
+
+	// file open to stream
+	ifs.open(fileName);
+
+	// Location name read
+	// loadLocationName();
+	
+
+	// Location time read
+	ifs.getline(readData, MAX_STRING);
+	if (readData == "<Location Time>")
+	{
+		ifs.getline(readData, MAX_STRING);
+		loadTime(readData);
+		ifs.getline(readData, MAX_STRING); // endLine
+	}
+
+	else
+	{
+		ifs.close();
+		return;
+	}
+
+
+	// Location feature data read
+	ifs.getline(readData, MAX_STRING);
+	if (readData != "<Location Info>")
+	{
+		ifs.close();
+		return;
+	}
+
+	while (!ifs.eof())
+	{
+		
+
+	}
+
+	// file close
+	ifs.close();
+}
+
+void FieldDataBase::loadLocationName(char* name)
+{
+	ifs.getline(name, MAX_STRING);
+	if (readData == "<Location Name>")
+	{
+		ifs.getline(readData, MAX_STRING);
+		loadLocationName(readData);
+		ifs.getline(readData, MAX_STRING); // endLine
+	}
+
+	else
+	{
+		ifs.close();
+		return;
+	}
+}
+
+void FieldDataBase::loadTime(char* time)
+{
+	m_timer->setTime(time);
+}
+
+void FieldDataBase::loadLocationFeature()
+{
+
+}
+
 #pragma endregion

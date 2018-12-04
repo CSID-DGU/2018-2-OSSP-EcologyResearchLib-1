@@ -139,7 +139,7 @@ void OrgDataBase::readDB(std::string fileName)
 		ifs.getline(readData, MAX_STRING);
 
 		// test
-		cout << readData << endl;
+		// cout << readData << endl;
 	}
 
 	// file close
