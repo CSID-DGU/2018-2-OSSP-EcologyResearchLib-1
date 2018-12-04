@@ -38,23 +38,22 @@ Last Updated : 18-11-05
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
-#define MAX_STRING 50
-
 
 // Position data struct
 typedef struct Position
 {
-	float fLatitude, fLongitude, fAltitude;
+	std::string longitude, latitude, altitude;
 } Position;
 
 // The states shows that organisms can move or not to the location
-enum LOCALSTATE
+typedef struct LOCALSTATE
 {
-	AIR_MOVABLE, SEA_MOVABLE, GROUND_MOVABLE, NONE
-};
+	std::string groundMovable, airMovable, seaMovable;
+}LOCALSTATE;
 
 /* 메모 : 해류의 이동 방향 설정 위해, db_origin으로 옮길 예정 */
    // 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서

@@ -126,24 +126,24 @@ public:
 #pragma region ORGDATABASE_FILE
 void OrgDataBase::readDB(const char* fileName)
 {
-	using namespace std;
+	//using namespace std;
 
-	char readData[MAX_STRING]; // data line
-	
-	// file open to stream
-	ifs.open(fileName);
-	
-	// Data Read
-	while (!ifs.eof())
-	{
-		ifs.getline(readData, MAX_STRING);
+	//char readData[MAX_STRING]; // data line
+	//
+	//// file open to stream
+	//ifs.open(fileName);
+	//
+	//// Data Read
+	//while (!ifs.eof())
+	//{
+	//	ifs.getline(readData, MAX_STRING);
 
-		// test
-		// cout << readData << endl;
-	}
+	//	// test
+	//	// cout << readData << endl;
+	//}
 
-	// file close
-	ifs.close();
+	//// file close
+	//ifs.close();
 }
 
 

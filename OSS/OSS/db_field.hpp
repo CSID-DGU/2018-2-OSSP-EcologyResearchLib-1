@@ -57,6 +57,7 @@ void updateLocalState(int x, int y); // Update each local state
 #include "db_timer.hpp"
 #include "db_environment.hpp"
 #include "db_organism.hpp"
+#include <string>
 
 #define MAX_FIELD_WIDTH_SIZE 40
 #define MAX_FIELD_HEIGHT_SIZE 40
@@ -64,8 +65,8 @@ void updateLocalState(int x, int y); // Update each local state
 
 struct LocalInfo
 {
-	LOCALSTATE localState[3] = { NONE, NONE, NONE }; // AIR, SEA, GROUND
 	Position pos;	// Real value of Position in earth
+	LOCALSTATE localState[3] = { NONE, NONE, NONE }; // GROUND, AIR, SEA
 	Environment environment;	// Environment information for algorithm
 	std::vector<Organism>* organisms; // Organism list for algorithm
 };
@@ -100,10 +101,14 @@ public:
 	virtual void readDB(const char* fileName); // read DB file
 	void loadLocationName(std::string& readData); // Load Location name from DB
 	void loadTime(std::string& readData);	// Load Location time from DB
-	void loadLocationFeature(); // Load Location feature from DB
-	void getDBLine(std::string& readData);	// Read a line from DB
+	void loadLocationFeature(std::string& readData); // Load Location feature from DB
+	void parsingFeatures(std::vector<std::string>& parsingVec, 
+						       const std::string& readData);
+								// Parsing location features read from DB
+	void getDBLine(std::string& readData);  // Read a line from DB
 	bool isLocationName(const std::string& name); // check location name Data or not
 	bool isLocationTime(const std::string& time); // check location time data or not
+	bool isLocationFeature(const std::string& feature); // check location feature or not
 };
 
 #pragma region FieldDataBase_CONSTRUCTOR
@@ -172,8 +177,6 @@ std::string FieldDataBase::getLocalName()
 
 std::string FieldDataBase::getLocalTime()
 {
-	// Debug
-	std::cout << m_timer->getTimeString() << std::endl;
 	return m_timer->getTimeString();
 }
 
@@ -194,20 +197,8 @@ void FieldDataBase::readDB(const char* fileName)
 	// Location time read
 	loadTime(readData);
 
-
-	//// Location feature data read
-	//ifs.getline(readData, MAX_STRING);
-	//if (readData != "<Location Info>")
-	//{
-	//	ifs.close();
-	//	return;
-	//}
-
-	//while (!ifs.eof())
-	//{
-	//	
-
-	//}
+	// Location feature data read
+	loadLocationFeature(readData);
 
 	// file close
 	ifs.close();
@@ -220,31 +211,54 @@ void FieldDataBase::loadLocationName(std::string& readData)
 
 	getDBLine(readData);
 	setLocalName(readData);
-	readData.resize(0);
 }
 
 void FieldDataBase::loadTime(std::string& readData)
 {
 	getDBLine(readData);
-
-	// Debug
-	std::cout << readData << std::endl;
-
 	assert(isLocationTime(readData) && "Load location time error\n");
 
 
 	getDBLine(readData);
-
-
-	// Debug
-	std::cout << readData << std::endl;
-
-
 	setLocalTime(readData);
 }
 
-void FieldDataBase::loadLocationFeature()
+void FieldDataBase::loadLocationFeature(std::string& readData)
 {
+	std::vector<std::string> parsingVec;
+	getDBLine(readData);
+	assert(isLocationFeature(readData) && "Load location Feature error\n");
+
+	while (!ifs.eof())
+	{
+		getDBLine(readData);
+		parsingFeatures(parsingVec, readData); // parsing feature data line
+		
+		// debug
+		for (auto& str : parsingVec)
+		{
+			std::cout << str << std::endl;
+		}
+
+		// setup Programmed coordinate
+		int x = stoi(parsingVec[0]);
+		int y = stoi(parsingVec[1]);
+		
+		// setup Postion
+		localInfo[x][y].pos.altitude = parsingVec[2];
+		localInfo[x][y].pos.altitude = parsingVec[3];
+		localInfo[x][y].pos.altitude = "0"; // default
+
+		// setup topoGraphic features
+		localInfo[x][y].localState[0] = parsingVec[4];
+
+		// setup Enviornment Watertemperature 
+		localInfo[x][y].environment.setWaterTemperature(stoi(parsingVec[4]));
+		
+		// setup Organism List
+
+		parsingVec.clear();
+	}
 
 }
 
@@ -253,6 +267,26 @@ void FieldDataBase::getDBLine(std::string& readData)
 	getline(ifs, readData);
 }
 
+void FieldDataBase::parsingFeatures(std::vector<std::string>& parsingVec, const std::string& readData)
+{
+	std::string parsedStr = "";
+
+	// Parsing
+	for (auto& ch : readData)
+	{
+		if (ch != ' ')
+			parsedStr += ch;
+
+		else
+		{
+			parsingVec.push_back(parsedStr);
+			parsedStr.resize(0);
+		}
+	}
+	parsingVec.push_back(parsedStr); // last element pushing
+}
+
+
 bool FieldDataBase::isLocationName(const std::string& name)
 {
 	return (name == "<Location Name>");
@@ -260,12 +294,15 @@ bool FieldDataBase::isLocationName(const std::string& name)
 
 bool FieldDataBase::isLocationTime(const std::string& time)
 {
-	// debug
-	std::cout << time << std::endl;
-	std::cout << time.length() << std::endl;
-	std::string temp = "<Location Time>";
-	std::cout << temp.length() << std::endl;
 	return (time == "<Location Time>");
 }
+
+bool FieldDataBase::isLocationFeature(const std::string& feature)
+{
+	return (feature == "<Location Feature>");
+}
+
+
+
 
 #pragma endregion

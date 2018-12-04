@@ -55,7 +55,7 @@ Last Updated : 18-11-05
 class Environment
 {
 	//int airTemperature; // 기온
-	WaterTemperatureDB waterTemperature; // 수온
+	int waterTemperature; // 수온
 	//int wind_speed;  // 풍속
 	//WEATHERSTATUS status; 
 	//SEASON season;
@@ -68,7 +68,24 @@ public:
 	//void setAirTemperature(int temp) { airTemperature = temp; }
 	//int getAirTemperature() { return airTemperature; }
 
-	void setWaterTemperature(int temp) {  }
-	WaterTemperatureDB getWaterTemperature() { return waterTemperature; }
+	// Setter
+	void setWaterTemperature(int temp);
+
+	// Getter 
+	int getWaterTemperature();
 
 };
+
+#pragma region Environment_Setter
+void Environment::setWaterTemperature(int temp)
+{
+	waterTemperature = temp;
+}
+#pragma endregion
+
+#pragma region Environment_Getter
+int Environment::getWaterTemperature()
+{
+	return waterTemperature;
+}
+#pragma endregion
