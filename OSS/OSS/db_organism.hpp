@@ -74,7 +74,7 @@ public:
 	std::vector<Organism> getPreyList() const { return m_Prey; }
 
 	// File Read
-	virtual void readDB(std::string fileName);
+	virtual void readDB(const char* fileName);
 
 private:
 	std::string name;
@@ -124,7 +124,7 @@ public:
 
 
 #pragma region ORGDATABASE_FILE
-void OrgDataBase::readDB(std::string fileName)
+void OrgDataBase::readDB(const char* fileName)
 {
 	using namespace std;
 

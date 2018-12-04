@@ -75,7 +75,7 @@ protected:
 public:
 	DataBase();
 	virtual ~DataBase();
-	virtual void readDB(std::string fileName) {};
+	virtual void readDB(const char* fileName) {};
 };
 
 

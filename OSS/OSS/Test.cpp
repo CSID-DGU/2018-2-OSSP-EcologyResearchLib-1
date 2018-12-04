@@ -1,11 +1,14 @@
 #include "lib_manager.hpp"
 
+using namespace std;
 
 int main()
 {
-	OrgDataBase testDB;
-	testDB.readDB("test.txt");
-
+	cout << "HI" << endl;
+	FieldDataBase testDB;
+	testDB.readDB("testDB.txt");
+	//testDB.getLocalName();
+	//testDB.getLocalTime();
 
 	return 0;
 }

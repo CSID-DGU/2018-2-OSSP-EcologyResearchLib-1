@@ -73,8 +73,9 @@ struct LocalInfo
 class FieldDataBase : public DataBase
 {
 private:
-	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Map array 
-	Timer * m_timer; // Global Time
+	std::string localName; // Local name
+	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Programmed map array 
+	Timer * m_timer; // Local Time
 
 public:
 	FieldDataBase(); // constructor
@@ -85,32 +86,38 @@ public:
 
 	void updateOrganismList(int x, int y); // Update Organism list of location
 
+	// Setter
+	void setLocalName(std::string name); // set local name from DB
+	void setLocalTime(std::string time); // set local time from DB
+
+	// Getter
 	LOCALSTATE getLocalState(int x, int y);
 	std::vector<Organism>* getOrganismList(int x, int y);
+	std::string getLocalName(); // get local name from object
+	std::string getLocalTime(); // get local time form object
 
 	// DB Load
-	virtual void readDB(std::string fileName); // read DB file
-	void loadLocationName(char* name); // Load Location name from DB
-	void loadTime(char* time);	// Load Location time from DB
+	virtual void readDB(const char* fileName); // read DB file
+	void loadLocationName(std::string& readData); // Load Location name from DB
+	void loadTime(std::string& readData);	// Load Location time from DB
 	void loadLocationFeature(); // Load Location feature from DB
+	void getDBLine(std::string& readData);	// Read a line from DB
+	bool isLocationName(const std::string& name); // check location name Data or not
+	bool isLocationTime(const std::string& time); // check location time data or not
 };
 
 #pragma region FieldDataBase_CONSTRUCTOR
-
 FieldDataBase::FieldDataBase()
 {
 	m_timer = new Timer();
 }
-
 #pragma endregion
 
 #pragma region FieldDataBase_DESTRUCTOR
-
 FieldDataBase::~FieldDataBase()
 {
 	delete[] m_timer;
 }
-
 #pragma endregion
 
 
@@ -132,7 +139,20 @@ void FieldDataBase::updateOrganismList(int x, int y)
 #pragma endregion
 
 
-#pragma region FieldDataBase_INFORMATION
+#pragma region FieldDataBase_SETTER
+void FieldDataBase::setLocalName(std::string name)
+{
+	localName = name;
+}
+
+void FieldDataBase::setLocalTime(std::string time)
+{
+	m_timer->setTime(time);
+}
+
+#pragma endregion
+
+#pragma region FieldDataBase_GETTER
 LOCALSTATE FieldDataBase::getLocalState(int x, int y)
 {
 	// to do
@@ -144,82 +164,108 @@ std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
 	// to do
 	return NULL;
 }
+
+std::string FieldDataBase::getLocalName()
+{
+	return localName;
+}
+
+std::string FieldDataBase::getLocalTime()
+{
+	// Debug
+	std::cout << m_timer->getTimeString() << std::endl;
+	return m_timer->getTimeString();
+}
+
 #pragma endregion
 
 
 #pragma region FieldDataBase_FILEIO
-void FieldDataBase::readDB(std::string fileName)
+void FieldDataBase::readDB(const char* fileName)
 {
-	using namespace std;
+	std::string readData; // data line
 	
-	char readData[MAX_STRING]; // data line
-
 	// file open to stream
 	ifs.open(fileName);
 
 	// Location name read
-	// loadLocationName();
+	loadLocationName(readData);
 	
-
 	// Location time read
-	ifs.getline(readData, MAX_STRING);
-	if (readData == "<Location Time>")
-	{
-		ifs.getline(readData, MAX_STRING);
-		loadTime(readData);
-		ifs.getline(readData, MAX_STRING); // endLine
-	}
-
-	else
-	{
-		ifs.close();
-		return;
-	}
+	loadTime(readData);
 
 
-	// Location feature data read
-	ifs.getline(readData, MAX_STRING);
-	if (readData != "<Location Info>")
-	{
-		ifs.close();
-		return;
-	}
+	//// Location feature data read
+	//ifs.getline(readData, MAX_STRING);
+	//if (readData != "<Location Info>")
+	//{
+	//	ifs.close();
+	//	return;
+	//}
 
-	while (!ifs.eof())
-	{
-		
+	//while (!ifs.eof())
+	//{
+	//	
 
-	}
+	//}
 
 	// file close
 	ifs.close();
 }
 
-void FieldDataBase::loadLocationName(char* name)
+void FieldDataBase::loadLocationName(std::string& readData)
 {
-	ifs.getline(name, MAX_STRING);
-	if (readData == "<Location Name>")
-	{
-		ifs.getline(readData, MAX_STRING);
-		loadLocationName(readData);
-		ifs.getline(readData, MAX_STRING); // endLine
-	}
+	getDBLine(readData);
+	assert(isLocationName(readData) && "Load Location Name Error\n");
 
-	else
-	{
-		ifs.close();
-		return;
-	}
+	getDBLine(readData);
+	setLocalName(readData);
+	readData.resize(0);
 }
 
-void FieldDataBase::loadTime(char* time)
+void FieldDataBase::loadTime(std::string& readData)
 {
-	m_timer->setTime(time);
+	getDBLine(readData);
+
+	// Debug
+	std::cout << readData << std::endl;
+
+	assert(isLocationTime(readData) && "Load location time error\n");
+
+
+	getDBLine(readData);
+
+
+	// Debug
+	std::cout << readData << std::endl;
+
+
+	setLocalTime(readData);
 }
 
 void FieldDataBase::loadLocationFeature()
 {
 
+}
+
+void FieldDataBase::getDBLine(std::string& readData)
+{
+	getline(ifs, readData);
+}
+
+bool FieldDataBase::isLocationName(const std::string& name)
+{
+	return (name == "<Location Name>");
+}
+
+bool FieldDataBase::isLocationTime(const std::string& time)
+{
+	// debug
+	std::cout << time << std::endl;
+	std::cout << time.length() << std::endl;
+	std::string temp = "<Location Time>";
+	std::cout << temp.length() << std::endl;
+	return (time == "<Location Time>");
 }
 
 #pragma endregion
