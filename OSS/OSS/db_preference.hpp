@@ -22,7 +22,7 @@ SOFTWARE. */
 
 /*
 Coded by : Jong Ha Sin
-Last Updated : 18-11-12
+Last Updated : 18-12-5
 
 
 [ Preference ]
@@ -99,13 +99,57 @@ class Preference
 {
 private:
 	LOCALSTATE movable[3] = {NONE, NONE, NONE}; // prefetr to go somewhere
-	std::vector<Organism>* preyList; // Prey List which organism can eat and like to eat. 
+	std::vector<Organism> preyList; // Prey List which organism can eat and like to eat. 
 	
 	/*
 		알고리즘 내부에서 각 지역 데이터 <=> Organism 내부의 Preference 비교. 
 	*/
 
 public:
-	
+	// Constructor
+	Preference();
 
+	// Destructor
+	~Preference();
+
+	// Setter
+	void setLocalState(LOCALSTATE* localState);
+	void setPreyList(Organism org);
+
+	// Getter
 };
+
+#pragma region Preference_Constructor
+Preference::Preference()
+{
+
+}
+
+#pragma endregion
+
+#pragma region Preference_Destructor
+Preference::~Preference()
+{
+
+}
+
+#pragma endregion
+
+#pragma region Preference_Setter
+void Preference::setLocalState(LOCALSTATE* localState)
+{
+	int ix = 0;
+	for (auto& ls : movable)
+		ls = localState[ix++];
+}
+
+void Preference::setPreyList(Organism org)
+{
+	preyList.push_back(org);
+}
+
+#pragma endregion
+
+#pragma region Preference_Getter
+
+#pragma endregion

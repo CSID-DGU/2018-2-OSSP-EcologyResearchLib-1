@@ -98,17 +98,15 @@ public:
 	std::string getLocalTime(); // get local time form object
 
 	// DB Load
-	virtual void readDB(const char* fileName); // read DB file
-	void loadLocationName(std::string& readData); // Load Location name from DB
-	void loadTime(std::string& readData);	// Load Location time from DB
-	void loadLocationFeature(std::string& readData); // Load Location feature from DB
-	void parsingFeatures(std::vector<std::string>& parsingVec, 
-						       const std::string& readData);
-								// Parsing location features read from DB
+	virtual void readDB(const char* fileName) override; // read DB file
+	void loadLocationName(std::string& readData);		// Load Location name from DB
+	void loadTime(std::string& readData);				// Load Location time from DB
+	void loadLocationFeature(std::string& readData);	// Load Location feature from DB
+	void parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec);
+														// Parsing location features read from DB
 	LOCALSTATE convertTopoGraphic(const std::string& feature); // Convert string data 
 															   // to (enum) LOCALSTATE
-	void createOrganismList(int x, int y); // Create organism list to targeted map 
-	void getDBLine(std::string& readData);  // Read a line from DB
+	void createOrganismList(int x, int y);		  // Create organism list to targeted map 
 	bool isLocationName(const std::string& name); // check location name Data or not
 	bool isLocationTime(const std::string& time); // check location time data or not
 	bool isLocationFeature(const std::string& feature); // check location feature or not
@@ -240,7 +238,7 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 	while (!ifs.eof())
 	{
 		getDBLine(readData);
-		parsingFeatures(parsingVec, readData); // parsing feature data line
+		parsingFeatures(readData, parsingVec); // parsing feature data line
 		
 		// debug
 		for (auto& str : parsingVec)
@@ -276,12 +274,7 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 
 }
 
-void FieldDataBase::getDBLine(std::string& readData)
-{
-	getline(ifs, readData);
-}
-
-void FieldDataBase::parsingFeatures(std::vector<std::string>& parsingVec, const std::string& readData)
+void FieldDataBase::parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec)
 {
 	std::string parsedStr = "";
 

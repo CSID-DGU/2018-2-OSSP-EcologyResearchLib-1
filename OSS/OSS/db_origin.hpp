@@ -39,6 +39,7 @@ Last Updated : 18-11-05
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <cassert>
 
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
@@ -74,11 +75,12 @@ protected:
 public:
 	DataBase();
 	virtual ~DataBase();
-	virtual void readDB(const char* fileName) {};
-
+	
 	// File I/O
-	void readFileOpen(const char* fileName);
-	void readFileClose();
+	virtual void readDB(const char* fileName) = 0; // Read DB file from stroage
+	void readFileOpen(const char* fileName);	// Read file open to input stream
+	void readFileClose();						// Read file close from input stream
+	void getDBLine(std::string& readData);		// Read a line from DB
 };
 
 
@@ -112,6 +114,12 @@ void DataBase::readFileOpen(const char* fileName)
 void DataBase::readFileClose()
 {
 	ifs.close();
+}
+
+void DataBase::getDBLine(std::string& readData)
+{
+	getline(ifs, readData);
+	assert(readData.empty() && "READ ERROR!!");
 }
 
 #pragma endregion
