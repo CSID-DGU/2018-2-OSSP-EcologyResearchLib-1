@@ -50,10 +50,10 @@ typedef struct Position
 } Position;
 
 // The states shows that organisms can move or not to the location
-typedef struct LOCALSTATE
+enum LOCALSTATE
 {
-	std::string groundMovable, airMovable, seaMovable;
-}LOCALSTATE;
+	GROUND, SEA, AIR, NONE
+};
 
 /* 메모 : 해류의 이동 방향 설정 위해, db_origin으로 옮길 예정 */
    // 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서
@@ -75,10 +75,14 @@ public:
 	DataBase();
 	virtual ~DataBase();
 	virtual void readDB(const char* fileName) {};
+
+	// File I/O
+	void readFileOpen(const char* fileName);
+	void readFileClose();
 };
 
 
-#pragma region DATABASE_CONSTURCTOR
+#pragma region DataBase_CONSTURCTOR
 
 DataBase::DataBase()
 {
@@ -88,7 +92,7 @@ DataBase::DataBase()
 #pragma endregion 
 
 
-#pragma region DATABASE_DESTURCTOR
+#pragma region DataBase_DESTURCTOR
 
 DataBase::~DataBase()
 {
@@ -96,3 +100,18 @@ DataBase::~DataBase()
 }
 
 #pragma endregion 
+
+
+#pragma region DataBase_FILE_I/O
+
+void DataBase::readFileOpen(const char* fileName)
+{
+	ifs.open(fileName);
+}
+
+void DataBase::readFileClose()
+{
+	ifs.close();
+}
+
+#pragma endregion

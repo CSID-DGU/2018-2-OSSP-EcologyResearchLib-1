@@ -49,8 +49,25 @@ class Organism;
 enum STATUS { ALIVE, DEAD, HUNGRY, FULL, SLEEPY, FEARED, 
 			  HIBERNATION, HIDING, DIVE, FLOATING, BREEDING };
 enum ACTION { MOVING, HUNTING, MATING, STOPED, SLEEPING, 
-	          EATING, DIVING, SPOUTING };
+	          EATING, DIVING, SPOUTING, DEFAULT };
 enum SEX { MALE, FEMALE, BOTH };
+
+struct OrgDBStruct
+{
+	std::string name;	// Organism's Name
+	int age;			// Organism's Age
+	SEX m_Sex;			// Organism's sex
+	unsigned energy;    // calories % for survive
+
+	std::vector<STATUS> status;  // Current Status list
+	ACTION action;			     // Current action
+
+	Preference prefer;			   // preference of a organism
+
+	// These datas are Determined by field DB
+	int xPoint, yPoint;  // coordinates of organism at location
+	Position m_Position; // Current geographical position
+};
 
 class OrgDataBase : public DataBase
 {
@@ -77,22 +94,7 @@ public:
 	virtual void readDB(const char* fileName);
 
 private:
-	std::string name;
-
-	int m_Age;
-	int xPoint, yPoint; // coordinates of organism at location
-	int energy; // calories % for survive
-
-	SEX m_Sex;
-	
-	ACTION m_Action;
-	Position m_Position; // Current Position
-
-	std::vector<STATUS> m_Status;
-	std::vector<Organism> m_Prey;  // Prey List which organism can eat.
-	
-	Preference prefer; // preference of a organism
-
+	OrgDBStruct organismInfo;
 };
 
 
@@ -102,19 +104,16 @@ private:
 	OrgDataBase* m_ODB;
 
 public:
+	// Constructor
+	Organism();
 
-	Organism() {}
+	// Destructor
+	virtual ~Organism();
 
-	Organism(int x, int y)
-	{
-		m_ODB = new OrgDataBase();
-		
-	}
+	// Setter
+	void setOrganismInfo(const char* fileName);
 
-	virtual ~Organism()
-	{
-		delete[] m_ODB;
-	}
+	// Getter
 
 
 	// Moving
@@ -123,28 +122,42 @@ public:
 
 
 
-#pragma region ORGDATABASE_FILE
+#pragma region OrgDataBase_FILEIO
 void OrgDataBase::readDB(const char* fileName)
 {
-	//using namespace std;
+	std::string readData;
 
-	//char readData[MAX_STRING]; // data line
-	//
-	//// file open to stream
-	//ifs.open(fileName);
-	//
-	//// Data Read
-	//while (!ifs.eof())
-	//{
-	//	ifs.getline(readData, MAX_STRING);
-
-	//	// test
-	//	// cout << readData << endl;
-	//}
-
-	//// file close
-	//ifs.close();
+	readFileOpen(fileName);
+	// loadName(readData);
+	// loadAge(readData);
+	// loadSex(readData);
+	// 
+	
+	readFileClose();
 }
-
-
 #pragma region
+
+
+#pragma region Organism_CONSTRUCTOR
+
+Organism::Organism()
+{
+	m_ODB = new OrgDataBase();
+}
+#pragma endregion 
+
+#pragma region Organism_DESTRUCTOR
+
+Organism::~Organism()
+{
+	delete[] m_ODB;
+}
+#pragma endregion 
+
+#pragma region Organism_SETTER
+
+void Organism::setOrganismInfo(const char* fileName)
+{
+	m_ODB->readDB(fileName);
+}
+#pragma endregion

@@ -39,8 +39,6 @@ Last Updated : 18-11-05
 */
 
 #pragma once
-#include "db_watertemperature.hpp"
-
 // ³¯¾¾ »óÅÂ
 //enum WEATHERSTATUS
 //{
@@ -73,7 +71,6 @@ public:
 
 	// Getter 
 	int getWaterTemperature();
-
 };
 
 #pragma region Environment_Setter

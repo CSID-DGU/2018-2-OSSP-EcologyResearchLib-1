@@ -99,12 +99,11 @@ class Preference
 {
 private:
 	LOCALSTATE movable[3] = {NONE, NONE, NONE}; // prefetr to go somewhere
-	//std::vector<Organism>* preylist; // prefer to eat something
-	Environment* preferEnvironment; // prefer to be in some environment 
+	std::vector<Organism>* preyList; // Prey List which organism can eat and like to eat. 
+	
 	/*
 		알고리즘 내부에서 각 지역 데이터 <=> Organism 내부의 Preference 비교. 
 	*/
-
 
 public:
 	
