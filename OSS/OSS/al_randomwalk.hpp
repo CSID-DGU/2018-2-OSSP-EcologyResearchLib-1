@@ -174,12 +174,18 @@ SEQUENCE
 #include "al_algorithm.hpp"
 #include <algorithm>
 
+typedef std::string timer_string_t;
+
 class RandomWalk
 {
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열
 	float possibility[DIRECTION_NUMBER];
+
+    // 랜덤워커의 위치, 해당 시간
+    Position m_position;
+    timer_string_t m_timer;
 
 public:
     RandomWalk();
@@ -191,7 +197,10 @@ public:
 
     // 특정 방향(1방향)에 대한 이동 확률 설정 메소드
     //void setMovingPossibility(Direction direction, float posibility);
-
+    
+    // Location에서 생물체의 현재 좌표와 시간을 가져와 멤버에 저장
+    // Location = Position + Timer
+    void setLocation(const Location& location);
 };
 
 // 생 성 자
