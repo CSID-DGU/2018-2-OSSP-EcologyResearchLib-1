@@ -78,7 +78,7 @@ public:
 	~OrgDataBase();
 
 	// File I/O
-	virtual void readDB(const char* fileName) override;
+	virtual void readDB(std::string& fileName) override;
 	void loadName(std::string& readData);
 	void loadAge(std::string& readData);
 	void loadSex(std::string& readData);
@@ -116,12 +116,7 @@ public:
 	
 
 	// Getter
-	/*int getAge() const { return m_Age; }
-	int getSex() const { return m_Sex; }
-	std::vector<STATUS> getStatus() const { return m_Status; }
-	ACTION getAction() const { return m_Action; }
-	Position getPosition() const { return m_Position; }
-	std::vector<Organism> getPreyList() const { return m_Prey; }*/
+	std::string getName();
 
 	
 
@@ -143,10 +138,10 @@ public:
 	virtual ~Organism();
 
 	// Setter
-	void setOrganismInfo(const char* fileName);
+	void setOrganismInfo(std::string& fileName);
 
 	// Getter
-
+	std::string getOrganismName();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -169,7 +164,7 @@ OrgDataBase::~OrgDataBase()
 #pragma endregion
 
 #pragma region OrgDataBase_FILEIO
-void OrgDataBase::readDB(const char* fileName)
+void OrgDataBase::readDB(std::string& fileName)
 {
 	std::string readData;
 	readFileOpen(fileName);
@@ -401,6 +396,14 @@ void OrgDataBase::setPreferPreyList(const std::string& readData)
 #pragma endregion
 
 
+#pragma OrgDataBase_Getter
+std::string OrgDataBase::getName()
+{
+	return organismInfo->name;
+}
+
+#pragma endregion
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -422,8 +425,16 @@ Organism::~Organism()
 
 #pragma region Organism_SETTER
 
-void Organism::setOrganismInfo(const char* fileName)
+void Organism::setOrganismInfo(std::string& fileName)
 {
 	m_ODB->readDB(fileName);
 }
+#pragma endregion
+
+#pragma region Organism_Getter
+std::string Organism::getOrganismName()
+{
+	return m_ODB->getName();
+}
+
 #pragma endregion

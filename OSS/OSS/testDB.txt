@@ -2,6 +2,10 @@
 Austrailia
 <Location Time>
 2018-12-01 13:00:00
+<Location Organism>
+2
+HUMPBACKWHALE 
+KRILL
 <Location Feature>
 0 0 E160¡Æ S21¡Æ NONE SEA NONE 2.1 HUMPBACKWHALE
 0 1 E161¡Æ S21¡Æ NONE SEA NONE 2.1 HUMPBACKWHALE

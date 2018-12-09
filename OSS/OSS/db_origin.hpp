@@ -77,8 +77,8 @@ public:
 	virtual ~DataBase();
 	
 	// File I/O
-	virtual void readDB(const char* fileName) = 0; // Read DB file from stroage
-	void readFileOpen(const char* fileName);	// Read file open to input stream
+	virtual void readDB(std::string& fileName) = 0; // Read DB file from stroage
+	void readFileOpen(std::string& fileName);	// Read file open to input stream
 	void readFileClose();						// Read file close from input stream
 	void getDBLine(std::string& readData);		// Read a line from DB
 };
@@ -106,7 +106,7 @@ DataBase::~DataBase()
 
 #pragma region DataBase_FILE_I/O
 
-void DataBase::readFileOpen(const char* fileName)
+void DataBase::readFileOpen(std::string& fileName)
 {
 	ifs.open(fileName);
 }

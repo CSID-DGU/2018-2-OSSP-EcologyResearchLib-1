@@ -68,7 +68,7 @@ struct LocalInfo
 	Position pos;	// Real value of Position in earth
 	LOCALSTATE localState[3] = { NONE, NONE, NONE }; // GROUND, AIR, SEA
 	Environment environment;		  // Environment information for algorithm
-	std::vector<Organism>* organisms; // Organism list for algorithm
+	std::vector<Organism*> localOrganisms; // local Organism list for algorithm
 };
 
 class FieldDataBase : public DataBase
@@ -76,20 +76,38 @@ class FieldDataBase : public DataBase
 private:
 	std::string localName; // Local name
 	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Programmed map array 
+	std::vector<Organism*> organismList; // all organisms of this area
 	Timer * m_timer; // Local Time
 
 public:
 	FieldDataBase(); // constructor
 	~FieldDataBase(); // destructor
 
+	// DB Load
+	virtual void readDB(std::string& fileName) override; // read DB file
+	void loadLocationName(std::string& readData);		// Load Location name from DB
+	void loadTime(std::string& readData);				// Load Location time from DB
+	void loadLocationFeature(std::string& readData);	// Load Location feature from DB
+	void loadOrganisms(std::string& readData);			// Load location organisms from DB
+	void parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec);
+												  // Parsing location features read from DB
+	LOCALSTATE convertTopoGraphic(const std::string& feature); // Convert string data 
+															   // to (enum) LOCALSTATE
+	// void createOrganismList(int x, int y);		  // Create organism list to targeted map 
+	bool isLocationName(const std::string& name); // check location name Data or not
+	bool isLocationTime(const std::string& time); // check location time data or not
+	bool isLocationFeature(const std::string& feature); // check location feature or not
+	bool isLocationOrganism(const std::string& feature);
+
+	// Update
 	void updateGlobalState(); // Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
-
 	void updateOrganismList(int x, int y); // Update Organism list of location
 
 	// Setter
 	void setLocalName(std::string name); // set local name from DB
 	void setLocalTime(std::string time); // set local time from DB
+	void setOrganismList(std::string organisms, int x, int y); // set organisms from DB
 
 	// Getter
 	LOCALSTATE getLocalState(int x, int y);
@@ -97,19 +115,7 @@ public:
 	std::string getLocalName(); // get local name from object
 	std::string getLocalTime(); // get local time form object
 
-	// DB Load
-	virtual void readDB(const char* fileName) override; // read DB file
-	void loadLocationName(std::string& readData);		// Load Location name from DB
-	void loadTime(std::string& readData);				// Load Location time from DB
-	void loadLocationFeature(std::string& readData);	// Load Location feature from DB
-	void parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec);
-														// Parsing location features read from DB
-	LOCALSTATE convertTopoGraphic(const std::string& feature); // Convert string data 
-															   // to (enum) LOCALSTATE
-	void createOrganismList(int x, int y);		  // Create organism list to targeted map 
-	bool isLocationName(const std::string& name); // check location name Data or not
-	bool isLocationTime(const std::string& time); // check location time data or not
-	bool isLocationFeature(const std::string& feature); // check location feature or not
+	
 };
 
 #pragma region FieldDataBase_CONSTRUCTOR
@@ -129,7 +135,7 @@ FieldDataBase::~FieldDataBase()
 
 
 #pragma region FieldDataBase_FILEIO
-void FieldDataBase::readDB(const char* fileName)
+void FieldDataBase::readDB(std::string& fileName)
 {
 	std::string readData;
 
@@ -141,6 +147,9 @@ void FieldDataBase::readDB(const char* fileName)
 
 	// Location time read
 	loadTime(readData);
+
+	// Location organisms read
+	loadOrganisms(readData);
 
 	// Location feature data read
 	loadLocationFeature(readData);
@@ -163,9 +172,25 @@ void FieldDataBase::loadTime(std::string& readData)
 	getDBLine(readData);
 	assert(isLocationTime(readData) && "Load location time error\n");
 
-
 	getDBLine(readData);
 	setLocalTime(readData);
+}
+
+void FieldDataBase::loadOrganisms(std::string& readData)
+{
+	getDBLine(readData);
+	assert(isLocationOrganism(readData) && "Load Organism error\n");
+
+	getDBLine(readData);
+	int orgNum = stoi(readData);
+	for (int ix = 0; ix < orgNum; ix++)
+	{
+		getDBLine(readData);
+		Organism* org = new Organism();
+		std::string orgFile = readData + ".txt";
+		org->setOrganismInfo(orgFile);
+		organismList.push_back(org);
+	}
 }
 
 void FieldDataBase::loadLocationFeature(std::string& readData)
@@ -178,12 +203,6 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 	{
 		getDBLine(readData);
 		parsingFeatures(readData, parsingVec); // parsing feature data line
-
-		// debug
-		for (auto& str : parsingVec)
-		{
-			std::cout << str << std::endl;
-		}
 
 		// setup Programmed coordinate
 		int x = stoi(parsingVec[0]);
@@ -203,15 +222,15 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 		localInfo[x][y].environment.setWaterTemperature(stoi(parsingVec[7]));
 
 		// setup Organism List
-		createOrganismList(x, y);
 		for (int ix = 8; ix < parsingVec.size(); ix++)
-			// setOrganism(parsingVec[ix]);
+			setOrganismList(parsingVec[ix], x, y);
 
 		// Clear vector for a next data
-			parsingVec.clear();
+		parsingVec.clear();
 	}
-
 }
+
+
 
 void FieldDataBase::parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec)
 {
@@ -248,6 +267,11 @@ bool FieldDataBase::isLocationFeature(const std::string& feature)
 	return (feature == "<Location Feature>");
 }
 
+bool FieldDataBase::isLocationOrganism(const std::string& feature)
+{
+	return (feature == "<Location Organism>");
+}
+
 LOCALSTATE FieldDataBase::convertTopoGraphic(const std::string& feature)
 {
 	if (feature == "GROUND")	return GROUND;
@@ -256,17 +280,17 @@ LOCALSTATE FieldDataBase::convertTopoGraphic(const std::string& feature)
 	else						return NONE;
 }
 
-void FieldDataBase::createOrganismList(int x, int y)
-{
-	// Range check 
-	assert(MAX_FIELD_WIDTH_SIZE > x &&
-		MAX_FIELD_HEIGHT_SIZE > y &&
-		x >= 0 &&
-		y >= 0 &&
-		"createOrganismList point ERROR!!");
-
-	localInfo[x][y].organisms = new vector<Organism>;
-}
+//void FieldDataBase::createOrganismList(int x, int y)
+//{
+//	// Range check 
+//	assert(MAX_FIELD_WIDTH_SIZE > x &&
+//		MAX_FIELD_HEIGHT_SIZE > y &&
+//		x >= 0 &&
+//		y >= 0 &&
+//		"createOrganismList point ERROR!!");
+//
+//	localInfo[x][y].organisms = new vector<Organism>;
+//}
 #pragma endregion
 
 
@@ -299,9 +323,16 @@ void FieldDataBase::setLocalTime(std::string time)
 	m_timer->setTime(time);
 }
 
-void setOrganismList()
+void FieldDataBase::setOrganismList(std::string organisms, int x, int y)
 {
-
+	for (auto& org : organismList)
+	{
+		if (org->getOrganismName() == organisms)
+		{
+			localInfo[x][y].localOrganisms.push_back(org);
+			break;
+		}
+	}
 }
 
 #pragma endregion
