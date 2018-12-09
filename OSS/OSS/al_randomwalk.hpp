@@ -174,7 +174,6 @@ SEQUENCE
 #include "al_algorithm.hpp"
 #include <algorithm>
 
-typedef std::string timer_string_t;
 
 class RandomWalk
 {

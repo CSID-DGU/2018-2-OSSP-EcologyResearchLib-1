@@ -78,6 +78,7 @@ private:
 	LocalInfo localInfo[MAX_FIELD_WIDTH_SIZE][MAX_FIELD_HEIGHT_SIZE]; // Programmed map array 
 	std::vector<Organism*> organismList; // all organisms of this area
 	Timer * m_timer; // Local Time
+	
 
 public:
 	FieldDataBase(); // constructor

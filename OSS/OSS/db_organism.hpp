@@ -143,7 +143,7 @@ public:
 
 	// Getter
 	std::string getOrganismName();
-	Position getPostion();
+	Position getOrganismPosition();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -444,7 +444,7 @@ std::string Organism::getOrganismName()
 	return m_ODB->getName();
 }
 
-Position Organism::getPostion()
+Position Organism::getOrganismPosition()
 {
 	return m_ODB->getPosition();
 }
