@@ -117,6 +117,7 @@ public:
 
 	// Getter
 	std::string getName();
+	Position getPosition();
 
 	
 
@@ -142,6 +143,7 @@ public:
 
 	// Getter
 	std::string getOrganismName();
+	Position getOrganismPosition();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -402,6 +404,11 @@ std::string OrgDataBase::getName()
 	return organismInfo->name;
 }
 
+Position OrgDataBase::getPosition()
+{
+	return organismInfo->position;
+}
+
 #pragma endregion
 
 
@@ -435,6 +442,11 @@ void Organism::setOrganismInfo(std::string& fileName)
 std::string Organism::getOrganismName()
 {
 	return m_ODB->getName();
+}
+
+Position Organism::getOrganismPosition()
+{
+	return m_ODB->getPosition();
 }
 
 #pragma endregion

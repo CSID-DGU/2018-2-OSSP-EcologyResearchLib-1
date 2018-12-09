@@ -44,6 +44,8 @@ Last Updated : 18-11-05
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
 
+typedef std::string timer_string_t;
+
 // Position data struct
 typedef struct Position
 {
