@@ -51,13 +51,17 @@ enum Direction
 */
 
 // 나중에 옮길거임 ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ
-// 간소화 저장용 RWOutput (알고리즘에서 랜덤워커랑 같이 쓰려고 여기로 가져왔음)
-typedef struct
+// 간소화 저장용 RWOutput
+typedef struct RWOutput
 {
-    std::string     organismName;   // 생명체 이름
     Position        position;       // 좌표
     timer_string_t  time;           // 간소화된 시간 스트링
-} LocationTimeInfo;
+
+    // 생성자
+    RWOutput( Position p, timer_string_t t)
+        : position(p), time(t) {}
+
+} RWOutput;
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
@@ -70,6 +74,8 @@ protected:
 private:
     // 랜덤워커 배열 = 예측된 이동 경로
 	std::vector<RandomWalk> m_randomWalk;
+    // 저장용 간소화 배열
+    std::vector<RWOutput> m_rwOutput;
     // 예측 루틴 실행 횟수
     int m_predictCount;
     // 현재 랜덤워커 수
@@ -113,6 +119,12 @@ public:
 
     // 벡터 내의 마지막 랜덤워커 객체로부터 이동확률을 읽어, 이동 방향 결정
     Direction decideDirection();
+
+    // 랜덤워커 배열 -> 간소화 배열 변환
+    void transformRWArray();
+
+    // 간소화 배열 반환
+    std::vector<RWOutput> getRWOutput();
 };
 
 #pragma region Private Fuctions
@@ -213,6 +225,21 @@ Direction HumpbackWhaleMP::decideDirection()
     // 9방향의 확률에 대해 랜덤으로 위치 결정
 
     /* return Direction::DECIDED_DIRECTION ! */
+}
+
+// 랜덤워커 배열 -> 간소화 배열 변환
+void HumpbackWhaleMP::transformRWArray()
+{
+    for(RandomWalk& walker : m_randomWalk)
+    {
+        m_rwOutput.push_back(RWOutput(walker.getLocalInfo().pos, walker.getTimer().getTimeString() ));
+    }
+}
+
+// 간소화 배열 반환
+std::vector<RWOutput> HumpbackWhaleMP::getRWOutput()
+{
+    return m_rwOutput;
 }
 
 #pragma endregion
