@@ -203,6 +203,10 @@ public:
     // Location에서 생물체의 현재 좌표와 시간을 가져와 멤버에 저장
     // Location = Position + Timer
     void setLocation(const Location& location);
+
+    // Getters
+    LocalInfo getLocalInfo();
+    Timer     getTimer();
 };
 
 // 생 성 자
@@ -226,6 +230,12 @@ void RandomWalk::setMovingPossibility(const float& pArray)
 #pragma endregion
 
 
+LocalInfo RandomWalk::getLocalInfo()
+{
+    return m_localInfo;
+}
 
-
-
+Timer RandomWalk::getTimer()
+{
+    return m_timer;
+}
