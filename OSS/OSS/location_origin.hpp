@@ -77,7 +77,7 @@ public:
 };
 
 
-#pragma region TARGET_ORGANISM
+#pragma region Location_Target
 void Location::setTarget(Organism* org)
 {
 	// TO DO
