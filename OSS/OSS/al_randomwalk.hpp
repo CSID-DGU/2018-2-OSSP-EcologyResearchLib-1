@@ -171,23 +171,26 @@ SEQUENCE
 #pragma once
 
 #include "db_organism.hpp"
-#include "al_algorithm.hpp"
+#include "al_humpback_whale_mp.hpp"
 #include <algorithm>
-
 
 class RandomWalk
 {
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열
-	float possibility[DIRECTION_NUMBER];
+    float possibility[DIRECTION_NUMBER] = {0.0, };
 
-    // 랜덤워커의 위치, 해당 시간
-    Position m_position;
-    timer_string_t m_timer;
+    // 해당 랜덤워커가 위치한 로컬 정보, 해당 시간
+    LocalInfo m_localInfo;
+    Timer     m_timer;
 
 public:
     RandomWalk();
+
+    //생성자 : 로컬 정보, 시간 초기화
+    RandomWalk(const LocalInfo& localInfo, Timer timer)
+        : m_localInfo(localInfo), m_timer(timer) {}
     ~RandomWalk() {}
 
     // 알고리즘 클래스의 calculate() 내부에서 실행된다.
