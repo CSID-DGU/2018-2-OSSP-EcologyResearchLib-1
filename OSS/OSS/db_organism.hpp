@@ -77,26 +77,6 @@ public:
 	// Destructor
 	~OrgDataBase();
 
-	// Setter
-	void setName(const std::string& name);			// Set Organism's name
-	void setAge(const int& age);				    // Set Organism's age
-	void setSex(const SEX& sex);					// Set Organism's sex
-	void setEnergy(const int& enerngy);				// Set Organism's energy
-	void setStatus(const std::string& status);		// Set Organism's status
-	void setAction(const std::string& action);		// Set Organism's action
-	void setPreference();							// Set Organism's Preference
-
-	// void setPosition(Position pos) { m_Position = pos; }
-	
-
-	// Getter
-	int getAge() const { return m_Age; }
-	int getSex() const { return m_Sex; }
-	std::vector<STATUS> getStatus() const { return m_Status; }
-	ACTION getAction() const { return m_Action; }
-	Position getPosition() const { return m_Position; }
-	std::vector<Organism> getPreyList() const { return m_Prey; }
-
 	// File I/O
 	virtual void readDB(const char* fileName) override;
 	void loadName(std::string& readData);
@@ -105,14 +85,45 @@ public:
 	void loadEnergy(std::string& readData);
 	void loadStatus(std::string& readData);
 	void loadAction(std::string& readData);
-	void loadPreference(std::string& readData);
+	void loadPreferLocalState(std::string& readData);
+	void loadPreferPreyList(std::string& readData);
 
 	SEX convertSexData(const std::string& readData);
 	STATUS convertStatusData(const std::string& readData);
 	ACTION convertActionData(const std::string& readData);
+	LOCALSTATE convertLocalStateData(const std::string& readData);
 
 	void parsingStatusData(const std::string& readData, std::vector<STATUS>& statusVec);
 	void parsingActionData(const std::string& readData, std::vector<ACTION>& actionVec);
+	void parsingLocalStateData(const std::string& readData, Preference* prefer);
+	void parsingPreyListData(const std::string& readData, Preference* prefer);
+	
+
+	// Setter
+	void setName(const std::string& name);			 // Set Organism's name
+	void setAge(const int& age);				     // Set Organism's age
+	void setSex(const SEX& sex);					 // Set Organism's sex
+	void setEnergy(const int& enerngy);				 // Set Organism's energy
+	void setStatus(const std::string& status);		 // Set Organism's status
+	void setAction(const std::string& action);		 // Set Organism's action
+	void setPreferLocalState(const std::string& readData); 
+													// Set Organism's prefer local state					
+	void setPreferPreyList(const std::string& readData);
+													// Set Organism's prefer prey list
+
+													
+	// void setPosition(Position pos) { m_Position = pos; }
+	
+
+	// Getter
+	/*int getAge() const { return m_Age; }
+	int getSex() const { return m_Sex; }
+	std::vector<STATUS> getStatus() const { return m_Status; }
+	ACTION getAction() const { return m_Action; }
+	Position getPosition() const { return m_Position; }
+	std::vector<Organism> getPreyList() const { return m_Prey; }*/
+
+	
 
 private:
 	OrgDBStruct* organismInfo;
@@ -146,6 +157,7 @@ public:
 OrgDataBase::OrgDataBase()
 {
 	organismInfo = new OrgDBStruct();
+	organismInfo->prefer = new Preference();
 }
 #pragma endregion
 
@@ -154,44 +166,6 @@ OrgDataBase::~OrgDataBase()
 {
 	delete[] organismInfo;
 }
-#pragma endregion
-
-#pragma region OrgDataBase_Setter
-void OrgDataBase::setName(const std::string& name)
-{
-	organismInfo->name = name;
-}
-
-void OrgDataBase::setAge(const int& age)
-{
-	organismInfo->age = age;
-}
-
-void OrgDataBase::setSex(const SEX& sex)
-{
-	organismInfo->sex = sex;
-}
-
-void OrgDataBase::setEnergy(const int& enerngy)
-{
-	organismInfo->energy = enerngy;
-}
-
-void OrgDataBase::setStatus(const std::string& status)
-{
-	parsingStatusData(status, organismInfo->status);
-}
-
-void OrgDataBase::setAction(const std::string& action)
-{
-	parsingActionData(action, organismInfo->action);
-}
-
-void OrgDataBase::setPreference()
-{
-	organismInfo->prefer = new Preference();
-}
-
 #pragma endregion
 
 #pragma region OrgDataBase_FILEIO
@@ -206,8 +180,9 @@ void OrgDataBase::readDB(const char* fileName)
 	loadEnergy(readData);
 	loadStatus(readData);
 	loadAction(readData);
-	loadPreference(readData);
-	
+	loadPreferLocalState(readData);
+	loadPreferPreyList(readData);
+
 	readFileClose();
 }
 
@@ -247,10 +222,17 @@ void OrgDataBase::loadAction(std::string& readData)
 	setAction(readData);
 }
 
-void OrgDataBase::loadPreference(std::string& readData)
+void OrgDataBase::loadPreferLocalState(std::string& readData)
 {
 	getDBLine(readData);
-	setPreference();
+	setPreferLocalState(readData);
+}
+
+
+void OrgDataBase::loadPreferPreyList(std::string& readData)
+{
+	getDBLine(readData);
+	setPreferPreyList(readData);
 }
 
 SEX OrgDataBase::convertSexData(const std::string& readData)
@@ -285,6 +267,15 @@ ACTION OrgDataBase::convertActionData(const std::string& readData)
 	else if (readData == "DIVING") return DIVING;
 	else if (readData == "SPOUTING") return SPOUTING;
 	else if (readData == "RESTING") return RESTING;
+	else fprintf(stderr, "Converting ERROR!!\n");
+}
+
+LOCALSTATE OrgDataBase::convertLocalStateData(const std::string& readData)
+{
+	if (readData == "GROUND") return GROUND;
+	else if (readData == "SEA") return SEA;
+	else if (readData == "AIR") return AIR;
+	else if (readData == "NONE") return NONE;
 	else fprintf(stderr, "Converting ERROR!!\n");
 }
 
@@ -324,9 +315,94 @@ void OrgDataBase::parsingActionData(const std::string& readData, std::vector<ACT
 	actionVec.push_back(convertActionData(parsedStr));
 }
 
+void OrgDataBase::parsingLocalStateData(const std::string& readData, Preference* prefer)
+{
+	std::string parsedStr = "";
+	LOCALSTATE localState[3];
+
+	int ix = 0;
+	for (auto& ch : readData)
+	{
+		if (ch != ' ')
+			parsedStr += ch;
+
+		else
+		{
+			localState[ix] = convertLocalStateData(parsedStr);
+			ix++;
+			parsedStr.resize(0);
+		}
+	} localState[++ix] = convertLocalStateData(parsedStr);
+
+	prefer->setLocalState(localState);
+}
+
+void OrgDataBase::parsingPreyListData(const std::string& readData, Preference* prefer)
+{
+	std::string parsedStr = "";
+
+	for (auto& ch : readData)
+	{
+		if (ch != ' ')
+			parsedStr += ch;
+
+		else
+		{
+			prefer->setPreyList(parsedStr);
+			parsedStr.resize(0);
+		}
+	} 
+}
+
 #pragma endregion
 
-///////////////////////////////////////////////////////////////////////////////
+
+#pragma region OrgDataBase_Setter
+void OrgDataBase::setName(const std::string& name)
+{
+	organismInfo->name = name;
+}
+
+void OrgDataBase::setAge(const int& age)
+{
+	organismInfo->age = age;
+}
+
+void OrgDataBase::setSex(const SEX& sex)
+{
+	organismInfo->sex = sex;
+}
+
+void OrgDataBase::setEnergy(const int& enerngy)
+{
+	organismInfo->energy = enerngy;
+}
+
+void OrgDataBase::setStatus(const std::string& status)
+{
+	parsingStatusData(status, organismInfo->status);
+}
+
+void OrgDataBase::setAction(const std::string& action)
+{
+	parsingActionData(action, organismInfo->action);
+}
+
+void OrgDataBase::setPreferLocalState(const std::string& readData)
+{
+	parsingLocalStateData(readData, organismInfo->prefer);
+}
+
+void OrgDataBase::setPreferPreyList(const std::string& readData)
+{
+	parsingPreyListData(readData, organismInfo->prefer);
+}
+
+#pragma endregion
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
 
 #pragma region Organism_CONSTRUCTOR
 

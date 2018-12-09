@@ -127,6 +127,149 @@ FieldDataBase::~FieldDataBase()
 #pragma endregion
 
 
+
+#pragma region FieldDataBase_FILEIO
+void FieldDataBase::readDB(const char* fileName)
+{
+	std::string readData;
+
+	// file open to stream
+	readFileOpen(fileName);
+
+	// Location name read
+	loadLocationName(readData);
+
+	// Location time read
+	loadTime(readData);
+
+	// Location feature data read
+	loadLocationFeature(readData);
+
+	// file close
+	readFileClose();
+}
+
+void FieldDataBase::loadLocationName(std::string& readData)
+{
+	getDBLine(readData);
+	assert(isLocationName(readData) && "Load Location Name Error\n");
+
+	getDBLine(readData);
+	setLocalName(readData);
+}
+
+void FieldDataBase::loadTime(std::string& readData)
+{
+	getDBLine(readData);
+	assert(isLocationTime(readData) && "Load location time error\n");
+
+
+	getDBLine(readData);
+	setLocalTime(readData);
+}
+
+void FieldDataBase::loadLocationFeature(std::string& readData)
+{
+	std::vector<std::string> parsingVec;
+	getDBLine(readData);
+	assert(isLocationFeature(readData) && "Load location Feature error\n");
+
+	while (!ifs.eof())
+	{
+		getDBLine(readData);
+		parsingFeatures(readData, parsingVec); // parsing feature data line
+
+		// debug
+		for (auto& str : parsingVec)
+		{
+			std::cout << str << std::endl;
+		}
+
+		// setup Programmed coordinate
+		int x = stoi(parsingVec[0]);
+		int y = stoi(parsingVec[1]);
+
+		// setup Postion
+		localInfo[x][y].pos.altitude = parsingVec[2];
+		localInfo[x][y].pos.altitude = parsingVec[3];
+		localInfo[x][y].pos.altitude = "0"; // default
+
+		// setup topoGraphic features
+		localInfo[x][y].localState[0] = convertTopoGraphic(parsingVec[4]);
+		localInfo[x][y].localState[1] = convertTopoGraphic(parsingVec[5]);
+		localInfo[x][y].localState[2] = convertTopoGraphic(parsingVec[6]);
+
+		// setup Enviornment Watertemperature 
+		localInfo[x][y].environment.setWaterTemperature(stoi(parsingVec[7]));
+
+		// setup Organism List
+		createOrganismList(x, y);
+		for (int ix = 8; ix < parsingVec.size(); ix++)
+			// setOrganism(parsingVec[ix]);
+
+		// Clear vector for a next data
+			parsingVec.clear();
+	}
+
+}
+
+void FieldDataBase::parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec)
+{
+	std::string parsedStr = "";
+
+	// Parsing
+	for (auto& ch : readData)
+	{
+		if (ch != ' ')
+			parsedStr += ch;
+
+		else
+		{
+			parsingVec.push_back(parsedStr);
+			parsedStr.resize(0);
+		}
+	}
+	parsingVec.push_back(parsedStr); // last element pushing
+}
+
+
+bool FieldDataBase::isLocationName(const std::string& name)
+{
+	return (name == "<Location Name>");
+}
+
+bool FieldDataBase::isLocationTime(const std::string& time)
+{
+	return (time == "<Location Time>");
+}
+
+bool FieldDataBase::isLocationFeature(const std::string& feature)
+{
+	return (feature == "<Location Feature>");
+}
+
+LOCALSTATE FieldDataBase::convertTopoGraphic(const std::string& feature)
+{
+	if (feature == "GROUND")	return GROUND;
+	else if (feature == "SEA")	return SEA;
+	else if (feature == "AIR")	return AIR;
+	else						return NONE;
+}
+
+void FieldDataBase::createOrganismList(int x, int y)
+{
+	// Range check 
+	assert(MAX_FIELD_WIDTH_SIZE > x &&
+		MAX_FIELD_HEIGHT_SIZE > y &&
+		x >= 0 &&
+		y >= 0 &&
+		"createOrganismList point ERROR!!");
+
+	localInfo[x][y].organisms = new vector<Organism>;
+}
+#pragma endregion
+
+
 #pragma region FieldDataBase_UPDATE
 void FieldDataBase::updateGlobalState()
 {
@@ -188,144 +331,3 @@ std::string FieldDataBase::getLocalTime()
 
 #pragma endregion
 
-
-#pragma region FieldDataBase_FILEIO
-void FieldDataBase::readDB(const char* fileName)
-{
-	std::string readData;
-	
-	// file open to stream
-	readFileOpen(fileName);
-
-	// Location name read
-	loadLocationName(readData);
-	
-	// Location time read
-	loadTime(readData);
-
-	// Location feature data read
-	loadLocationFeature(readData);
-
-	// file close
-	readFileClose();
-}
-
-void FieldDataBase::loadLocationName(std::string& readData)
-{
-	getDBLine(readData);
-	assert(isLocationName(readData) && "Load Location Name Error\n");
-
-	getDBLine(readData);
-	setLocalName(readData);
-}
-
-void FieldDataBase::loadTime(std::string& readData)
-{
-	getDBLine(readData);
-	assert(isLocationTime(readData) && "Load location time error\n");
-
-
-	getDBLine(readData);
-	setLocalTime(readData);
-}
-
-void FieldDataBase::loadLocationFeature(std::string& readData)
-{
-	std::vector<std::string> parsingVec;
-	getDBLine(readData);
-	assert(isLocationFeature(readData) && "Load location Feature error\n");
-
-	while (!ifs.eof())
-	{
-		getDBLine(readData);
-		parsingFeatures(readData, parsingVec); // parsing feature data line
-		
-		// debug
-		for (auto& str : parsingVec)
-		{
-			std::cout << str << std::endl;
-		}
-
-		// setup Programmed coordinate
-		int x = stoi(parsingVec[0]);
-		int y = stoi(parsingVec[1]);
-		
-		// setup Postion
-		localInfo[x][y].pos.altitude = parsingVec[2];
-		localInfo[x][y].pos.altitude = parsingVec[3];
-		localInfo[x][y].pos.altitude = "0"; // default
-
-		// setup topoGraphic features
-		localInfo[x][y].localState[0] = convertTopoGraphic(parsingVec[4]);
-		localInfo[x][y].localState[1] = convertTopoGraphic(parsingVec[5]);
-		localInfo[x][y].localState[2] = convertTopoGraphic(parsingVec[6]);
-
-		// setup Enviornment Watertemperature 
-		localInfo[x][y].environment.setWaterTemperature(stoi(parsingVec[7]));
-		
-		// setup Organism List
-		createOrganismList(x, y);
-		for (int ix = 8; ix<parsingVec.size(); ix++)
-			// setOrganism(parsingVec[ix]);
-
-		// Clear vector for a next data
-		parsingVec.clear();
-	}
-
-}
-
-void FieldDataBase::parsingFeatures(const std::string& readData, std::vector<std::string>& parsingVec)
-{
-	std::string parsedStr = "";
-
-	// Parsing
-	for (auto& ch : readData)
-	{
-		if (ch != ' ')
-			parsedStr += ch;
-
-		else
-		{
-			parsingVec.push_back(parsedStr);
-			parsedStr.resize(0);
-		}
-	}
-	parsingVec.push_back(parsedStr); // last element pushing
-}
-
-
-bool FieldDataBase::isLocationName(const std::string& name)
-{
-	return (name == "<Location Name>");
-}
-
-bool FieldDataBase::isLocationTime(const std::string& time)
-{
-	return (time == "<Location Time>");
-}
-
-bool FieldDataBase::isLocationFeature(const std::string& feature)
-{
-	return (feature == "<Location Feature>");
-}
-
-LOCALSTATE FieldDataBase::convertTopoGraphic(const std::string& feature)
-{
-	if (feature == "GROUND")	return GROUND;
-	else if (feature == "SEA")	return SEA;
-	else if (feature == "AIR")	return AIR;
-	else						return NONE;
-}
-
-void FieldDataBase::createOrganismList(int x, int y)
-{
-	// Range check 
-	assert(MAX_FIELD_WIDTH_SIZE > x &&
-		  MAX_FIELD_HEIGHT_SIZE > y &&
-		                     x >= 0 && 
-		                     y >= 0 && 
-    "createOrganismList point ERROR!!");
-
-	localInfo[x][y].organisms = new vector<Organism>;
-}
-#pragma endregion

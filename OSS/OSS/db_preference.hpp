@@ -99,7 +99,8 @@ class Preference
 {
 private:
 	LOCALSTATE movable[3] = {NONE, NONE, NONE}; // prefetr to go somewhere
-	std::vector<Organism> preyList; // Prey List which organism can eat and like to eat. 
+	std::vector<std::string> preyList;			
+										// Prey List which organism can eat and like to eat. 
 	
 	/*
 		알고리즘 내부에서 각 지역 데이터 <=> Organism 내부의 Preference 비교. 
@@ -113,10 +114,13 @@ public:
 	~Preference();
 
 	// Setter
-	void setLocalState(LOCALSTATE* localState);
-	void setPreyList(Organism org);
+	void setLocalState(const LOCALSTATE* localState);
+	void setPreyList(std::string prey);
 
 	// Getter
+	bool checkLocalState(LOCALSTATE localstate);
+	bool checkPreyList(const std::string prey);
+
 };
 
 #pragma region Preference_Constructor
@@ -136,20 +140,38 @@ Preference::~Preference()
 #pragma endregion
 
 #pragma region Preference_Setter
-void Preference::setLocalState(LOCALSTATE* localState)
+void Preference::setLocalState(const LOCALSTATE* localState)
 {
 	int ix = 0;
 	for (auto& ls : movable)
 		ls = localState[ix++];
 }
 
-void Preference::setPreyList(Organism org)
+void Preference::setPreyList(std::string prey)
 {
-	preyList.push_back(org);
+	preyList.push_back(prey);
 }
 
 #pragma endregion
 
 #pragma region Preference_Getter
+bool Preference::checkLocalState(LOCALSTATE localstate)
+{
+	if (localstate == GROUND && (movable[0] == GROUND)) return true;
+	else if (localstate == SEA && (movable[1] == SEA)) return true;
+	else if (localstate == AIR && (movable[2] == AIR)) return true;
+	else return false;
+}
+
+bool Preference::checkPreyList(const std::string prey)
+{
+	for (auto& item : preyList)
+	{
+		if (item == prey)
+			return true;
+	}
+	return false;
+}
 
 #pragma endregion
+
