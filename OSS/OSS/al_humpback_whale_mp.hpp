@@ -27,8 +27,6 @@
 #define _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
 
 #include "al_algorithm.hpp"
-#include <vector>
-
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction

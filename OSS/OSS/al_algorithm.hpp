@@ -9,7 +9,7 @@
 *************************************************************
 
  Coded by : Sa Min Hong
- Last Updated : 18-11-05
+ Last Updated : 18-12-11
 
 
  [ MovementPrediction ] 
@@ -47,7 +47,10 @@
 // 예측 알고리즘은 각 생물마다 구현한다.
 class MovementPrediction
 {
+private:
     //int m_predictCount;   // 예측 루틴 실행 횟수
+	Organism* targetOrganism;	// target Organism to predict
+	Location* location;	// target Location for algorithm
 
 public:
 
@@ -60,7 +63,10 @@ public:
      */
 
     // 기본 생성자
-    MovementPrediction(){}
+	MovementPrediction();
+
+	// Destructor
+	virtual ~MovementPrediction();
 
     // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
     virtual void initiate() = 0;
@@ -68,7 +74,61 @@ public:
     // predict 메소드는 Prediction 클래스의 핵심 루틴으로,
     // predictCount 횟수만큼 반복적으로 실행된다.
     virtual void predict() = 0;
+
+	// Setter
+	bool setLocation(Location* loc);
+	bool setTarget(std::string& orgName);
+
+	// Getter
+
+	// Check
+	bool isTargetOrganism(Organism* org);
+
 };
 
 
 #endif // _ALGORITHM_H__
+
+
+#pragma region MovementPrediction_Constructor
+MovementPrediction::MovementPrediction()
+{
+
+}
+#pragma endregion
+
+#pragma region MovementPrediction_Destructor
+MovementPrediction::~MovementPrediction()
+{
+	delete[] targetOrganism;
+	delete[] location;
+}
+#pragma endregion
+
+#pragma region MovementPredcitor_Setter
+bool MovementPrediction::setLocation(Location* loc)
+{
+	if (loc != nullptr)
+	{
+		location = loc;
+		return true;
+	} return false;
+}
+
+bool MovementPrediction::setTarget(std::string& orgName)
+{
+	if (isTargetOrganism(location->getTarget(orgName)))
+	{
+		this->targetOrganism = location->getTarget(orgName);
+		return true;
+	} return false;
+}
+
+bool MovementPrediction::isTargetOrganism(Organism* org)
+{
+	if (org != nullptr)
+		return true;
+	else
+		return false;
+}
+#pragma endregion

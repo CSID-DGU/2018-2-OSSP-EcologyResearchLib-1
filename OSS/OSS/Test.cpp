@@ -4,18 +4,14 @@ using namespace std;
 
 int main()
 {
-	Location* loc;
-	loc = new Location();
-
 	std::string fileName = "testDB.txt";
-	loc->setUpFieldDB(fileName);
+	std::string target = "HUMPBACKWHALE";
 
-
-	EcologyResearchLib::LocationLib::assignLocationMemory();
-	EcologyResearchLib::AlgorithmLib::assignMpAlgorithmMemory();
-
-	EcologyResearchLib::LocationLib::location->setUpFieldDB(fileName);
-	
+	EcologyResearchLib::initializeLib();
+	EcologyResearchLib::LocationLib::setLocationData(fileName);
+	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetLocation();
+	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetOrganism(target);
+	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::run();
 
 	return 0;
 }
