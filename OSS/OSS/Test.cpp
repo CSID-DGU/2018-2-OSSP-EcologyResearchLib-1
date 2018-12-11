@@ -4,8 +4,12 @@ using namespace std;
 
 int main()
 {
-	FieldDataBase testDB;
-	testDB.readDB("testDB.txt");
+	Location* loc;
+	loc = new Location();
+	
+
+	std::string fileName = "testDB.txt";
+	testDB.readDB(fileName);
 	
 	return 0;
 }

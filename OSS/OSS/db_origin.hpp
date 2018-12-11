@@ -54,6 +54,20 @@ enum Direction
 	SOUTH, SOUTH_WEST, WEST, NOTRH_WEST
 };
 
+
+// 간소화 저장용 RWOutput
+typedef struct RWOutput
+{
+	Position        position;       // 좌표
+	timer_string_t  time;           // 간소화된 시간 스트링
+
+	// 생성자
+	RWOutput(Position p, timer_string_t t)
+		: position(p), time(t) {}
+
+} RWOutput;
+
+
 class DataBase
 {
 protected:

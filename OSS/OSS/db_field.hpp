@@ -92,6 +92,11 @@ public:
 	void updateLocalState(int x, int y); // Update each local state
 	void updateOrganismList(int x, int y); // Update Organism list of location
 
+	// Retrieve
+	Organism* retrieveOrganism(const std::string& name);
+	bool isFoundName(const std::string& findName, const std::string& orgName);
+
+
 	// Setter
 	void setLocalName(std::string name); // set local name from DB
 	void setLocalTime(std::string time); // set local time from DB
@@ -299,6 +304,26 @@ void FieldDataBase::updateOrganismList(int x, int y)
 }
 #pragma endregion
 
+#pragma region FieldDataBase_Retrieve
+Organism* FieldDataBase::retrieveOrganism(const std::string& name)
+{
+	for (auto& orgIter : organismList)
+	{
+		if (isFoundName(name ,orgIter->getOrganismName()))
+			return orgIter;
+	}
+	return nullptr;
+}
+
+bool FieldDataBase::isFoundName(const std::string& findName, const std::string& orgName)
+{
+	if (findName == orgName)
+		return true;
+
+	else
+		return false;
+}
+#pragma endregion
 
 #pragma region FieldDataBase_SETTER
 void FieldDataBase::setLocalName(std::string name)

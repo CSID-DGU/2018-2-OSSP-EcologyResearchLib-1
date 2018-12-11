@@ -29,27 +29,6 @@
 #include "al_algorithm.hpp"
 #include <vector>
 
-/* 9방향 이동 경로 : 정지, 북, 북동, 동, ... 서, 북서
-enum Direction
-{
-    STOP,
-    NORTH, NORTH_EAST, EAST, SOUTH_EAST,
-    SOUTH, SOUTH_WEST, WEST, NOTRH_WEST
-};
-*/
-
-// 나중에 옮길거임 ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ
-// 간소화 저장용 RWOutput
-typedef struct RWOutput
-{
-    Position        position;       // 좌표
-    timer_string_t  time;           // 간소화된 시간 스트링
-
-    // 생성자
-    RWOutput( Position p, timer_string_t t)
-        : position(p), time(t) {}
-
-} RWOutput;
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
