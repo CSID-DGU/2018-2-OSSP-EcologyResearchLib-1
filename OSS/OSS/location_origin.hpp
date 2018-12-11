@@ -46,9 +46,12 @@ public:
 	// Destructor
 	~Location();
 
+	// Initialiazation
+	void initiailize(std::string& fileName);
+
 	// DB Setter
 	void setUpFieldDB(std::string& fileName);
-	void setTarget(Organism* org);
+	bool setTarget(std::string& orgName);
 	
 	// DB Getter
 	timer_string_t getTime();
@@ -88,18 +91,28 @@ Location::~Location()
 }
 #pragma endregion
 
-
+#pragma region Location_Initialize
+void Location::initiailize(std::string& fileName)
+{
+	
+	this->setUpFieldDB(fileName);
+}
+#pragma endregion
 
 #pragma region Location_Target
-void Location::setTarget(Organism* org)
+bool Location::setTarget(std::string& orgName)
 {
-	// TO DO
+	this->target = m_FDB->retrieveOrganism(orgName);
+
+	if (target != nullptr)
+		return true;
+
+	return false;
 }
 
 Organism* Location::getTarget()
 {
-	return nullptr;
-	// TO DO
+	return target;
 }
 
 Position Location::getTagetPostion()

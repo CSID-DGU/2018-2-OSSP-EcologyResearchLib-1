@@ -152,6 +152,7 @@
     <ClInclude Include="family_balaenopteridae.hpp" />
     <ClInclude Include="genus_megaptera.hpp" />
     <ClInclude Include="kingdom_animalia.hpp" />
+    <ClInclude Include="lib_ecology_research.hpp" />
     <ClInclude Include="order_cetacea.hpp" />
     <ClInclude Include="phylum_chordata.hpp" />
     <ClInclude Include="species_humpback_whale.hpp" />
@@ -164,7 +165,6 @@
     <ClInclude Include="tax_kingdom.hpp" />
     <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="class_mammalia.hpp" />
-    <ClInclude Include="lib_manager.hpp" />
     <ClInclude Include="db_organism.hpp" />
     <ClInclude Include="tax_phylum.hpp" />
     <ClInclude Include="db_timer.hpp" />
