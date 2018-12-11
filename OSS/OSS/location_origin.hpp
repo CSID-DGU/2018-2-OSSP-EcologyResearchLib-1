@@ -40,8 +40,9 @@ Last Updated : 18-12-09
 
 class Location 
 {
+private:
 	FieldDataBase* m_FDB;
-	Organism* target = nullptr;
+	Organism* target;
 	// searching target for algorithm (now assume one living thing)
 	/*
 		target이 사용되는 용도
@@ -50,15 +51,12 @@ class Location
 	*/
 
 public:
-	Location(FieldDataBase* fdb) 
-	{
-		m_FDB = fdb;
-	}
-	
-	~Location()
-	{
-		delete[] m_FDB;
-	}
+	// Constructor
+	Location();
+	Location(std::string& fileName);
+
+	// Destructor
+	~Location();
 
 	// DB Setter
 	void setUpFieldDB();
@@ -77,6 +75,31 @@ public:
 
 
 };
+
+#pragma region Location_Constuructor
+Location::Location()
+{
+	m_FDB = new FieldDataBase();
+	target = new Organism();
+}
+
+Location::Location(std::string& fileName)
+{
+	m_FDB = new FieldDataBase();
+	m_FDB->readDB(fileName);
+
+	target = new Organism();
+}
+#pragma endregion
+
+#pragma region Location_Destructor
+Location::~Location()
+{
+	delete[] target;
+	delete[] m_FDB;
+}
+#pragma endregion
+
 
 
 #pragma region Location_Target
