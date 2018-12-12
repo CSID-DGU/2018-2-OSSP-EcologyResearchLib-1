@@ -1,12 +1,9 @@
 /*
 
-*************************************************************
-*															*
-*						MIT License							*
-*															*
-*				Copyright (c) 2018 CSID-DGU					*
-*															*
-*************************************************************
+******************************************************
+					MIT License					
+			Copyright (c) 2018 CSID-DGU					
+******************************************************
 
  Coded by : Sa Min Hong
  Last Updated : 18-12-11
@@ -35,9 +32,6 @@
 
 */
 
-
-#ifndef _ALGORITHM_H__
-#define _ALGORITHM_H__
 
 #include "location_origin.hpp"
 #include "al_randomwalk.hpp"
@@ -87,8 +81,6 @@ public:
 };
 
 
-#endif // _ALGORITHM_H__
-
 
 #pragma region MovementPrediction_Constructor
 MovementPrediction::MovementPrediction()
@@ -132,3 +124,8 @@ bool MovementPrediction::isTargetOrganism(Organism* org)
 		return false;
 }
 #pragma endregion
+
+
+
+
+#endif // _ALGORITHM_H__
