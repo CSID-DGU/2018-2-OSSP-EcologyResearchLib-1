@@ -12,6 +12,7 @@ Last Updated : 18-12-11
 
 #pragma once
 #include "al_algorithm.hpp"
+#include "al_humpback_whale_mp.hpp"
 #include "location_origin.hpp"
 
 #pragma region EcologyResearchLib_Declaration
@@ -80,7 +81,7 @@ using namespace AlgorithmLib;
 bool MovementPredictionLib::assignMpAlgorithmMemory()
 {
 	// TO DO
-	//mpAlgorithm = new mpAlgorithm();
+	mpAlgorithm = new HumpbackWhaleMP();
 	return true;
 }
 

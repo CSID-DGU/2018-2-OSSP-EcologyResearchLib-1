@@ -52,6 +52,9 @@ private:
 
 
 public:
+
+	HumpbackWhaleMP();
+
     // 생성자 : Target으로부터 LocalInfo, 초기 시간을 받아 멤버에 저장, 실행 횟수 지정
     HumpbackWhaleMP(LocalInfo localInfo, Timer timer, int predictCount)
         : m_localInfo(localInfo), m_timer(timer), m_predictCount(predictCount) {}
@@ -85,6 +88,14 @@ public:
     // 간소화 배열 반환
     std::vector<RWOutput> getRWOutput();
 };
+
+#pragma region HumpbackWhaleMP_Constructor
+HumpbackWhaleMP::HumpbackWhaleMP()
+{
+
+}
+
+#pragma endregion
 
 #pragma region Private Fuctions
 
