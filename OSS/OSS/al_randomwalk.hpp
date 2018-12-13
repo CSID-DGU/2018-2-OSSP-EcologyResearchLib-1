@@ -154,9 +154,7 @@ SEQUENCE
 
 #pragma once
 
-#include "db_organism.hpp"
-#include "al_humpback_whale_mp.hpp"
-#include <algorithm>
+#include "location_origin.hpp"
 
 class RandomWalk
 {

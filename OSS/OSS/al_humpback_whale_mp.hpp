@@ -195,6 +195,7 @@ Direction HumpbackWhaleMP::decideDirection()
     // 9방향의 확률에 대해 랜덤으로 위치 결정
 
     /* return Direction::DECIDED_DIRECTION ! */
+	return Direction();
 }
 
 // 랜덤워커 배열 -> 간소화 배열 변환

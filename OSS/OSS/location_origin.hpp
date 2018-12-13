@@ -21,7 +21,6 @@ Last Updated : 18-12-11
 
 #pragma once
 #include "db_field.hpp"
-#include "db_environment.hpp"
 
 class Location 
 {

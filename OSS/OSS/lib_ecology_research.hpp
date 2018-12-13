@@ -6,13 +6,12 @@
 ******************************************************
 
 Coded by : Jong Ha Sin
-Last Updated : 18-12-11
+Last Updated : 18-12-13
 
 */
 
 #pragma once
 #include "al_algorithm.hpp"
-#include "al_humpback_whale_mp.hpp"
 #include "location_origin.hpp"
 
 #pragma region EcologyResearchLib_Declaration
@@ -79,9 +78,9 @@ using namespace AlgorithmLib;
 
 #pragma region AlgorithmLib_MovePredictionAlgorithm
 bool MovementPredictionLib::assignMpAlgorithmMemory()
-{
+{	
 	// TO DO
-	mpAlgorithm = new HumpbackWhaleMP();
+	mpAlgorithm = new MovementPrediction();
 	return true;
 }
 
@@ -99,11 +98,16 @@ void MovementPredictionLib::setTargetLocation()
 
 void MovementPredictionLib::setTargetOrganism(std::string& str)
 {
-	MovementPredictionLib::mpAlgorithm->setTarget(str);
+	if (MovementPredictionLib::mpAlgorithm->setTarget(str))
+		std::cout << "Set Target Completed" << std::endl;
+	
+	else
+		std::cout << "Set Target Failed" << std::endl;
 }
 
 void MovementPredictionLib::run()
 {
-
+	std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
+	std::cout << "Get Target Completed" << std::endl;
 }
 #pragma endregion

@@ -32,15 +32,17 @@
 
 */
 
-
 #include "location_origin.hpp"
+
 
 // 생물 이동경로 예측 알고리즘
 // 인터페이스를 제공하며,
 // 예측 알고리즘은 각 생물마다 구현한다.
+
+
 class MovementPrediction
 {
-private:
+protected:
     //int m_predictCount;   // 예측 루틴 실행 횟수
 	Organism* targetOrganism;	// target Organism to predict
 	Location* location;	// target Location for algorithm
@@ -62,17 +64,18 @@ public:
 	virtual ~MovementPrediction();
 
     // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
-    virtual void initiate() = 0;
+	virtual void initiate() {};
 
     // predict 메소드는 Prediction 클래스의 핵심 루틴으로,
     // predictCount 횟수만큼 반복적으로 실행된다.
-    virtual void predict() = 0;
+	virtual void predict() {};
 
 	// Setter
 	bool setLocation(Location* loc);
 	bool setTarget(std::string& orgName);
 
 	// Getter
+	std::string getTagetName();
 
 	// Check
 	bool isTargetOrganism(Organism* org);
@@ -107,6 +110,9 @@ bool MovementPrediction::setLocation(Location* loc)
 
 bool MovementPrediction::setTarget(std::string& orgName)
 {
+	//debug
+	std::cout << "Find org Name = " << orgName << std::endl;
+
 	if (isTargetOrganism(location->getTarget(orgName)))
 	{
 		this->targetOrganism = location->getTarget(orgName);
@@ -120,6 +126,16 @@ bool MovementPrediction::isTargetOrganism(Organism* org)
 		return true;
 	else
 		return false;
+}
+
+#pragma endregion
+
+
+#pragma region MovementPrediction_Getter
+std::string MovementPrediction::getTagetName()
+{
+	assert(targetOrganism != nullptr && "Target is NULLPTR!!");
+	return targetOrganism->getOrganismName();
 }
 #pragma endregion
 

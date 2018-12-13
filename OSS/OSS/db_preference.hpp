@@ -76,8 +76,6 @@ Last Updated : 18-12-5
 
 #pragma once
 #include "db_origin.hpp"
-#include "db_organism.hpp"
-#include "db_environment.hpp"
 
 class Preference
 {

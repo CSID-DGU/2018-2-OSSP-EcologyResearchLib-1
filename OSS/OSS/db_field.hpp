@@ -39,9 +39,8 @@ void updateLocalState(int x, int y); // Update each local state
 #pragma once
 #include "db_origin.hpp"
 #include "db_timer.hpp"
-#include "db_environment.hpp"
 #include "db_organism.hpp"
-#include <string>
+#include "db_environment.hpp"
 
 #define MAX_FIELD_WIDTH_SIZE 40
 #define MAX_FIELD_HEIGHT_SIZE 40
@@ -329,14 +328,20 @@ Organism* FieldDataBase::retrieveOrganism(const std::string& name)
 {
 	for (auto& orgIter : organismList)
 	{
-		if (isFoundName(name ,orgIter->getOrganismName()))
+		if (isFoundName(name, orgIter->getOrganismName()))
+		{
 			return orgIter;
+		}
 	}
 	return nullptr;
 }
 
 bool FieldDataBase::isFoundName(const std::string& findName, const std::string& orgName)
 {
+	// debug
+	std::cout << "isFoundName:: (find Name), (orgName) = " << findName << ", " << orgName  << std::endl;
+
+
 	if (findName == orgName)
 		return true;
 

@@ -25,6 +25,7 @@ Last Updated : 18-11-05
 #include <string>
 #include <cassert>
 
+
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
 
