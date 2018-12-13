@@ -4,8 +4,8 @@ using namespace std;
 
 int main()
 {
-	std::string fileName = "testDB.txt";
-	std::string target = "HUMPBACKWHALE";
+	std::string fileName = "LocationDB.txt";
+	std::string target = "HumpbackWhaleDB";
 
 	EcologyResearchLib::initializeLib();
 	EcologyResearchLib::LocationLib::setLocationData(fileName);

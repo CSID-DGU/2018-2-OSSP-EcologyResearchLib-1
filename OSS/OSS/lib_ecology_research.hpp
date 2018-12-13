@@ -46,6 +46,7 @@ bool EcologyResearchLib::initializeLib()
 {
 	LocationLib::assignLocationMemory();
 	AlgorithmLib::MovementPredictionLib::assignMpAlgorithmMemory();
+	return true;
 }
 #pragma endregion 
 
@@ -55,6 +56,7 @@ using namespace EcologyResearchLib;
 bool LocationLib::assignLocationMemory()
 {
 	location = new Location();
+	return true;
 }
 
 void LocationLib::setLocationData(std::string& str)
@@ -79,6 +81,7 @@ bool MovementPredictionLib::assignMpAlgorithmMemory()
 {
 	// TO DO
 	//mpAlgorithm = new mpAlgorithm();
+	return true;
 }
 
 void MovementPredictionLib::setTargetLocation()

@@ -119,7 +119,11 @@ void DataBase::readFileClose()
 void DataBase::getDBLine(std::string& readData)
 {
 	getline(ifs, readData);
-	assert(readData.empty() && "READ ERROR!!");
+
+	// debug
+	std::cout << "GetDBLINE :: READ DATA = " << readData << std::endl;
+
+	assert(!readData.empty() && "READ ERROR!!");
 }
 
 #pragma endregion

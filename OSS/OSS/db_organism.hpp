@@ -82,6 +82,8 @@ public:
 	void parsingActionData(const std::string& readData, std::vector<ACTION>& actionVec);
 	void parsingLocalStateData(const std::string& readData, Preference* prefer);
 	void parsingPreyListData(const std::string& readData, Preference* prefer);
+
+	void completeCheck(const std::string& errMsg);
 	
 
 	// Setter
@@ -155,7 +157,6 @@ void OrgDataBase::readDB(std::string& fileName)
 {
 	std::string readData;
 	readFileOpen(fileName);
-
 	loadName(readData);
 	loadAge(readData);
 	loadSex(readData);
@@ -172,42 +173,49 @@ void OrgDataBase::loadName(std::string& readData)
 {
 	getDBLine(readData);
 	setName(readData);
+	completeCheck("LOAD NAME COMPLETE");
 }
 
 void OrgDataBase::loadAge(std::string& readData)
 {
 	getDBLine(readData);
 	setAge(stoi(readData));
+	completeCheck("LOAD AGE COMPLETE");
 }
 
 void OrgDataBase::loadSex(std::string& readData)
 {
 	getDBLine(readData);
 	setSex(convertSexData(readData));
+	completeCheck("LOAD SEX COMPLETE");
 }
 
 void OrgDataBase::loadEnergy(std::string& readData)
 {
 	getDBLine(readData);
 	setEnergy(stoi(readData));
+	completeCheck("LOAD ENERGY COMPLETE");
 }
 
 void OrgDataBase::loadStatus(std::string& readData)
 {
 	getDBLine(readData);
 	setStatus(readData);
+	completeCheck("LOAD STATUS COMPLETE");
 }
 
 void OrgDataBase::loadAction(std::string& readData)
 {
 	getDBLine(readData);
 	setAction(readData);
+	completeCheck("LOAD ACTION COMPLETE");
 }
 
 void OrgDataBase::loadPreferLocalState(std::string& readData)
 {
 	getDBLine(readData);
 	setPreferLocalState(readData);
+	completeCheck("LOAD LOCALSTATE COMPLETE");
 }
 
 
@@ -215,6 +223,7 @@ void OrgDataBase::loadPreferPreyList(std::string& readData)
 {
 	getDBLine(readData);
 	setPreferPreyList(readData);
+	completeCheck("LOAD PREYLIST COMPLETE");
 }
 
 SEX OrgDataBase::convertSexData(const std::string& readData)
@@ -302,19 +311,27 @@ void OrgDataBase::parsingLocalStateData(const std::string& readData, Preference*
 	std::string parsedStr = "";
 	LOCALSTATE localState[3];
 
+	std::cout << readData << std::endl;
+
 	int ix = 0;
 	for (auto& ch : readData)
 	{
+	//	std::cout << "ch : " << ch << std::endl;
+
 		if (ch != ' ')
 			parsedStr += ch;
 
 		else
 		{
+			// debug
+			std::cout << "parsingLocalStateData::parsedStr = "<<parsedStr << std::endl;
+
 			localState[ix] = convertLocalStateData(parsedStr);
 			ix++;
 			parsedStr.resize(0);
 		}
-	} localState[++ix] = convertLocalStateData(parsedStr);
+	} 
+	localState[ix] = convertLocalStateData(parsedStr);
 
 	prefer->setLocalState(localState);
 }
@@ -334,6 +351,11 @@ void OrgDataBase::parsingPreyListData(const std::string& readData, Preference* p
 			parsedStr.resize(0);
 		}
 	} 
+}
+
+void OrgDataBase::completeCheck(const std::string& errMsg)
+{
+	std::cout << errMsg << std::endl;
 }
 
 #pragma endregion

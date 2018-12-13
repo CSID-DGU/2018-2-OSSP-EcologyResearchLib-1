@@ -131,15 +131,27 @@ void FieldDataBase::readDB(std::string& fileName)
 
 	// file open to stream
 	readFileOpen(fileName);
+	
+	// debug
+	std::cout << "readDB File open complete" << std::endl;
 
 	// Location name read
 	loadLocationName(readData);
 
+	// debug
+	std::cout << "Location Name Read complete" << std::endl;
+
 	// Location time read
 	loadTime(readData);
 
+	// debug
+	std::cout << "Location Time Read complete" << std::endl;
+
 	// Location organisms read
 	loadOrganisms(readData);
+
+	// debug
+	std::cout << "Location Organism Read complete" << std::endl;
 
 	// Location feature data read
 	loadLocationFeature(readData);
@@ -177,7 +189,11 @@ void FieldDataBase::loadOrganisms(std::string& readData)
 	{
 		getDBLine(readData);
 		Organism* org = new Organism();
-		std::string orgFile = readData + ".txt";
+		std::string orgFile = readData + "DB.txt";
+
+		// debug
+		std::cout << "FieldDataBase::loadOrganisms(std::string& readData) : orgFile = " << orgFile << std::endl;
+
 		org->setOrganismInfo(orgFile);
 		organismList.push_back(org);
 	}
@@ -217,7 +233,14 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 
 		// Clear vector for a next data
 		parsingVec.clear();
+
+
+		//debug
+		std::cout << "LOAD SUCCESS" << std::endl;
 	}
+
+	//debug
+	std::cout << "FIELD DB EOF" << std::endl;
 }
 
 

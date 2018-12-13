@@ -19,11 +19,8 @@
 
 */
 
-
-#ifndef _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
-#define _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
-
 #include "al_algorithm.hpp"
+#include "al_randomwalk.hpp"
 
 // 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
@@ -205,5 +202,3 @@ std::vector<RWOutput> HumpbackWhaleMP::getRWOutput()
 }
 
 #pragma endregion
-
-#endif // _HUMPBACK_WHALE_MOVEMENT_PREDICTION_HPP__
