@@ -35,7 +35,7 @@ namespace EcologyResearchLib
 			bool assignMpAlgorithmMemory();
 			void setTargetLocation();
 			void setTargetOrganism(std::string& str);
-			void run();
+			RWOutput run();
 		}
 	}
 }
@@ -105,10 +105,13 @@ void MovementPredictionLib::setTargetOrganism(std::string& str)
 		std::cout << "Set Target Failed" << std::endl;
 }
 
-void MovementPredictionLib::run()
+RWOutput MovementPredictionLib::run()
 {
 	// test
 	std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
 	std::cout << "Get Target Completed" << std::endl;
+
+	// run Algorithm
+	return mpAlgorithm->run();
 }
 #pragma endregion
