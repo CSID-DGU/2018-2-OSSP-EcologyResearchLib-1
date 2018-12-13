@@ -81,12 +81,6 @@
     <ClInclude Include="db_environment.hpp">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
-    <ClInclude Include="al_humpback_whale_mp.hpp">
-      <Filter>Header Files\Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="al_algorithm.hpp">
-      <Filter>Header Files\Algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="class_mammalia.hpp">
       <Filter>Header Files\Organism\class</Filter>
     </ClInclude>
@@ -125,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="lib_ecology_research.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="al_movement_prediction.hpp">
+      <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

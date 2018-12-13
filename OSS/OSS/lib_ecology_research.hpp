@@ -11,7 +11,7 @@ Last Updated : 18-12-13
 */
 
 #pragma once
-#include "al_algorithm.hpp"
+#include "al_movement_prediction.hpp"
 #include "location_origin.hpp"
 
 #pragma region EcologyResearchLib_Declaration
@@ -80,7 +80,7 @@ using namespace AlgorithmLib;
 bool MovementPredictionLib::assignMpAlgorithmMemory()
 {	
 	// TO DO
-	mpAlgorithm = new MovementPrediction();
+	mpAlgorithm = new HumpbackWhaleMP();
 	return true;
 }
 
@@ -107,7 +107,8 @@ void MovementPredictionLib::setTargetOrganism(std::string& str)
 
 void MovementPredictionLib::run()
 {
-	std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
-	std::cout << "Get Target Completed" << std::endl;
+	// test
+	/*std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
+	std::cout << "Get Target Completed" << std::endl;*/
 }
 #pragma endregion

@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="al_algorithm.hpp" />
+    <ClInclude Include="al_movement_prediction.hpp" />
     <ClInclude Include="al_randomwalk.hpp" />
     <ClInclude Include="db_environment.hpp" />
     <ClInclude Include="db_movementpath.hpp" />
@@ -161,7 +161,6 @@
     <ClInclude Include="tax_domain.hpp" />
     <ClInclude Include="domain_eukaryotes.hpp" />
     <ClInclude Include="db_field.hpp" />
-    <ClInclude Include="al_humpback_whale_mp.hpp" />
     <ClInclude Include="tax_kingdom.hpp" />
     <ClInclude Include="location_origin.hpp" />
     <ClInclude Include="class_mammalia.hpp" />
