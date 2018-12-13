@@ -115,10 +115,11 @@ private:
 
 class Organism
 {
-private:
+protected:
 	OrgDataBase* m_ODB;
 
 public:
+	
 	// Constructor
 	Organism();
 
@@ -155,6 +156,9 @@ OrgDataBase::~OrgDataBase()
 #pragma region OrgDataBase_FILEIO
 void OrgDataBase::readDB(std::string& fileName)
 {
+	//debug
+	std::cout << "OrgDataBase::readDB Start" << std::endl;
+
 	std::string readData;
 	readFileOpen(fileName);
 	loadName(readData);
@@ -441,7 +445,13 @@ Organism::~Organism()
 
 void Organism::setOrganismInfo(std::string& fileName)
 {
+	// debug
+	std::cout << "Organism::setOrganismInfo start" << std::endl;
+
 	m_ODB->readDB(fileName);
+	
+	// debug
+	std::cout << "Organism::setOrganismInfo complete" << std::endl;
 }
 #pragma endregion
 

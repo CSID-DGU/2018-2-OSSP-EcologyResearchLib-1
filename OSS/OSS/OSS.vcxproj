@@ -167,6 +167,7 @@
     <ClInclude Include="db_organism.hpp" />
     <ClInclude Include="tax_phylum.hpp" />
     <ClInclude Include="db_timer.hpp" />
+    <ClInclude Include="tax_species.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp" />

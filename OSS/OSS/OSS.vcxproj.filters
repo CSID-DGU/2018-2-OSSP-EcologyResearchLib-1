@@ -123,6 +123,9 @@
     <ClInclude Include="al_movement_prediction.hpp">
       <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="tax_species.hpp">
+      <Filter>Header Files\Taxonomy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp">

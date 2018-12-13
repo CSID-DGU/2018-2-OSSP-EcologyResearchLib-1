@@ -108,7 +108,7 @@ void MovementPredictionLib::setTargetOrganism(std::string& str)
 void MovementPredictionLib::run()
 {
 	// test
-	/*std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
-	std::cout << "Get Target Completed" << std::endl;*/
+	std::cout << MovementPredictionLib::mpAlgorithm->getTagetName() << std::endl;
+	std::cout << "Get Target Completed" << std::endl;
 }
 #pragma endregion

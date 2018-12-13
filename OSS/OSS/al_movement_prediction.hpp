@@ -6,7 +6,7 @@
 ******************************************************
 
  Coded by : Sa Min Hong
- Last Updated : 18-12-11
+ Last Updated : 18-12-13
 
 
  [ MovementPrediction ] 
@@ -44,9 +44,18 @@
 class MovementPrediction
 {
 protected:
-    //int m_predictCount;   // 예측 루틴 실행 횟수
+	// DB pointer
 	Organism* targetOrganism;	// target Organism to predict
 	Location* location;	// target Location for algorithm
+
+	// 랜덤워커 배열 = 예측된 이동 경로
+	std::vector<RandomWalk> m_randomWalk;
+	// 저장용 간소화 배열
+	std::vector<RWOutput> m_rwOutput;
+	// 예측 루틴 실행 횟수
+	int m_predictCount;
+	// 현재 랜덤워커 수
+	int m_numberOfWalkers;
 
 public:
 
@@ -65,11 +74,11 @@ public:
 	virtual ~MovementPrediction();
 
     // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
-	virtual void initiate() {};
+	virtual void initiate() = 0;
 
     // predict 메소드는 Prediction 클래스의 핵심 루틴으로,
     // predictCount 횟수만큼 반복적으로 실행된다.
-	virtual void predict() {};
+	virtual void predict() = 0;
 
 	// Setter
 	bool setLocation(Location* loc);
@@ -146,7 +155,7 @@ std::string MovementPrediction::getTagetName()
 
 /*
  Coded by : Sa Min Hong
- Last Updated : 18-11-05
+ Last Updated : 18-12-13
 
  [ HumpbackWhaleMP ]
 
@@ -158,26 +167,10 @@ std::string MovementPrediction::getTagetName()
 
 */
 
-//#include "al_algorithm.hpp"
-
-// 혹등고래(Humpback Whale) 이동경로 예측(MP) 알고리즘
 class HumpbackWhaleMP : public MovementPrediction
 {
-	/*
-	protected:
-		int m_predictCount;   // 예측 루틴 실행 횟수
-	*/
-
 private:
-	// 랜덤워커 배열 = 예측된 이동 경로
-	std::vector<RandomWalk> m_randomWalk;
-	// 저장용 간소화 배열
-	std::vector<RWOutput> m_rwOutput;
-	// 예측 루틴 실행 횟수
-	int m_predictCount;
-	// 현재 랜덤워커 수
-	int m_numberOfWalkers;
-
+	
 	// 랜덤워커 객체가 위치할 좌표와, 해당 좌표의 위치 정보
 	// 알고리즘 실행 시, Target으로부터 LocalInfo 받아옴(생성자)
 	// 예측 수행할 때마다, 업데이트하여 마지막 랜덤워커의 정보를 담게 됨
@@ -194,8 +187,8 @@ public:
 	HumpbackWhaleMP();
 
 	// 생성자 : Target으로부터 LocalInfo, 초기 시간을 받아 멤버에 저장, 실행 횟수 지정
-	HumpbackWhaleMP(LocalInfo localInfo, Timer timer, int predictCount)
-		: m_localInfo(localInfo), m_timer(timer), m_predictCount(predictCount) {}
+	/*HumpbackWhaleMP(LocalInfo localInfo, Timer timer, int predictCount)
+		: m_localInfo(localInfo), m_timer(timer), m_predictCount(predictCount) {}*/
 
 	// 예측 수행 = initiate + (predict * count)
 	void run();

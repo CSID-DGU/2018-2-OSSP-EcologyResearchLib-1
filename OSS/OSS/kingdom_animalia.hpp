@@ -20,7 +20,6 @@ Last Updated : 18-11-05
 
 #pragma once
 #include "domain_eukaryotes.hpp"
-#include "tax_kingdom.hpp"
 
 class Animalia : public Eukaryotes
 {

@@ -20,7 +20,6 @@ Last Updated : 18-11-05
 
 #pragma once
 
-#include "tax_domain.hpp"
 #include "db_organism.hpp"
 
 class Eukaryotes : public Organism

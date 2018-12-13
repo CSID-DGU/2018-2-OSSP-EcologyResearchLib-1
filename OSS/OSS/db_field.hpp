@@ -41,6 +41,7 @@ void updateLocalState(int x, int y); // Update each local state
 #include "db_timer.hpp"
 #include "db_organism.hpp"
 #include "db_environment.hpp"
+#include "tax_species.hpp"
 
 #define MAX_FIELD_WIDTH_SIZE 40
 #define MAX_FIELD_HEIGHT_SIZE 40
@@ -82,6 +83,7 @@ public:
 	bool isLocationTime(const std::string& time); // check location time data or not
 	bool isLocationFeature(const std::string& feature); // check location feature or not
 	bool isLocationOrganism(const std::string& feature);
+	void createSpecies(const std::string& speciesName, Organism* org);
 
 	// Update
 	void updateGlobalState(); // Update whole Local State
@@ -189,14 +191,27 @@ void FieldDataBase::loadOrganisms(std::string& readData)
 		getDBLine(readData);
 		Organism* org = new Organism();
 		std::string orgFile = readData + "DB.txt";
+		//createSpecies(readData, org);
 
 		// debug
+		std::cout << "FieldDataBase::createSpecies : readData = " << readData << std::endl;
 		std::cout << "FieldDataBase::loadOrganisms(std::string& readData) : orgFile = " << orgFile << std::endl;
 
 		org->setOrganismInfo(orgFile);
+
+		// debug
+		std::cout << "FieldDataBase::setOrganismInfo Complete" << std::endl;
+
 		organismList.push_back(org);
 	}
 }
+
+void FieldDataBase::createSpecies(const std::string& speciesName, Organism* org)
+{
+	if (speciesName == "HumpbackWhale") org = new HumpBackWhale();
+	else if (speciesName == "Krill") org = new Organism();
+}
+
 
 void FieldDataBase::loadLocationFeature(std::string& readData)
 {
