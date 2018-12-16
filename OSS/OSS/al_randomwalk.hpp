@@ -162,7 +162,7 @@ class RandomWalk
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열
-    float possibility[DIRECTION_NUMBER] = {0.0, };
+    float possibility[3][3] = { 0.0, };
 
     // 해당 랜덤워커의 위치, 시간
     Point     m_point;
@@ -188,7 +188,7 @@ public:
     void setLocation(const Location& location);
 
     // Getters
-    LocalInfo getLocalInfo();
+    Point     getPoint();
     Timer     getTimer();
 };
 
@@ -213,9 +213,9 @@ void RandomWalk::setMovingPossibility(const float& pArray)
 #pragma endregion
 
 
-LocalInfo RandomWalk::getLocalInfo()
+Point RandomWalk::getPoint()
 {
-    return m_localInfo;
+    return m_point;
 }
 
 Timer RandomWalk::getTimer()

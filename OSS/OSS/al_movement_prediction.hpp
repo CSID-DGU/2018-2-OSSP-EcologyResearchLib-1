@@ -210,9 +210,9 @@ public:
 	
 	void addWalker();                   // 랜덤워커 객체 1개 추가
 	
-	void calculateByPreference();       // 특정 선호 요소에 따른 각 방향의 이동확률 계산
+	//void calculateByPreference();       // 특정 선호 요소에 따른 각 방향의 이동확률 계산
 
-	void updateLocalInfo();             // 이동 방향 결정 후, m_localInfo 위치 이동
+	//void updateLocalInfo();             // 이동 방향 결정 후, m_localInfo 위치 이동
 
 	void timeElapse();                  // 단위 시간 증가
 
@@ -275,10 +275,16 @@ void HumpbackWhaleMP::calculate(/*int leftX, int topY, int rightX, int bottomY*/
 {
 	// 대상 : 현재 랜덤 워커 벡터의 마지막 객체
 	// 9방향 각각에 대한 이동 확률을 계산하여 랜덤워커 객체에 업데이트
-    
-    float     targetPossibility[DIRECTION_NUMBER] = {0,};
-    Point     targetPoint[3][3];
-    LocalInfo targetInfo[3][3];
+     
+    float     targetPossibility[3][3] = { 0.0, }; // 9개 위치의 확률
+    Point     targetPoint[3][3];    // 9개 위치의 좌표 값
+    LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
+    STATUS    targetStatus = m_targetOrganism->getOrgStatus();  // 타겟 생물체의 상태
+
+    // 확률 가중치
+    int warmTemperatureWeight;
+    int coldTemperatureWeight;
+    int preyWeight;
 
     // 9개의 좌표 중, 중심 좌표 가져오기
     targetPoint[1][1] = m_targetOrganism->getOrgPoint();
@@ -298,18 +304,35 @@ void HumpbackWhaleMP::calculate(/*int leftX, int topY, int rightX, int bottomY*/
             targetInfo[i][j] = m_location->getLocalInfo(targetPoint[i][j]);
         }
 
+    /* 영향 요소들을 이용해 가중치 계산*/
 
+    if(targetStatus == BREEDING)
+    {
+        warmTemperatureWeight = 7;
+        coldTemperatureWeight = 2;
+        preyWeight = 3;
+    }
+    else
+    {
+        warmTemperatureWeight = 1;
+        coldTemperatureWeight = 3;
+        preyWeight = 6;
+    }
 
-	// TODO !!!!!!!
+    // 먹이
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            for (const auto& orgMember : targetInfo[i][j].localOrganisms)
+            {
+                // 해당 위치에 크릴 새우가 있을 경우
+                if(orgMember->getOrganismName() == "Krill")
+                    targetPossibility[i][j] += (float)preyWeight;
 
+                if();
+            }
 
-	/* 각 선호 요소마다 계산 진행 */
+    //
 
-	// 개체 상태
-	calculateByPreference(/* state */);
-
-	// 수온
-	calculateByPreference(/* temperature */);
 
 	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
 	calculateByPreference(/* 지형 */);
@@ -322,12 +345,10 @@ void HumpbackWhaleMP::addWalker()
 
 	// 바로 이전 랜덤워커의 확률에 따라 좌표 이동
 
-
-	// 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
-	updateLocalInfo();
 	// 단위 시간 증가
 	timeElapse();
 
+    // 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
 	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
 	m_randomWalk.push_back(RandomWalk(m_point, m_timer));
 	m_numberOfWalkers++;
