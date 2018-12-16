@@ -63,6 +63,10 @@ typedef struct RWOutput
 	RWOutput(Position p, timer_string_t t)
 		: position(p), time(t) {}
 
+	// getter
+	Position getPosition() { return position; }
+	timer_string_t getTimer() { return time; }
+
 } RWOutput;
 
 
@@ -78,12 +82,14 @@ public:
 	virtual ~DataBase();
 	
 	// File I/O
-	virtual void readDB(std::string& fileName)  // Read DB file from stroage
+	virtual void readDB(std::string& fileName); // Read DB file from stroage
 	void readFileOpen(std::string& fileName);	// Read file open to input stream
 	void readFileClose();						// Read file close from input stream
 	void getDBLine(std::string& readData);		// Read a line from DB
-	void writeFileOpen(std::string& fileName);	// Write file open to output stream
+	void writeFileOpen(const std::string& fileName);
+												// Write file open to output stream
 	void writeFileClose();						// Write file close from output stream
+	virtual void writeDB();						// Write data to output stream
 	
 };
 
@@ -109,6 +115,10 @@ DataBase::~DataBase()
 
 
 #pragma region DataBase_FILE_I/O
+void DataBase::readDB(std::string& fileName)
+{
+	// TO DO
+}
 
 void DataBase::readFileOpen(std::string& fileName)
 {
@@ -130,7 +140,7 @@ void DataBase::getDBLine(std::string& readData)
 	assert(!readData.empty() && "READ ERROR!!");
 }
 
-void DataBase::writeFileOpen(std::string& fileName)
+void DataBase::writeFileOpen(const std::string& fileName)
 {
 	ofs.open(fileName, std::ofstream::out | std::ofstream::app);
 }
@@ -138,5 +148,10 @@ void DataBase::writeFileOpen(std::string& fileName)
 void DataBase::writeFileClose()
 {
 	ofs.close();
+}
+
+void DataBase::writeDB()
+{
+
 }
 #pragma endregion

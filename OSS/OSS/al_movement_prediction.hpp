@@ -198,7 +198,7 @@ public:
 	// Overridings
 	virtual void initiate() override;
 	virtual void predict() override;
-	virtual void run() override;
+	virtual void run()  override;
 
 	// 9방향의 확률 계산 메소드 : 랜덤워커 계산할 2차원 필드 범위를 지정
 	void calculate(/*int leftX, int topY, int rightX, int bottomY*/);
@@ -237,7 +237,7 @@ HumpbackWhaleMP::HumpbackWhaleMP()
 void HumpbackWhaleMP::initiate()
 {
 	// 랜덤워커 배열의 0번 객체 초기화
-	m_randomWalk.push_back(RandomWalk(m_localInfo, m_timer));
+	// m_randomWalk.push_back(RandomWalk(m_localInfo, m_timer));
 
 	// 이제 랜덤워커는 한 명
 	m_numberOfWalkers = 1;
@@ -292,7 +292,7 @@ void HumpbackWhaleMP::addWalker()
 	timeElapse();
 
 	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
-	m_randomWalk.push_back(RandomWalk(m_localInfo, m_timer));
+	// m_randomWalk.push_back(RandomWalk(m_localInfo, m_timer));
 	m_numberOfWalkers++;
 }
 
@@ -309,7 +309,7 @@ void HumpbackWhaleMP::updateLocalInfo()
 void HumpbackWhaleMP::timeElapse()
 {
 	// 단위 시간 증가 : 3일
-	m_timer.addDay(3);
+	// m_timer.addDay(3);
 }
 
 Direction HumpbackWhaleMP::decideDirection()
@@ -336,5 +336,9 @@ std::vector<RWOutput> HumpbackWhaleMP::getRWOutput()
 	return m_rwOutput;
 }
 
+void HumpbackWhaleMP::run()
+{
+
+}
 #pragma endregion
 

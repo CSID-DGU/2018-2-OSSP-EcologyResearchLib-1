@@ -87,6 +87,9 @@ bool DBLib::isLocationEmpty()
 void DBLib::getmovementPathData(const std::string& outFileName)
 {
 	// TO DO
+	rwDB->writeFileOpen(outFileName);
+	rwDB->writeDB(); 
+	rwDB->writeFileClose();
 }
 #pragma endregion
 
