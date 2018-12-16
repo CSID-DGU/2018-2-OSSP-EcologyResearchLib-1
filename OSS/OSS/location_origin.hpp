@@ -47,7 +47,7 @@ public:
 	// Getter
 	timer_string_t getTime();
 	Organism* getTarget(const std::string& orgName); // return target organism to algorithm
-	LocalInfo* getLocalInfo();			// 9개의 방향에 있는 Local data 를 배열로 리턴
+	LocalInfo getLocalInfo(int x, int y);			// 9개의 방향에 있는 Local data 를 배열로 리턴
 
 	//Position getTagetPostion();
 	
@@ -86,16 +86,9 @@ void Location::setUpFieldDB(std::string& fileName)
 	m_FDB->readDB(fileName);
 }
 
-LocalInfo* Location::getLocalInfo()
+LocalInfo Location::getLocalInfo(int x, int y)
 {
-	// retrieve
-
-	// TO DO
-	/*
-		9개의 LocalInfo를 계산하고자 하는 알고리즘에 넘겨주는 함수
-	*/
-	
-	return NULL;
+	return m_FDB->getLocalInfo(x,y);
 }
 
 timer_string_t Location::getTime()

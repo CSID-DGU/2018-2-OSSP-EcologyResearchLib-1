@@ -101,12 +101,11 @@ public:
 	void setOrganismList(std::string organisms, int x, int y); // set organisms from DB
 
 	// Getter
-	LOCALSTATE getLocalState(int x, int y);
+	LocalInfo getLocalInfo(int x, int y);
 	std::vector<Organism>* getOrganismList(int x, int y);
 	std::string getLocalName(); // get local name from object
 	std::string getLocalTime(); // get local time form object
-
-	
+	Timer* getTimer();			// get Timer
 };
 
 #pragma region FieldDataBase_CONSTRUCTOR
@@ -391,10 +390,9 @@ void FieldDataBase::setOrganismList(std::string organisms, int x, int y)
 #pragma endregion
 
 #pragma region FieldDataBase_GETTER
-LOCALSTATE FieldDataBase::getLocalState(int x, int y)
+LocalInfo FieldDataBase::getLocalInfo(int x, int y)
 {
-	// to do
-	return LOCALSTATE();
+	return localInfo[x][y];
 }
 
 std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
@@ -413,5 +411,6 @@ std::string FieldDataBase::getLocalTime()
 	return m_timer->getTimeString();
 }
 
+Timer* getTimer();			// get Timer
 #pragma endregion
 
