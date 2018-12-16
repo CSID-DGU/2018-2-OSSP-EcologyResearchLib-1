@@ -43,8 +43,8 @@ void updateLocalState(int x, int y); // Update each local state
 #include "db_environment.hpp"
 #include "tax_species.hpp"
 
-#define MAX_FIELD_WIDTH_SIZE 40
-#define MAX_FIELD_HEIGHT_SIZE 40
+#define MAX_FIELD_WIDTH_SIZE 20
+#define MAX_FIELD_HEIGHT_SIZE 20
 
 
 struct LocalInfo

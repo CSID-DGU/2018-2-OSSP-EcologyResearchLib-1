@@ -49,7 +49,7 @@ struct OrgDBStruct
 	Preference* prefer;			 // preference of a organism
 
 	// These datas are Determined by field DB
-	int xPoint, yPoint;  // coordinates of organism at location
+	Point p;  // coordinates of organism at location
 	Position position;   // Current geographical position
 };
 
@@ -97,7 +97,7 @@ public:
 													// Set Organism's prefer local state					
 	void setPreferPreyList(const std::string& readData);
 													// Set Organism's prefer prey list
-
+	void setPoint(Point p);							// Set orfanism's point in map
 													
 	// void setPosition(Position pos) { m_Position = pos; }
 	
@@ -105,8 +105,7 @@ public:
 	// Getter
 	std::string getName();
 	Position getPosition();
-
-	
+	Point getPoint();
 
 private:
 	OrgDBStruct* organismInfo;
@@ -132,6 +131,7 @@ public:
 	// Getter
 	std::string getOrganismName();
 	Position getOrganismPosition();
+	Point getPoint();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -464,6 +464,11 @@ std::string Organism::getOrganismName()
 Position Organism::getOrganismPosition()
 {
 	return m_ODB->getPosition();
+}
+
+Point Organism::getPoint()
+{
+	return m_ODB->getPoint();
 }
 
 #pragma endregion
