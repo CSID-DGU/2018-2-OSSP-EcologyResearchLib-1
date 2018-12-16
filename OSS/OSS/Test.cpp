@@ -8,10 +8,11 @@ int main()
 	std::string target = "HumpbackWhale";
 
 	EcologyResearchLib::initializeLib();
-	EcologyResearchLib::LocationLib::setLocationData(fileName);
+	EcologyResearchLib::DBLib::setLocationData(fileName);
 	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetLocation();
 	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetOrganism(target);
 	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::run();
+	EcologyResearchLib::DBLib::getmovementPathData("result.txt");
 
 	
 	return 0;

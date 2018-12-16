@@ -155,6 +155,7 @@ SEQUENCE
 #pragma once
 
 #include "location_origin.hpp"
+#include "db_movementpath.hpp"
 
 class RandomWalk
 {

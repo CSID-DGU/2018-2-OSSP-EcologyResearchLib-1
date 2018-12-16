@@ -78,10 +78,13 @@ public:
 	virtual ~DataBase();
 	
 	// File I/O
-	virtual void readDB(std::string& fileName) = 0; // Read DB file from stroage
+	virtual void readDB(std::string& fileName)  // Read DB file from stroage
 	void readFileOpen(std::string& fileName);	// Read file open to input stream
 	void readFileClose();						// Read file close from input stream
 	void getDBLine(std::string& readData);		// Read a line from DB
+	void writeFileOpen(std::string& fileName);	// Write file open to output stream
+	void writeFileClose();						// Write file close from output stream
+	
 };
 
 
@@ -127,4 +130,13 @@ void DataBase::getDBLine(std::string& readData)
 	assert(!readData.empty() && "READ ERROR!!");
 }
 
+void DataBase::writeFileOpen(std::string& fileName)
+{
+	ofs.open(fileName, std::ofstream::out | std::ofstream::app);
+}
+
+void DataBase::writeFileClose()
+{
+	ofs.close();
+}
 #pragma endregion

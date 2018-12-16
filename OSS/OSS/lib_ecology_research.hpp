@@ -6,7 +6,7 @@
 ******************************************************
 
 Coded by : Jong Ha Sin
-Last Updated : 18-12-13
+Last Updated : 18-12-16
 
 */
 
@@ -19,12 +19,16 @@ namespace EcologyResearchLib
 {
 	bool initializeLib();
 
-	namespace LocationLib
+	namespace DBLib
 	{
 		Location* location = nullptr;
+		RandomWalkMovementPathDB* rwDB = nullptr; // User for data return
+		
 		bool assignLocationMemory();
+		bool assignRWDBMemory();
 		void setLocationData(std::string& str);
 		bool isLocationEmpty();
+		void getmovementPathData(const std::string& outFileName);
 	}
 
 	namespace AlgorithmLib
@@ -41,10 +45,11 @@ namespace EcologyResearchLib
 }
 #pragma endregion
 
-#pragma region EcologyResearchLib_LocationLib
+#pragma region EcologyResearchLib_Init
 bool EcologyResearchLib::initializeLib()
 {
-	LocationLib::assignLocationMemory();
+	DBLib::assignLocationMemory();
+	DBLib::assignRWDBMemory();
 	AlgorithmLib::MovementPredictionLib::assignMpAlgorithmMemory();
 	return true;
 }
@@ -52,25 +57,36 @@ bool EcologyResearchLib::initializeLib()
 
 using namespace EcologyResearchLib;
 
-#pragma region LocationLib
-bool LocationLib::assignLocationMemory()
+#pragma region DBLib
+bool DBLib::assignLocationMemory()
 {
 	location = new Location();
 	return true;
 }
 
-void LocationLib::setLocationData(std::string& str)
+bool DBLib::assignRWDBMemory()
+{
+	rwDB = new RandomWalkMovementPathDB();
+	return true;
+}
+
+void DBLib::setLocationData(std::string& str)
 {
 	location->setUpFieldDB(str);
 }
 
-bool LocationLib::isLocationEmpty()
+bool DBLib::isLocationEmpty()
 {
 	if (location == nullptr)
 		return true;
 
 	else
 		return false;
+}
+
+void DBLib::getmovementPathData(const std::string& outFileName)
+{
+	// TO DO
 }
 #pragma endregion
 
@@ -86,14 +102,14 @@ bool MovementPredictionLib::assignMpAlgorithmMemory()
 
 void MovementPredictionLib::setTargetLocation()
 {
-	if (LocationLib::isLocationEmpty())
+	if (DBLib::isLocationEmpty())
 	{
 		fprintf(stderr, "LOCATION ERROR!!");
 		exit(1);
 	} 
 	
 	// set Location to algorithm class
-	MovementPredictionLib::mpAlgorithm->setLocation(LocationLib::location);
+	MovementPredictionLib::mpAlgorithm->setLocation(DBLib::location);
 }
 
 void MovementPredictionLib::setTargetOrganism(std::string& str)

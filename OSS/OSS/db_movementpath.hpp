@@ -17,9 +17,9 @@ Coded by : Jong Ha Sin
 
 #pragma once
 
-#include "al_randomwalk.hpp"
+#include "db_origin.hpp"
 
-class RandomWalkMovementPathDB
+class RandomWalkMovementPathDB : public DataBase
 {
 private:
 	std::vector<RWOutput> randomwWalkOutput;
