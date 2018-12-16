@@ -87,6 +87,7 @@ public:
 
 };
 
+밑에 제거할 것!;
 
 #pragma region MovementPrediction_Constructor
 MovementPrediction::MovementPrediction()
@@ -205,8 +206,8 @@ public:
 	virtual void initiate() override;
 	virtual void predict() override;
 
-	// 9방향의 확률 계산 메소드 : 랜덤워커 계산할 2차원 필드 범위를 지정
-	void calculate(/*int leftX, int topY, int rightX, int bottomY*/);
+	// 9방향의 확률 계산 메소드
+	void calculate();
 	
 	void addWalker();                   // 랜덤워커 객체 1개 추가
 	
@@ -271,7 +272,7 @@ void HumpbackWhaleMP::predict()
 	}
 }
 
-void HumpbackWhaleMP::calculate(/*int leftX, int topY, int rightX, int bottomY*/)
+void HumpbackWhaleMP::calculate()
 {
 	// 대상 : 현재 랜덤 워커 벡터의 마지막 객체
 	// 9방향 각각에 대한 이동 확률을 계산하여 랜덤워커 객체에 업데이트
@@ -319,23 +320,47 @@ void HumpbackWhaleMP::calculate(/*int leftX, int topY, int rightX, int bottomY*/
         preyWeight = 6;
     }
 
+    // 중앙 위치의 온도 값
+    int centerTemerature = m_location->getWaterTemperature(targetPoint[4][4]);
+
     // 먹이
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
             for (const auto& orgMember : targetInfo[i][j].localOrganisms)
             {
-                // 해당 위치에 크릴 새우가 있을 경우
+                // 1. 해당 위치에 크릴 새우가 있을 경우
                 if(orgMember->getOrganismName() == "Krill")
-                    targetPossibility[i][j] += (float)preyWeight;
+                    targetPossibility[i][j] += (float)preyWeight;   // 가중치 가산
 
-                if();
+                // 2. 온도
+                if(targetStatus == BREEDING)
+                {
+                    // 주변의 온도가 중앙보다 높은 경우
+                    if (m_location->getWaterTemperature(targetPoint[i][j]) > centerTemerature)
+                    {
+                        targetPossibility[i][j] += (float)warmTemperatureWeight;   // 가중치 가산
+                    }
+                }
+                else    // NONBREEDING
+                {
+                    // 주변의 온도가 중앙보다 낮은 경우
+                    if (m_location->getWaterTemperature(targetPoint[i][j]) < centerTemerature)
+                    {
+                        targetPossibility[i][j] += (float)coldTemperatureWeight;   // 가중치 가산
+                    }
+                }
+
+                
             }
 
-    //
-
-
 	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
-	calculateByPreference(/* 지형 */);
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+        {
+            // 해당 인접 위치가 바다가 아닌 경우 : 이동 확률을 0으로 초기화
+            if(targetInfo[i][j].localState[2] != SEA)
+                targetPossibility[i][j] = 0.0f;
+        }
 }
 
 void HumpbackWhaleMP::addWalker()
@@ -343,7 +368,24 @@ void HumpbackWhaleMP::addWalker()
 	// 이터레이터 : 백터 내에서 가장 말단에 있는 랜덤 워커
 	const RandomWalk& iterator = m_randomWalk[m_numberOfWalkers - 1];
 
-	// 바로 이전 랜덤워커의 확률에 따라 좌표 이동
+
+    /* 2018.12.16 ~ TODO ***********************************
+     *
+     * 1. 난수 발생시켜서 이동할 방향 결정
+     * 2. 결정된 방향으로 이동 (moveWalker(방향) 메소드 구현 및 호출)
+     * 3. 이동된 방향으로 새로운 랜덤워커 객체 생성(벡터 말단에 push_back)
+     * 4. ~반복하여 랜덤워커 벡터가 생성됨
+     * 5. 생성된 벡터를 간소화 배열로 변환(구현되어있음, 수정 필요) => 간소화 배열 반환
+     *
+     * ******************************************************
+     */
+
+
+    // 말단 랜덤워커의 9개의 이동 확률을 읽고, 랜덤으로 방향 결정
+
+
+	// 결정된 방향으로 이동
+    moveWalker(direction);
 
 	// 단위 시간 증가
 	timeElapse();
@@ -352,16 +394,6 @@ void HumpbackWhaleMP::addWalker()
 	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
 	m_randomWalk.push_back(RandomWalk(m_point, m_timer));
 	m_numberOfWalkers++;
-}
-
-void HumpbackWhaleMP::updateLocalInfo()
-{
-	// 마지막 랜덤워커의 확률로부터 랜덤 계산하여 방향 결정
-	Direction nextDirection = decideDirection();
-
-	/* TODO : 결정된 방향에 따라 m_localInfo 위치 이동 */
-
-	/* TODO : localInfo 정보 실시간 업데이트 */
 }
 
 void HumpbackWhaleMP::timeElapse()
@@ -374,6 +406,8 @@ Direction HumpbackWhaleMP::decideDirection()
 {
 	// TODO : 난수 발생 필요
 	// 9방향의 확률에 대해 랜덤으로 위치 결정
+
+    
 
 	/* return Direction::DECIDED_DIRECTION ! */
 	return Direction();
