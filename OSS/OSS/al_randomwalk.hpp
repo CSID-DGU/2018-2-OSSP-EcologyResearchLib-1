@@ -162,18 +162,18 @@ class RandomWalk
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열
-    float possibility[DIRECTION_NUMBER] = {0.0, };
+    float possibility[3][3] = { 0.0, };
 
-    // 해당 랜덤워커가 위치한 로컬 정보, 해당 시간
-    LocalInfo m_localInfo;
+    // 해당 랜덤워커의 위치, 시간
+    Point     m_point;
     Timer     m_timer;
 
 public:
     RandomWalk();
 
     //생성자 : 로컬 정보, 시간 초기화
-    RandomWalk(const LocalInfo& localInfo, Timer timer)
-        : m_localInfo(localInfo), m_timer(timer) {}
+    RandomWalk(const Point& point, Timer timer)
+        : m_point(point), m_timer(timer) {}
     ~RandomWalk() {}
 
     // 알고리즘 클래스의 calculate() 내부에서 실행된다.
@@ -188,7 +188,7 @@ public:
     void setLocation(const Location& location);
 
     // Getters
-    LocalInfo getLocalInfo();
+    Point     getPoint();
     Timer     getTimer();
 };
 
@@ -213,9 +213,9 @@ void RandomWalk::setMovingPossibility(const float& pArray)
 #pragma endregion
 
 
-LocalInfo RandomWalk::getLocalInfo()
+Point RandomWalk::getPoint()
 {
-    return m_localInfo;
+    return m_point;
 }
 
 Timer RandomWalk::getTimer()
