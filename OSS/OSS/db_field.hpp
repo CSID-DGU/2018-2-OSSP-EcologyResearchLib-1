@@ -105,6 +105,7 @@ public:
 	std::vector<Organism>* getOrganismList(Point p);
 	std::string getLocalName(); // get local name from object
 	std::string getLocalTime(); // get local time form object
+	int getLocalWaterTemperature(Point p);
 	Timer* getTimer();			// get Timer
 };
 
@@ -411,6 +412,14 @@ std::string FieldDataBase::getLocalTime()
 	return m_timer->getTimeString();
 }
 
-Timer* getTimer();			// get Timer
+Timer* FieldDataBase::getTimer()
+{
+
+}// get Timer
+
+int FieldDataBase::getLocalWaterTemperature(Point p)
+{
+	return localInfo[p.xpos][p.ypos].environment.getWaterTemperature();
+}
 #pragma endregion
 
