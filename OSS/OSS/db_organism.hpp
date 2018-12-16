@@ -31,7 +31,7 @@ Last Updated : 18-11-05
 class Organism;
 
 // Organism status
-enum STATUS { ALIVE, DEAD, HIBERNATION, STEALTH, SUBMERGENCE, FLOATING, BREEDING };
+enum STATUS { ALIVE, DEAD, HIBERNATION, STEALTH, SUBMERGENCE, FLOATING, BREEDING, NONBREEDING };
 enum ACTION { MOVING, HUNTING, MATING, STOPED, SLEEPING, 
 	          EATING, DIVING, SPOUTING, RESTING };
 enum SEX    { MALE, FEMALE, BOTH };
@@ -106,6 +106,7 @@ public:
 	std::string getName();
 	Position getPosition();
 	Point getPoint();
+	STATUS getStatus();
 
 private:
 	OrgDBStruct* organismInfo;
@@ -132,6 +133,7 @@ public:
 	std::string getOrganismName();
 	Position getOrganismPosition();
 	Point getOrgPoint();
+	STATUS getOrgStatus();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -409,7 +411,7 @@ void OrgDataBase::setPreferPreyList(const std::string& readData)
 #pragma endregion
 
 
-#pragma OrgDataBase_Getter
+#pragma region OrgDataBase_Getter
 std::string OrgDataBase::getName()
 {
 	return organismInfo->name;
@@ -425,6 +427,10 @@ Point OrgDataBase::getPoint()
 	return organismInfo->p;
 }
 
+STATUS OrgDataBase::getStatus()
+{
+	return organismInfo->status.back();
+}
 #pragma endregion
 
 
@@ -476,4 +482,8 @@ Point Organism::getOrgPoint()
 	return m_ODB->getPoint();
 }
 
+STATUS Organism::getOrgStatus()
+{
+	return m_ODB->getStatus();
+}
 #pragma endregion
