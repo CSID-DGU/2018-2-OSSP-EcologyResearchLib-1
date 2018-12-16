@@ -69,6 +69,10 @@ typedef struct RWOutput
 
 } RWOutput;
 
+typedef struct Point
+{
+	int xpos, ypos;
+}Point;
 
 class DataBase
 {
