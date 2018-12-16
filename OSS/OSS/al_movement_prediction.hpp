@@ -80,7 +80,7 @@ public:
     // predictCount 횟수만큼 반복적으로 실행된다.
 	virtual void predict() = 0;
 
-	virtual std::vector<RWOutput>& run() = 0;
+	virtual void run() = 0;
 
 	// Setter
 	bool setLocation(Location* loc);
@@ -198,7 +198,7 @@ public:
 	// Overridings
 	virtual void initiate() override;
 	virtual void predict() override;
-	virtual std::vector<RWOutput>& run() override;
+	virtual void run() override;
 
 	// 9방향의 확률 계산 메소드 : 랜덤워커 계산할 2차원 필드 범위를 지정
 	void calculate(/*int leftX, int topY, int rightX, int bottomY*/);
