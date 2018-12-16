@@ -131,7 +131,7 @@ public:
 	// Getter
 	std::string getOrganismName();
 	Position getOrganismPosition();
-	Point getPoint();
+	Point getOrgPoint();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -420,6 +420,11 @@ Position OrgDataBase::getPosition()
 	return organismInfo->position;
 }
 
+Point OrgDataBase::getPoint()
+{
+	return organismInfo->p;
+}
+
 #pragma endregion
 
 
@@ -466,7 +471,7 @@ Position Organism::getOrganismPosition()
 	return m_ODB->getPosition();
 }
 
-Point Organism::getPoint()
+Point Organism::getOrgPoint()
 {
 	return m_ODB->getPoint();
 }
