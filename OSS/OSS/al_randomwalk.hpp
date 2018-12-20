@@ -201,8 +201,6 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
 	STATUS    targetStatus = org.getOrgStatus();  // 타겟 생물체의 상태
 
-	std::cout << targetStatus << std::endl;
-
 	// 확률 가중치
 	int warmTemperatureWeight;
 	int coldTemperatureWeight;
@@ -268,8 +266,6 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		for (int j = 0; j < 3; j++)
 			for (auto& orgMember : targetInfo[i][j].localOrganisms)
 			{
-				std::cout << i << "," << j << " Info : " << targetInfo[i][j].environment.getWaterTemperature() << std::endl;
-
 				// 1. 해당 위치에 크릴 새우가 있을 경우
 				if (orgMember->getOrganismName() == "Krill")
 					targetPossibility[i][j] += preyWeight;   // 가중치 가산
@@ -295,11 +291,6 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 
 			}
 
-
-	//debug
-	//std::cout << "Temperature & Prey possibility complete" << std::endl;
-	//std::cout << targetInfo[1][2].localOrganisms.back()->getOrganismName() << std::endl;
-
 	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
@@ -310,9 +301,9 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		}
 	
 	//debug
-	/*for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
-			std::cout << targetPossibility[i][j] << std::endl;*/
+			std::cout << targetPossibility[i][j] << std::endl;
 
 
 	//debug
@@ -346,6 +337,11 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	//debug
 	std::cout << "Random Generatre Complete" << std::endl;
 
+	// debug
+	for (auto& num : randVec)
+		std::cout << num << " ";
+	std::cout << std::endl;
+
 	return randVec.back();
 }
 
@@ -355,5 +351,10 @@ void RandomWalk::randomGenerate(std::vector<int>& rVec)
 	std::mt19937 g(rd());
 
 	std::shuffle(rVec.begin(), rVec.end(), g);
+
+	// debug
+	for (auto& num : rVec)
+		std::cout << num << " ";
+	std::cout << std::endl;
 }
 #pragma endregion

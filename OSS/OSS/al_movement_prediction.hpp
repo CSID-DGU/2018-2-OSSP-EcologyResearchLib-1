@@ -308,11 +308,18 @@ void HumpbackWhaleMP::calculate()
 
 	direction = randomWalk->doRandomWalk(*m_targetOrganism, *m_location);
 
+	//debug
+	std::cout <<"Direction : "<< direction << std::endl;
+	std::cout << "current Pos : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
+
 	// 단위 시간 증가
 	timeElapse();
 
 	output.time = m_location->getTime();
 	output.point = decideDirection(direction, m_targetOrganism->getOrgPoint());
+
+	std::cout << "current Pos : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
+
 
 	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
 	m_rwOutput.push_back(output);
@@ -323,34 +330,41 @@ void HumpbackWhaleMP::update()
 	std::cout << m_location->getTime() << std::endl;
 
     // TO DO 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
-	m_targetOrganism->setOrganismPoint(m_rwOutput.back().getPoint());
+	// m_targetOrganism->setOrganismPoint(m_rwOutput.back().getPoint());
 
 	//debug
 	std::cout << "Current Point : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
 	std::cout << "Next Point : " << m_rwOutput.back().point.xpos << " , " << m_rwOutput.back().point.ypos << std::endl;
-
-	m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());
-
+	
+	// target change
+	m_targetOrganism = 
+		m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());
+	
+	// Increase walker count
 	m_numberOfWalkers++;
 }
 
 void HumpbackWhaleMP::timeElapse()
 {
 	// 단위 시간 증가 : 3일
+	std::cout << m_location->getTime() << std::endl;
 	m_location->updateDay(UPDATE_DAY);
+	std::cout << m_location->getTime() << std::endl;
 }
 
 Point HumpbackWhaleMP::decideDirection(int direction, Point p)
 {
-	if (direction == 0) { p.xpos -= 1; p.ypos += 1; }
-	else if (direction == 1) { p.ypos += 1; }
-	else if (direction == 2) { p.xpos += 1; p.ypos += 1; }
-	else if (direction == 3) { p.xpos -= 1; }
+	if (direction == 0) { p.xpos -= 1; p.ypos -= 1; }
+	else if (direction == 1) { p.xpos -= 1; }
+	else if (direction == 2) { p.xpos -= 1; p.ypos += 1; }
+	else if (direction == 3) { p.ypos -= 1; }
 	else if (direction == 4) { }
-	else if (direction == 5) { p.xpos += 1; }
-	else if (direction == 6) { p.xpos -= 1; p.ypos -= 1; }
-	else if (direction == 7) { p.ypos -= 1; }
-	else if (direction == 8) { p.xpos += 1; p.ypos -= 1; }
+	else if (direction == 5) { p.ypos += 1; }
+	else if (direction == 6) { p.xpos += 1; p.ypos -= 1; }
+	else if (direction == 7) { p.xpos += 1;  }
+	else if (direction == 8) { p.xpos += 1; p.ypos += 1; }
+
+	std::cout << "Next Point : " << p.xpos << " , " << p.ypos << std::endl;
 
 	return p;
 }

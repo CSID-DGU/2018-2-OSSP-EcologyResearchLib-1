@@ -88,7 +88,7 @@ public:
 	// Update
 	void updateGlobalState();			// Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
-	void updateOrganismList(Point curPoint, Point nextPoint, const std::string& name);
+	Organism* updateOrganismList(Point curPoint, Point nextPoint, const std::string& name);
 										// Update Organism list of location
 	void updateTimerDay(int days);		// Update times
 
@@ -349,19 +349,39 @@ void FieldDataBase::updateLocalState(int x, int y)
 	// TO DO 
 }
 
-void FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, const std::string& name)
+Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, const std::string& name)
 {
+
+	std::cout << curPoint.xpos << " , " << curPoint.ypos << std::endl;
 	std::vector<Organism*>::iterator iter = localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.begin();
+	std::cout << (*iter)->getOrganismName() << std::endl;
 
 	for ( ; iter != localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.end(); iter++)
 	{
-		std::cout << (*iter)->getOrganismName() << std::endl;
-
-		/*if (name == (*iter)->getOrganismName())
+		if (name == (*iter)->getOrganismName())
 		{
-			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(*iter);
-			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.erase(iter);
-		}*/
+			std::cout << "push back" << std::endl;
+
+			Organism* newOrg = new Organism(*iter);
+			newOrg->setOrganismPoint(nextPoint);
+			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(newOrg);
+			
+			// debug
+			std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back()->getOrganismName() << std::endl;
+			std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back() << std::endl;
+			std::cout << *iter << std::endl;
+			std::cout << "push back OK" << std::endl;
+
+			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.pop_back();
+
+			// debug
+			for (auto& str : localInfo[curPoint.xpos][curPoint.ypos].localOrganisms)
+				std::cout << str->getOrganismName() << " ";
+			std::cout << std::endl;
+
+			return newOrg;
+
+		}
 	}
 }
 

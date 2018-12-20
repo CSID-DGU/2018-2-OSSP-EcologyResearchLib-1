@@ -123,6 +123,7 @@ public:
 	
 	// Constructor
 	Organism();
+	Organism(Organism* org); // copy constructor
 
 	// Destructor
 	virtual ~Organism();
@@ -479,6 +480,14 @@ Organism::Organism()
 {
 	m_ODB = new OrgDataBase();
 }
+
+Organism::Organism(Organism* org) // copy constructor
+{
+	m_ODB = new OrgDataBase();
+	
+	this->setOrganismDB(org->getOrgDB());
+}
+
 #pragma endregion 
 
 #pragma region Organism_DESTRUCTOR

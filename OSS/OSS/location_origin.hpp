@@ -39,7 +39,7 @@ public:
 	void initiailize(std::string& fileName);
 
 	// Update
-	void updateDB(Point curPoint, Point nextPoint, const std::string& name);
+	Organism* updateDB(Point curPoint, Point nextPoint, const std::string& name);
 	void updateDay(int day);
 	
 	// Setter
@@ -83,9 +83,9 @@ void Location::initiailize(std::string& fileName)
 #pragma endregion
 
 #pragma region Location_Update
-void Location::updateDB(Point curPoint, Point nextPoint, const std::string& name)
+Organism* Location::updateDB(Point curPoint, Point nextPoint, const std::string& name)
 {
-	m_FDB->updateOrganismList(curPoint, nextPoint, name);
+	return m_FDB->updateOrganismList(curPoint, nextPoint, name);
 }
 #pragma endregion
 
