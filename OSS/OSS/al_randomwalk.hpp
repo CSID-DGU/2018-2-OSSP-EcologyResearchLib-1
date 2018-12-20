@@ -245,10 +245,10 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	// 먹이
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
-			for (const auto& orgMember : targetInfo[i][j].localOrganisms)
+			for (auto& orgMember : targetInfo[i][j].localOrganisms)
 			{
 				// 1. 해당 위치에 크릴 새우가 있을 경우
-				if (orgMember->getOrganismName() == "Krill")
+				if (orgMember.getOrganismName() == "Krill")
 					targetPossibility[i][j] += preyWeight;   // 가중치 가산
 
 				// 2. 온도

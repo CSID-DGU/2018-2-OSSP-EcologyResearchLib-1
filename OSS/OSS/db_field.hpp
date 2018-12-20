@@ -403,7 +403,10 @@ void FieldDataBase::setOrganismList(std::string organisms, int x, int y)
 	{
 		if (org->getOrganismName() == organisms)
 		{
-			localInfo[x][y].localOrganisms.push_back(org);
+			Organism* newOrg = new Organism();
+			newOrg->setOrganismDB(org->getOrgDB());
+			newOrg->setOrganismPoint(Point(x, y));
+			localInfo[x][y].localOrganisms.push_back(newOrg);
 			break;
 		}
 	}
@@ -436,7 +439,7 @@ std::string FieldDataBase::getLocalTime()
 Timer* FieldDataBase::getTimer()
 {
 	return nullptr;
-}// get Timer
+}
 
 int FieldDataBase::getLocalWaterTemperature(Point p)
 {

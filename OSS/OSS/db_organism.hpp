@@ -98,7 +98,7 @@ public:
 	void setPreferPreyList(const std::string& readData);
 													// Set Organism's prefer prey list
 	void setPoint(Point p);							// Set orfanism's point in map
-													
+	void setOrgDBStruct(const OrgDBStruct& odb);
 	// void setPosition(Position pos) { m_Position = pos; }
 	
 
@@ -107,6 +107,7 @@ public:
 	Position getPosition();
 	Point getPoint();
 	STATUS getStatus();
+	OrgDBStruct getOrgDBStruct();
 
 private:
 	OrgDBStruct* organismInfo;
@@ -128,12 +129,15 @@ public:
 
 	// Setter
 	void setOrganismInfo(std::string& fileName);
+	void setOrganismPoint(Point p);
+	void setOrganismDB(OrgDBStruct odb);
 
 	// Getter
 	std::string getOrganismName();
 	Position getOrganismPosition();
 	Point getOrgPoint();
 	STATUS getOrgStatus();
+	OrgDBStruct getOrgDB();
 
 	// Moving
 	// virtual void moving() = 0;
@@ -408,6 +412,23 @@ void OrgDataBase::setPreferPreyList(const std::string& readData)
 	parsingPreyListData(readData, organismInfo->prefer);
 }
 
+void OrgDataBase::setPoint(Point p)
+{
+	organismInfo->p = p;
+}
+
+void OrgDataBase::setOrgDBStruct(const OrgDBStruct& odb)
+{
+	organismInfo->action = odb.action;
+	organismInfo->age = odb.age;
+	organismInfo->energy = odb.energy;
+	organismInfo->name = odb.name;
+	organismInfo->p = odb.p;
+	organismInfo->position = odb.position;
+	organismInfo->prefer = odb.prefer;
+	organismInfo->sex = odb.sex;
+	organismInfo->status = odb.status;
+}
 #pragma endregion
 
 
@@ -431,6 +452,22 @@ STATUS OrgDataBase::getStatus()
 {
 	return organismInfo->status.back();
 }
+
+OrgDBStruct OrgDataBase::getOrgDBStruct()
+{
+	OrgDBStruct temp;
+	temp.action = organismInfo->action;
+	temp.age = organismInfo->age;
+	temp.energy = organismInfo->energy;
+	temp.name = organismInfo->name;
+	temp.p = organismInfo->p;
+	temp.position = organismInfo->position;
+	temp.prefer = organismInfo->prefer;
+	temp.sex = organismInfo->sex;
+	temp.status = organismInfo->status;
+
+	return temp;
+}
 #pragma endregion
 
 
@@ -452,7 +489,7 @@ Organism::~Organism()
 }
 #pragma endregion 
 
-#pragma region Organism_SETTER
+#pragma region Organism_setter
 
 void Organism::setOrganismInfo(std::string& fileName)
 {
@@ -463,6 +500,16 @@ void Organism::setOrganismInfo(std::string& fileName)
 	
 	// debug
 	std::cout << "Organism::setOrganismInfo complete" << std::endl;
+}
+
+void Organism::setOrganismPoint(Point p)
+{
+	m_ODB->setPoint(p);
+}
+
+void Organism::setOrganismDB(OrgDBStruct odb)
+{
+	m_ODB->setOrgDBStruct(odb);
 }
 #pragma endregion
 
@@ -485,5 +532,10 @@ Point Organism::getOrgPoint()
 STATUS Organism::getOrgStatus()
 {
 	return m_ODB->getStatus();
+}
+
+OrgDBStruct Organism::getOrgDB()
+{
+	return m_ODB->getOrgDBStruct();
 }
 #pragma endregion

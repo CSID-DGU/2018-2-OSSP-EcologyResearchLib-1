@@ -36,6 +36,9 @@ typedef std::string timer_string_t;
 typedef struct Point
 {
 	int xpos, ypos;
+
+	Point() {}
+	Point(int x, int y) : xpos(x), ypos(y) {}
 }Point;
 
 // Position data struct
