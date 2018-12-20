@@ -224,22 +224,34 @@ void FieldDataBase::loadLocationFeature(std::string& readData)
 		getDBLine(readData);
 		parsingFeatures(readData, parsingVec); // parsing feature data line
 
+		for (auto& str : parsingVec)
+			std::cout << str << " | ";
+		std::cout << std::endl;
+
 		// setup Programmed coordinate
 		int x = stoi(parsingVec[0]);
 		int y = stoi(parsingVec[1]);
+
+		debugMsg("setup coordinate complete");
 
 		// setup Postion
 		localInfo[x][y].pos.altitude = parsingVec[2];
 		localInfo[x][y].pos.altitude = parsingVec[3];
 		localInfo[x][y].pos.altitude = "0"; // default
 
+		debugMsg("setup location position complete");
+
 		// setup topoGraphic features
 		localInfo[x][y].localState[0] = convertTopoGraphic(parsingVec[4]);
 		localInfo[x][y].localState[1] = convertTopoGraphic(parsingVec[5]);
 		localInfo[x][y].localState[2] = convertTopoGraphic(parsingVec[6]);
 
+		debugMsg("setup topoGraphic featrues complete");
+
 		// setup Enviornment Watertemperature 
 		localInfo[x][y].environment.setWaterTemperature(stoi(parsingVec[7]));
+
+		debugMsg("setup Watertemperature complete");
 
 		// setup Organism List
 		for (int ix = 8; ix < parsingVec.size(); ix++)
@@ -276,6 +288,9 @@ void FieldDataBase::parsingFeatures(const std::string& readData, std::vector<std
 		}
 	}
 	parsingVec.push_back(parsedStr); // last element pushing
+
+	// debug
+	std::cout << "Parsing Location Feature Complete" << std::endl;
 }
 
 
@@ -396,7 +411,7 @@ LocalInfo FieldDataBase::getLocalInfo(Point p)
 	return localInfo[p.xpos][p.ypos];
 }
 
-std::vector<Organism>* FieldDataBase::getOrganismList(int x, int y)
+std::vector<Organism>* FieldDataBase::getOrganismList(Point p)
 {
 	// to do
 	return NULL;
@@ -414,7 +429,7 @@ std::string FieldDataBase::getLocalTime()
 
 Timer* FieldDataBase::getTimer()
 {
-
+	return nullptr;
 }// get Timer
 
 int FieldDataBase::getLocalWaterTemperature(Point p)

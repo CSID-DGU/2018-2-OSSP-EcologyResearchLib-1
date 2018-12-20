@@ -162,7 +162,7 @@ class RandomWalk
 private:
 
     // 9방향 각각에 대한 이동 확률을 저장하는 배열
-    float possibility[3][3] = { 0.0, };
+    int possibility[3][3] = { 0, };
 
     // 해당 랜덤워커의 위치, 시간
     Point     m_point;
@@ -197,7 +197,7 @@ public:
 
 RandomWalk::RandomWalk()
 {
-    std::fill_n(possibility, 9, 0); // 9방향 확률 모두 0으로 초기화
+    //std::fill_n(possibility, 9, 0); // 9방향 확률 모두 0으로 초기화
 }
 
 #pragma endregion

@@ -45,10 +45,6 @@
 
 class MovementPrediction
 {
-protected:
-	
-
-
 public:
 
     /* Procedure
@@ -60,10 +56,10 @@ public:
      */
 
     // 기본 생성자
-	MovementPrediction();
+	MovementPrediction() {};
 
 	// Destructor
-	virtual ~MovementPrediction();
+	virtual ~MovementPrediction() {};
 
     // 첫 객체 초기화 (예측 값이 아닌, 실재하는 데이터를 초기 값으로 가져온다.)
 	virtual void initiate() = 0;
@@ -75,88 +71,17 @@ public:
 	virtual void run() = 0;
 
 	// Setter
-	bool setLocation(Location* loc);
-	bool setTarget(std::string& orgName);
+	virtual bool setLocation(Location* loc) { return true; };
+	virtual bool setTarget(std::string& orgName) { return true; };
 
 	// Getter
-	std::string getTagetName();
+	virtual std::string getTagetName() { return nullptr; };
 
 	// Check
-	bool isTargetOrganism(Organism* org);
-	bool isPredictionEnd();	// 지정한 예측 루틴 실행 횟수에 도달했는지 검사
+	virtual bool isTargetOrganism(Organism* org) { return true; };
+	virtual bool isPredictionEnd() { return true; };	// 지정한 예측 루틴 실행 횟수에 도달했는지 검사
 
 };
-
-밑에 제거할 것!;
-
-#pragma region MovementPrediction_Constructor
-MovementPrediction::MovementPrediction()
-{
-	m_predictCount = 0;
-	m_numberOfWalkers = 0;
-}
-#pragma endregion
-
-#pragma region MovementPrediction_Destructor
-MovementPrediction::~MovementPrediction()
-{
-	delete[] targetOrganism;
-	delete[] location;
-}
-#pragma endregion
-
-#pragma region MovementPredcitor_Setter
-bool MovementPrediction::setLocation(Location* loc)
-{
-	if (loc != nullptr)
-	{
-		location = loc;
-		return true;
-	} return false;
-}
-
-bool MovementPrediction::setTarget(std::string& orgName)
-{
-	//debug
-	std::cout << "Find org Name = " << orgName << std::endl;
-
-	if (isTargetOrganism(location->getTarget(orgName)))
-	{
-		this->targetOrganism = location->getTarget(orgName);
-		return true;
-	} return false;
-}
-
-bool MovementPrediction::isTargetOrganism(Organism* org)
-{
-	if (org != nullptr)
-		return true;
-	else
-		return false;
-}
-
-#pragma endregion
-
-
-#pragma region MovementPrediction_Getter
-std::string MovementPrediction::getTagetName()
-{
-	assert(targetOrganism != nullptr && "Target is NULLPTR!!");
-	return targetOrganism->getOrganismName();
-}
-#pragma endregion
-
-
-#pragma region MovementPrediction_Check
-bool MovementPrediction::isPredictionEnd()
-{
-	if (m_numberOfWalkers > m_predictCount)
-		return true;
-	else
-		return false;
-}
-#pragma endregion
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -194,10 +119,12 @@ private:
 public:
 
 	HumpbackWhaleMP();      // 기본 생성자
+	~HumpbackWhaleMP();
 
 	// 생성자 : Target으로부터 초기 시간을 받아 멤버에 저장, 실행 횟수 지정
 	HumpbackWhaleMP(Timer timer, int predictCount)
-		: m_timer(timer), m_predictCount(predictCount) {}
+		: m_timer(timer), m_predictCount(predictCount)
+	{}
 
 	// 예측 수행 = initiate + (predict * count)
 	
@@ -208,7 +135,6 @@ public:
 
 	// 9방향의 확률 계산 메소드
 	void calculate();
-	
 	void addWalker();                   // 랜덤워커 객체 1개 추가
 	
 	//void calculateByPreference();       // 특정 선호 요소에 따른 각 방향의 이동확률 계산
@@ -222,21 +148,97 @@ public:
 	void transformRWArray();            // 랜덤워커 배열 -> 간소화 배열 변환
 
 	std::vector<RWOutput> getRWOutput();    // 간소화 배열 반환
+
+	void randomGenerate(std::vector<int>& rVec);
+
+	// setter
+	virtual bool setLocation(Location* loc);
+	virtual bool setTarget(std::string& orgName);
+
+	// getter
+	virtual std::string getTagetName();
+
+	// check
+	virtual bool isTargetOrganism(Organism* org);
+	virtual bool isPredictionEnd();
 };
 
 #pragma region HumpbackWhaleMP_Constructor
 HumpbackWhaleMP::HumpbackWhaleMP()
 {
-
+	m_predictCount = 0;
+	m_numberOfWalkers = 0;
 }
 
-HumpbackWhaleMP::HumpbackWhaleMP(Timer timer, int predictCount)
+//HumpbackWhaleMP::HumpbackWhaleMP(Timer timer, int predictCount)
+//{
+//	// 랜덤워커 첫 객체의 위치 지정
+//	m_point = m_targetOrganism->getOrgPoint();
+//}
+#pragma endregion
+
+#pragma region HumpbackWhaleMP_Destructor
+HumpbackWhaleMP::~HumpbackWhaleMP()
 {
-    // 랜덤워커 첫 객체의 위치 지정
-    m_point = m_targetOrganism->getOrgPoint();
+	delete[] m_location;
+	delete[] m_targetOrganism;
 }
+#pragma endregion
+
+#pragma region HumpbackWhaleMP_Setter
+bool HumpbackWhaleMP::setLocation(Location* loc)
+{
+	if (loc != nullptr)
+	{
+		m_location = loc;
+		return true;
+	} return false;
+}
+
+bool HumpbackWhaleMP::setTarget(std::string& orgName)
+{
+	//debug
+	std::cout << "Find org Name = " << orgName << std::endl;
+
+	if (isTargetOrganism(m_location->getTarget(orgName)))
+	{
+		this->m_targetOrganism = m_location->getTarget(orgName);
+		return true;
+	} return false;
+}
+
 
 #pragma endregion
+
+
+#pragma region HumpbackWhaleMP_Getter
+std::string HumpbackWhaleMP::getTagetName()
+{
+	assert(m_targetOrganism != nullptr && "Target is NULLPTR!!");
+	return m_targetOrganism->getOrganismName();
+}
+#pragma endregion
+
+
+#pragma region HumpbackWhaleMP_Check
+bool HumpbackWhaleMP::isPredictionEnd()
+{
+	if (m_numberOfWalkers > m_predictCount)
+		return true;
+	else
+		return false;
+}
+
+bool HumpbackWhaleMP::isTargetOrganism(Organism* org)
+{
+	if (org != nullptr)
+		return true;
+	else
+		return false;
+}
+#pragma endregion
+
+
 
 
 #pragma region Public Functions
@@ -277,7 +279,7 @@ void HumpbackWhaleMP::calculate()
 	// 대상 : 현재 랜덤 워커 벡터의 마지막 객체
 	// 9방향 각각에 대한 이동 확률을 계산하여 랜덤워커 객체에 업데이트
      
-    float     targetPossibility[3][3] = { 0.0, }; // 9개 위치의 확률
+    int     targetPossibility[3][3] = { 0, }; // 9개 위치의 확률
     Point     targetPoint[3][3];    // 9개 위치의 좌표 값
     LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
     STATUS    targetStatus = m_targetOrganism->getOrgStatus();  // 타겟 생물체의 상태
@@ -330,7 +332,7 @@ void HumpbackWhaleMP::calculate()
             {
                 // 1. 해당 위치에 크릴 새우가 있을 경우
                 if(orgMember->getOrganismName() == "Krill")
-                    targetPossibility[i][j] += (float)preyWeight;   // 가중치 가산
+                    targetPossibility[i][j] += preyWeight;   // 가중치 가산
 
                 // 2. 온도
                 if(targetStatus == BREEDING)
@@ -338,7 +340,7 @@ void HumpbackWhaleMP::calculate()
                     // 주변의 온도가 중앙보다 높은 경우
                     if (m_location->getWaterTemperature(targetPoint[i][j]) > centerTemerature)
                     {
-                        targetPossibility[i][j] += (float)warmTemperatureWeight;   // 가중치 가산
+                        targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
                     }
                 }
                 else    // NONBREEDING
@@ -346,7 +348,7 @@ void HumpbackWhaleMP::calculate()
                     // 주변의 온도가 중앙보다 낮은 경우
                     if (m_location->getWaterTemperature(targetPoint[i][j]) < centerTemerature)
                     {
-                        targetPossibility[i][j] += (float)coldTemperatureWeight;   // 가중치 가산
+                        targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
                     }
                 }
 
@@ -359,8 +361,28 @@ void HumpbackWhaleMP::calculate()
         {
             // 해당 인접 위치가 바다가 아닌 경우 : 이동 확률을 0으로 초기화
             if(targetInfo[i][j].localState[2] != SEA)
-                targetPossibility[i][j] = 0.0f;
+                targetPossibility[i][j] = 0;
         }
+
+	// 확률 계산
+	std::vector<int> randVec;
+	int arrNum = 0;
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			int randNum = targetPossibility[i][j];
+			
+			while (randNum--)
+				randVec.push_back(arrNum);
+
+			arrNum++;
+		}
+
+	// 이동 좌표 결정
+	randomGenerate(randVec);
+	
+	
 }
 
 void HumpbackWhaleMP::addWalker()
@@ -385,7 +407,7 @@ void HumpbackWhaleMP::addWalker()
 
 
 	// 결정된 방향으로 이동
-    moveWalker(direction);
+    // moveWalker(direction);
 
 	// 단위 시간 증가
 	timeElapse();
@@ -418,7 +440,7 @@ void HumpbackWhaleMP::transformRWArray()
 {
 	for (RandomWalk& walker : m_randomWalk)
 	{
-		m_rwOutput.push_back(RWOutput(walker.getLocalInfo().pos, walker.getTimer().getTimeString()));
+		// m_rwOutput.push_back(RWOutput(walker.getLocalInfo().pos, walker.getTimer().getTimeString()));
 	}
 }
 
@@ -426,6 +448,14 @@ void HumpbackWhaleMP::transformRWArray()
 std::vector<RWOutput> HumpbackWhaleMP::getRWOutput()
 {
 	return m_rwOutput;
+}
+
+void HumpbackWhaleMP::randomGenerate(std::vector<int>& rVec)
+{
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(rVec.begin(), rVec.end(), g);
 }
 #pragma endregion
 

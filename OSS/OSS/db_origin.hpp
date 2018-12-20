@@ -24,7 +24,8 @@ Last Updated : 18-11-05
 #include <algorithm>
 #include <string>
 #include <cassert>
-
+#include <random>
+#include <iterator>
 
 #define RW_POSSIBILITY float*
 #define DIRECTION_NUMBER 9
@@ -95,6 +96,9 @@ public:
 	void writeFileClose();						// Write file close from output stream
 	virtual void writeDB();						// Write data to output stream
 	
+
+	// Debug 
+	void debugMsg(const std::string& msg);
 };
 
 
@@ -157,5 +161,12 @@ void DataBase::writeFileClose()
 void DataBase::writeDB()
 {
 
+}
+#pragma endregion
+
+#pragma region DataBase_debug
+void DataBase::debugMsg(const std::string& msg)
+{
+	std::cout << msg << std::endl;
 }
 #pragma endregion
