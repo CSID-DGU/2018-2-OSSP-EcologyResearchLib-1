@@ -37,6 +37,7 @@
 #include "location_origin.hpp"
 #include "al_randomwalk.hpp"
 
+#define UPDATE_DAY 3
 
 // 생물 이동경로 예측 알고리즘
 // 인터페이스를 제공하며,
@@ -107,7 +108,7 @@ private:
     Organism* m_targetOrganism;	// target Organism to predict
     Location* m_location;			// target Location for algorithm
     
-    std::vector<RandomWalk> m_randomWalk;   // 랜덤워커 배열 = 예측된 이동 경로
+	RandomWalk* randomWalk;					// 랜덤 워크
     std::vector<RWOutput> m_rwOutput;       // 저장용 간소화 배열
     
     int m_predictCount;                     // 예측 루틴 실행 횟수
@@ -135,7 +136,7 @@ public:
 
 	// 9방향의 확률 계산 메소드
 	void calculate();
-	void addWalker();                   // 랜덤워커 객체 1개 추가
+	void update();                     // Location DB 업데이트 
 	
 	//void calculateByPreference();       // 특정 선호 요소에 따른 각 방향의 이동확률 계산
 
@@ -143,13 +144,13 @@ public:
 
 	void timeElapse();                  // 단위 시간 증가
 
-	Direction decideDirection();        // 벡터 내의 마지막 랜덤워커 객체로부터 이동확률을 읽어, 이동 방향 결정
-
-	void transformRWArray();            // 랜덤워커 배열 -> 간소화 배열 변환
+	Point decideDirection(int direction, Point p);
+						// 벡터 내의 마지막 랜덤워커 객체로부터 이동확률을 읽어, 이동 방향 결정
 
 	std::vector<RWOutput> getRWOutput();    // 간소화 배열 반환
 
-	void randomGenerate(std::vector<int>& rVec);
+	// input
+	void inputPredictCount(const int& count);
 
 	// setter
 	virtual bool setLocation(Location* loc);
@@ -166,6 +167,7 @@ public:
 #pragma region HumpbackWhaleMP_Constructor
 HumpbackWhaleMP::HumpbackWhaleMP()
 {
+	randomWalk = new RandomWalk();
 	m_predictCount = 0;
 	m_numberOfWalkers = 0;
 }
@@ -251,11 +253,16 @@ void HumpbackWhaleMP::run()
 
 void HumpbackWhaleMP::initiate()
 {
-	// 랜덤워커 배열의 0번 객체 초기화
-	m_randomWalk.push_back(RandomWalk(m_point, m_timer));
+	// 랜덤워커 결과 배열의 0번 객체 초기화 (초기 생물의 위치)
+	m_rwOutput.push_back(RWOutput(m_location->getTime(), m_targetOrganism->getOrgPoint()));
 
-	// 이제 랜덤워커는 한 명
+	// 랜덤 워커 결과 개수
 	m_numberOfWalkers = 1;
+
+	// 예측 횟수 입력
+	int count;
+	std::cin >> count;
+	inputPredictCount(count);
 }
 
 void HumpbackWhaleMP::predict()
@@ -270,178 +277,62 @@ void HumpbackWhaleMP::predict()
 		calculate();
 
 		// 벡터에 랜덤 워커 객체 하나 추가
-		addWalker();
+		update();
 	}
 }
 
 void HumpbackWhaleMP::calculate()
 {
-	// 대상 : 현재 랜덤 워커 벡터의 마지막 객체
-	// 9방향 각각에 대한 이동 확률을 계산하여 랜덤워커 객체에 업데이트
-     
-    int     targetPossibility[3][3] = { 0, }; // 9개 위치의 확률
-    Point     targetPoint[3][3];    // 9개 위치의 좌표 값
-    LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
-    STATUS    targetStatus = m_targetOrganism->getOrgStatus();  // 타겟 생물체의 상태
+	/* 2018.12.16 ~ TODO ***********************************
+	 *
+	 * 1. 난수 발생시켜서 이동할 방향 결정
+	 * 2. 결정된 방향으로 이동 (doRandomWalk() 메소드 구현 및 호출)
+	 * 3. 이동된 방향으로 새로운 랜덤워커 결과 변수 생성(벡터 말단에 push_back)
+	 * 4. ~반복하여 랜덤워커 결과로 이루어진 배열이 생성됨
+	 * ******************************************************
+	 */
 
-    // 확률 가중치
-    int warmTemperatureWeight;
-    int coldTemperatureWeight;
-    int preyWeight;
+	 // 말단 랜덤워커의 9개의 이동 확률을 읽고, 랜덤으로 방향 결정
+	RWOutput output;
+	int direction = randomWalk->doRandomWalk(*m_targetOrganism, *m_location);
 
-    // 9개의 좌표 중, 중심 좌표 가져오기
-    targetPoint[1][1] = m_targetOrganism->getOrgPoint();
-    
-    // 인접한 9개의 좌표 계산
-    for(int i = 0; i < 3; i++)
-        for(int j = 0; j < 3; j++)
-        {
-            targetPoint[i][j].xpos = targetPoint[1][1].xpos + (i - 1);
-            targetPoint[i][j].ypos = targetPoint[1][1].ypos + (j - 1);
-        }
+	output.time = m_location->getTime();
+	output.point = decideDirection(direction, m_targetOrganism->getOrgPoint());
 
-    // 9개의 LocalInfo 가져오기
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-        {
-            targetInfo[i][j] = m_location->getLocalInfo(targetPoint[i][j]);
-        }
-
-    /* 영향 요소들을 이용해 가중치 계산*/
-
-    if(targetStatus == BREEDING)
-    {
-        warmTemperatureWeight = 7;
-        coldTemperatureWeight = 2;
-        preyWeight = 3;
-    }
-    else
-    {
-        warmTemperatureWeight = 1;
-        coldTemperatureWeight = 3;
-        preyWeight = 6;
-    }
-
-    // 중앙 위치의 온도 값
-    int centerTemerature = m_location->getWaterTemperature(targetPoint[4][4]);
-
-    // 먹이
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            for (const auto& orgMember : targetInfo[i][j].localOrganisms)
-            {
-                // 1. 해당 위치에 크릴 새우가 있을 경우
-                if(orgMember->getOrganismName() == "Krill")
-                    targetPossibility[i][j] += preyWeight;   // 가중치 가산
-
-                // 2. 온도
-                if(targetStatus == BREEDING)
-                {
-                    // 주변의 온도가 중앙보다 높은 경우
-                    if (m_location->getWaterTemperature(targetPoint[i][j]) > centerTemerature)
-                    {
-                        targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
-                    }
-                }
-                else    // NONBREEDING
-                {
-                    // 주변의 온도가 중앙보다 낮은 경우
-                    if (m_location->getWaterTemperature(targetPoint[i][j]) < centerTemerature)
-                    {
-                        targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
-                    }
-                }
-
-                
-            }
-
-	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-        {
-            // 해당 인접 위치가 바다가 아닌 경우 : 이동 확률을 0으로 초기화
-            if(targetInfo[i][j].localState[2] != SEA)
-                targetPossibility[i][j] = 0;
-        }
-
-	// 확률 계산
-	std::vector<int> randVec;
-	int arrNum = 0;
-
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-		{
-			int randNum = targetPossibility[i][j];
-			
-			while (randNum--)
-				randVec.push_back(arrNum);
-
-			arrNum++;
-		}
-
-	// 이동 좌표 결정
-	randomGenerate(randVec);
-	
-	
+	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
+	m_rwOutput.push_back(output);
 }
 
-void HumpbackWhaleMP::addWalker()
+void HumpbackWhaleMP::update()
 {
-	// 이터레이터 : 백터 내에서 가장 말단에 있는 랜덤 워커
-	const RandomWalk& iterator = m_randomWalk[m_numberOfWalkers - 1];
-
-
-    /* 2018.12.16 ~ TODO ***********************************
-     *
-     * 1. 난수 발생시켜서 이동할 방향 결정
-     * 2. 결정된 방향으로 이동 (moveWalker(방향) 메소드 구현 및 호출)
-     * 3. 이동된 방향으로 새로운 랜덤워커 객체 생성(벡터 말단에 push_back)
-     * 4. ~반복하여 랜덤워커 벡터가 생성됨
-     * 5. 생성된 벡터를 간소화 배열로 변환(구현되어있음, 수정 필요) => 간소화 배열 반환
-     *
-     * ******************************************************
-     */
-
-
-    // 말단 랜덤워커의 9개의 이동 확률을 읽고, 랜덤으로 방향 결정
-
-
-	// 결정된 방향으로 이동
-    // moveWalker(direction);
-
 	// 단위 시간 증가
 	timeElapse();
 
-    // 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
-	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
-	m_randomWalk.push_back(RandomWalk(m_point, m_timer));
+    // TO DO 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
+
+	//m_randomWalk.push_back(RandomWalk(m_point, m_timer));
 	m_numberOfWalkers++;
 }
 
 void HumpbackWhaleMP::timeElapse()
 {
 	// 단위 시간 증가 : 3일
-	m_timer.addDay(3);
+	m_location->updateDay(UPDATE_DAY);
 }
 
-Direction HumpbackWhaleMP::decideDirection()
+Point HumpbackWhaleMP::decideDirection(int direction, Point p)
 {
-	// TODO : 난수 발생 필요
-	// 9방향의 확률에 대해 랜덤으로 위치 결정
+	if (direction == 0) { p.xpos -= 1; p.ypos += 1; }
+	else if (direction == 1) { p.ypos += 1; }
+	else if (direction == 2) { p.xpos += 1; p.ypos += 1; }
+	else if (direction == 3) { p.xpos -= 1; }
+	else if (direction == 4) { }
+	else if (direction == 5) { p.xpos += 1; }
+	else if (direction == 6) { p.xpos -= 1; p.ypos -= 1; }
+	else if (direction == 7) { p.ypos -= 1; }
+	else if (direction == 8) { p.xpos += 1; p.ypos -= 1; }
 
-    
-
-	/* return Direction::DECIDED_DIRECTION ! */
-	return Direction();
-}
-
-// 랜덤워커 배열 -> 간소화 배열 변환
-void HumpbackWhaleMP::transformRWArray()
-{
-	for (RandomWalk& walker : m_randomWalk)
-	{
-		// m_rwOutput.push_back(RWOutput(walker.getLocalInfo().pos, walker.getTimer().getTimeString()));
-	}
+	return p;
 }
 
 // 간소화 배열 반환
@@ -450,12 +341,9 @@ std::vector<RWOutput> HumpbackWhaleMP::getRWOutput()
 	return m_rwOutput;
 }
 
-void HumpbackWhaleMP::randomGenerate(std::vector<int>& rVec)
+void HumpbackWhaleMP::inputPredictCount(const int& count)
 {
-	std::random_device rd;
-	std::mt19937 g(rd());
-
-	std::shuffle(rVec.begin(), rVec.end(), g);
+	m_predictCount = count;
 }
 #pragma endregion
 

@@ -40,6 +40,7 @@ public:
 
 	// Update
 	void updateDB(LocalInfo* localInfo);
+	void updateDay(int day);
 	
 	// Setter
 	void setUpFieldDB(std::string& fileName);
@@ -81,26 +82,12 @@ void Location::initiailize(std::string& fileName)
 }
 #pragma endregion
 
-#pragma region Location_FieldDB
+#pragma region Location_setter
 void Location::setUpFieldDB(std::string& fileName)
 {
 	m_FDB->readDB(fileName);
 }
 
-LocalInfo Location::getLocalInfo(Point p)
-{
-	return m_FDB->getLocalInfo(p);
-}
-
-timer_string_t Location::getTime()
-{
-	return m_FDB->getLocalTime();
-}
-
-#pragma endregion
-
-
-#pragma region Location_getter
 //bool Location::setTarget(std::string& orgName)
 //{
 //	this->target = m_FDB->retrieveOrganism(orgName);
@@ -110,6 +97,11 @@ timer_string_t Location::getTime()
 //
 //	return false;
 //}
+#pragma endregion
+
+
+#pragma region Location_getter
+
 
 Organism* Location::getTarget(const std::string& orgName)
 {
@@ -121,4 +113,20 @@ int Location::getWaterTemperature(Point p)
 	return m_FDB->getLocalWaterTemperature(p);
 }
 
+LocalInfo Location::getLocalInfo(Point p)
+{
+	return m_FDB->getLocalInfo(p);
+}
+
+timer_string_t Location::getTime()
+{
+	return m_FDB->getLocalTime();
+}
+#pragma endregion
+
+#pragma region Locatin_update
+void Location::updateDay(int day)
+{
+	m_FDB->updateTimerDay(day);
+}
 #pragma endregion

@@ -89,6 +89,7 @@ public:
 	void updateGlobalState(); // Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
 	void updateOrganismList(int x, int y); // Update Organism list of location
+	void updateTimerDay(int days);	// Update times
 
 	// Retrieve
 	Organism* retrieveOrganism(const std::string& name);
@@ -350,6 +351,11 @@ void FieldDataBase::updateLocalState(int x, int y)
 void FieldDataBase::updateOrganismList(int x, int y)
 {
 	// to do
+}
+
+void FieldDataBase::updateTimerDay(int days)
+{
+	m_timer->addDay(days);
 }
 #pragma endregion
 

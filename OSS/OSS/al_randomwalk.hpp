@@ -6,7 +6,7 @@
 ******************************************************
 
 Coded by : Sa Min Hong
-Last Updated : 18-11-05
+Last Updated : 18-12-20	
 
 
 [ RandomWalk ]
@@ -159,37 +159,18 @@ SEQUENCE
 
 class RandomWalk
 {
-private:
-
-    // 9방향 각각에 대한 이동 확률을 저장하는 배열
-    int possibility[3][3] = { 0, };
-
-    // 해당 랜덤워커의 위치, 시간
-    Point     m_point;
-    Timer     m_timer;
-
 public:
-    RandomWalk();
-
     //생성자 : 로컬 정보, 시간 초기화
-    RandomWalk(const Point& point, Timer timer)
-        : m_point(point), m_timer(timer) {}
+	RandomWalk();
     ~RandomWalk() {}
+
+	// Random Walk
+	int doRandomWalk(Organism& org, Location& loc);
 
     // 알고리즘 클래스의 calculate() 내부에서 실행된다.
     // 9방향 각각에 대한 이동 확률 계산 및 설정 메소드
-    void setMovingPossibility(const float& pArray);
-
-    // 특정 방향(1방향)에 대한 이동 확률 설정 메소드
-    //void setMovingPossibility(Direction direction, float posibility);
-    
-    // Location에서 생물체의 현재 좌표와 시간을 가져와 멤버에 저장
-    // Location = Position + Timer
-    void setLocation(const Location& location);
-
-    // Getters
-    Point     getPoint();
-    Timer     getTimer();
+    void setMovingPossibility(const int& pArray);
+	void randomGenerate(std::vector<int>& rVec);
 };
 
 // 생 성 자
@@ -203,22 +184,129 @@ RandomWalk::RandomWalk()
 #pragma endregion
 
 // 이동 확률 계산 및 설정
-#pragma region RANDOM_WALK_POSSIBILITY
+#pragma region RANDOM_WALK_caculate
 
-void RandomWalk::setMovingPossibility(const float& pArray)
+void RandomWalk::setMovingPossibility(const int& pArray)
 {
-	// To do
+	
 }
 
+int RandomWalk::doRandomWalk(Organism& org, Location& loc)
+{
+	// 대상 : 현재 랜덤 워커 벡터의 마지막 객체
+	// 9방향 각각에 대한 이동 확률을 계산하여 랜덤워커 객체에 업데이트
+
+	int     targetPossibility[3][3] = { 0, }; // 9개 위치의 확률
+	Point     targetPoint[3][3];    // 9개 위치의 좌표 값
+	LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
+	STATUS    targetStatus = org.getOrgStatus();  // 타겟 생물체의 상태
+
+	// 확률 가중치
+	int warmTemperatureWeight;
+	int coldTemperatureWeight;
+	int preyWeight;
+
+	// 9개의 좌표 중, 중심 좌표 가져오기
+	targetPoint[1][1] = org.getOrgPoint();
+
+	// 인접한 9개의 좌표 계산
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			targetPoint[i][j].xpos = targetPoint[1][1].xpos + (i - 1);
+			targetPoint[i][j].ypos = targetPoint[1][1].ypos + (j - 1);
+		}
+
+	// 9개의 LocalInfo 가져오기
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			targetInfo[i][j] = loc.getLocalInfo(targetPoint[i][j]);
+		}
+
+	/* 영향 요소들을 이용해 가중치 계산*/
+
+	if (targetStatus == BREEDING)
+	{
+		warmTemperatureWeight = 7;
+		coldTemperatureWeight = 2;
+		preyWeight = 3;
+	}
+	else
+	{
+		warmTemperatureWeight = 1;
+		coldTemperatureWeight = 3;
+		preyWeight = 6;
+	}
+
+	// 중앙 위치의 온도 값
+	int centerTemerature = loc.getWaterTemperature(targetPoint[4][4]);
+
+	// 먹이
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			for (const auto& orgMember : targetInfo[i][j].localOrganisms)
+			{
+				// 1. 해당 위치에 크릴 새우가 있을 경우
+				if (orgMember->getOrganismName() == "Krill")
+					targetPossibility[i][j] += preyWeight;   // 가중치 가산
+
+				// 2. 온도
+				if (targetStatus == BREEDING)
+				{
+					// 주변의 온도가 중앙보다 높은 경우
+					if (loc.getWaterTemperature(targetPoint[i][j]) > centerTemerature)
+					{
+						targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
+					}
+				}
+				else    // NONBREEDING
+				{
+					// 주변의 온도가 중앙보다 낮은 경우
+					if (loc.getWaterTemperature(targetPoint[i][j]) < centerTemerature)
+					{
+						targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
+					}
+				}
+
+
+			}
+
+	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			// 해당 인접 위치가 바다가 아닌 경우 : 이동 확률을 0으로 초기화
+			if (targetInfo[i][j].localState[2] != SEA)
+				targetPossibility[i][j] = 0;
+		}
+
+	// 확률 계산
+	std::vector<int> randVec;
+	int arrNum = 0;
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			int randNum = targetPossibility[i][j];
+
+			while (randNum--)
+				randVec.push_back(arrNum);
+
+			arrNum++;
+		}
+
+	// 이동 좌표 결정
+	randomGenerate(randVec);
+
+	return randVec.back();
+}
+
+void RandomWalk::randomGenerate(std::vector<int>& rVec)
+{
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(rVec.begin(), rVec.end(), g);
+}
 #pragma endregion
-
-
-Point RandomWalk::getPoint()
-{
-    return m_point;
-}
-
-Timer RandomWalk::getTimer()
-{
-    return m_timer;
-}

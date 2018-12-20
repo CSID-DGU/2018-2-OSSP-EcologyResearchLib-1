@@ -22,7 +22,7 @@ Coded by : Jong Ha Sin
 class RandomWalkMovementPathDB : public DataBase
 {
 private:
-	std::vector<RWOutput> randomwWalkOutput;
+	std::vector<RWOutput>* randomwWalkOutput;
 
 public:
 	// setter
@@ -39,17 +39,17 @@ public:
 #pragma region RandomWalkMovementPathDB_setter
 void RandomWalkMovementPathDB::pushData(RWOutput randomWalk)
 {
-	randomwWalkOutput.push_back(randomWalk);
+	randomwWalkOutput->push_back(randomWalk);
 }
 #pragma endregion
 
 #pragma region RandomWalkMovementPathDB_getter
 RWOutput RandomWalkMovementPathDB::popData()
 {
-	if (!randomwWalkOutput.empty())
+	if (!randomwWalkOutput->empty())
 	{
-		RWOutput temp = randomwWalkOutput.back();
-		randomwWalkOutput.pop_back();
+		RWOutput temp = randomwWalkOutput->back();
+		randomwWalkOutput->pop_back();
 		return temp;
 	}
 

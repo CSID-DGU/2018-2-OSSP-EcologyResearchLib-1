@@ -32,6 +32,12 @@ Last Updated : 18-11-05
 
 typedef std::string timer_string_t;
 
+// Point structure for map
+typedef struct Point
+{
+	int xpos, ypos;
+}Point;
+
 // Position data struct
 typedef struct Position
 {
@@ -57,23 +63,20 @@ enum Direction
 // 간소화 저장용 RWOutput
 typedef struct RWOutput
 {
-	Position        position;       // 좌표
 	timer_string_t  time;           // 간소화된 시간 스트링
+	Point point;						// 맵상 좌표
 
 	// 생성자
-	RWOutput(Position p, timer_string_t t)
-		: position(p), time(t) {}
+	RWOutput() {}
+
+	RWOutput(timer_string_t t, Point p)
+		: point(p), time(t) {}
 
 	// getter
-	Position getPosition() { return position; }
+	Point getPoint() { return point; }
 	timer_string_t getTimer() { return time; }
 
 } RWOutput;
-
-typedef struct Point
-{
-	int xpos, ypos;
-}Point;
 
 class DataBase
 {
