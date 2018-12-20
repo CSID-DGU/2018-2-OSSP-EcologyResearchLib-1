@@ -309,6 +309,8 @@ void HumpbackWhaleMP::update()
 	timeElapse();
 
     // TO DO 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
+	m_targetOrganism->setOrganismPoint(m_rwOutput.back().getPoint());
+	m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());
 
 	//m_randomWalk.push_back(RandomWalk(m_point, m_timer));
 	m_numberOfWalkers++;

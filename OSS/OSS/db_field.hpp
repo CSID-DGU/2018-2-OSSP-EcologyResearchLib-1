@@ -86,10 +86,11 @@ public:
 	void createSpecies(const std::string& speciesName, Organism* org);
 
 	// Update
-	void updateGlobalState(); // Update whole Local State
+	void updateGlobalState();			// Update whole Local State
 	void updateLocalState(int x, int y); // Update each local state
-	void updateOrganismList(int x, int y); // Update Organism list of location
-	void updateTimerDay(int days);	// Update times
+	void updateOrganismList(Point curPoint, Point nextPoint, const std::string& name);
+										// Update Organism list of location
+	void updateTimerDay(int days);		// Update times
 
 	// Retrieve
 	Organism* retrieveOrganism(const std::string& name);
@@ -348,9 +349,18 @@ void FieldDataBase::updateLocalState(int x, int y)
 	// TO DO 
 }
 
-void FieldDataBase::updateOrganismList(int x, int y)
+void FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, const std::string& name)
 {
-	// to do
+	std::vector<Organism*>::iterator iter = localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.begin();
+
+	for ( ; iter != localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.end(); iter++)
+	{
+		if (name == (*iter)->getOrganismName())
+		{
+			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back((*iter));
+			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.erase(iter);
+		}
+	}
 }
 
 void FieldDataBase::updateTimerDay(int days)
