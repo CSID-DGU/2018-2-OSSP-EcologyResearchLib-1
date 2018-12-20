@@ -73,7 +73,7 @@ public:
 
 	// Setter
 	virtual bool setLocation(Location* loc) { return true; };
-	virtual bool setTarget(std::string& orgName) { return true; };
+	virtual bool setTarget(std::string& orgName, Point p) { return true; };
 
 	// Getter
 	virtual std::string getTagetName() { return nullptr; };
@@ -154,7 +154,7 @@ public:
 
 	// setter
 	virtual bool setLocation(Location* loc);
-	virtual bool setTarget(std::string& orgName);
+	virtual bool setTarget(std::string& orgName, Point p);
 
 	// getter
 	virtual std::string getTagetName();
@@ -197,14 +197,14 @@ bool HumpbackWhaleMP::setLocation(Location* loc)
 	} return false;
 }
 
-bool HumpbackWhaleMP::setTarget(std::string& orgName)
+bool HumpbackWhaleMP::setTarget(std::string& orgName, Point p)
 {
 	//debug
 	std::cout << "Find org Name = " << orgName << std::endl;
 
-	if (isTargetOrganism(m_location->getTarget(orgName)))
+	if (isTargetOrganism(m_location->getTarget(orgName, p)))
 	{
-		this->m_targetOrganism = m_location->getTarget(orgName);
+		this->m_targetOrganism = m_location->getTarget(orgName, p);
 		return true;
 	} return false;
 }
@@ -250,7 +250,7 @@ void HumpbackWhaleMP::run(std::vector<RWOutput>* rwDB)
 	initiate();
 	predict();
 	
-	rwDB = &(this->m_rwOutput);
+	//rwDB = &(this->m_rwOutput);
 }
 
 void HumpbackWhaleMP::initiate()
@@ -272,9 +272,15 @@ void HumpbackWhaleMP::predict()
 	// 한 번 수행될 때마다, 랜덤 워커 객체를 하나 생성하여 벡터에 추가한다.
 	// Prototype : 단위는 3일(3일마다 1위도(110km정도)씩 이동)
 
+	
+
 	// 예측 루틴 반복 :  실행 횟수에 도달한 경우 종료
 	while (!isPredictionEnd())
 	{
+		// debug
+		std::cout << "N Predict Count : " << m_predictCount << std::endl;
+		std::cout << "RW : CACULATING.." << std::endl;
+
 		// 랜덤워커 벡터 내에 존재하는 마지막 객체에 대해 이동 확률 계산
 		calculate();
 
@@ -298,7 +304,12 @@ void HumpbackWhaleMP::calculate()
 
 	 // 말단 랜덤워커의 9개의 이동 확률을 읽고, 랜덤으로 방향 결정
 	RWOutput output;
-	int direction = randomWalk->doRandomWalk(*m_targetOrganism, *m_location);
+	int direction;
+
+	direction = randomWalk->doRandomWalk(*m_targetOrganism, *m_location);
+
+	// 단위 시간 증가
+	timeElapse();
 
 	output.time = m_location->getTime();
 	output.point = decideDirection(direction, m_targetOrganism->getOrgPoint());
@@ -309,11 +320,15 @@ void HumpbackWhaleMP::calculate()
 
 void HumpbackWhaleMP::update()
 {
-	// 단위 시간 증가
-	timeElapse();
+	std::cout << m_location->getTime() << std::endl;
 
     // TO DO 이동한 좌표에 따라, 해당 지역 정보를 실시간으로 업데이트
 	m_targetOrganism->setOrganismPoint(m_rwOutput.back().getPoint());
+
+	//debug
+	std::cout << "Current Point : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
+	std::cout << "Next Point : " << m_rwOutput.back().point.xpos << " , " << m_rwOutput.back().point.ypos << std::endl;
+
 	m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());
 
 	m_numberOfWalkers++;

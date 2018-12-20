@@ -47,7 +47,7 @@ public:
 
 	// Getter
 	timer_string_t getTime();
-	Organism* getTarget(const std::string& orgName); // return target organism to algorithm
+	Organism* getTarget(const std::string& orgName, Point p); // return target organism to algorithm
 	LocalInfo getLocalInfo(Point p);			// 9개의 방향에 있는 Local data 를 배열로 리턴
 	int getWaterTemperature(Point p);
 
@@ -110,9 +110,9 @@ void Location::setUpFieldDB(std::string& fileName)
 #pragma region Location_getter
 
 
-Organism* Location::getTarget(const std::string& orgName)
+Organism* Location::getTarget(const std::string& orgName, Point p)
 {
-	return m_FDB->retrieveOrganism(orgName);
+	return m_FDB->retrieveOrganism(orgName, p);
 }
 
 int Location::getWaterTemperature(Point p)

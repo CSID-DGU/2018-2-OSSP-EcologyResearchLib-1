@@ -67,6 +67,7 @@ void Environment::setWaterTemperature(int temp)
 #pragma region Environment_Getter
 int Environment::getWaterTemperature()
 {
+	//std::cout << "Environment : Water temperature return!" << std::endl;
 	return waterTemperature;
 }
 #pragma endregion

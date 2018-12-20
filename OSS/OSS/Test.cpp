@@ -10,7 +10,7 @@ int main()
 	EcologyResearchLib::initializeLib();
 	EcologyResearchLib::DBLib::setLocationData(fileName);
 	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetLocation();
-	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetOrganism(target);
+	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::setTargetOrganism(target, Point(1, 5));
 	EcologyResearchLib::AlgorithmLib::MovementPredictionLib::run();
 	EcologyResearchLib::DBLib::getmovementPathData("result.txt");
 	

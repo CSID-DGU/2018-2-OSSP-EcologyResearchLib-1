@@ -201,6 +201,8 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	LocalInfo targetInfo[3][3];     // 9개 위치의 Local 정보
 	STATUS    targetStatus = org.getOrgStatus();  // 타겟 생물체의 상태
 
+	std::cout << targetStatus << std::endl;
+
 	// 확률 가중치
 	int warmTemperatureWeight;
 	int coldTemperatureWeight;
@@ -209,12 +211,20 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	// 9개의 좌표 중, 중심 좌표 가져오기
 	targetPoint[1][1] = org.getOrgPoint();
 
+	// debug
+	std::cout << org.getOrganismName() << std::endl;
+	std::cout << org.getOrgPoint().xpos << " " << org.getOrgPoint().ypos << std::endl;
+	std::cout << "TargetPoint Load : " << targetPoint[1][1].xpos << " " << targetPoint[1][1].ypos << std::endl;
+
 	// 인접한 9개의 좌표 계산
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 		{
 			targetPoint[i][j].xpos = targetPoint[1][1].xpos + (i - 1);
 			targetPoint[i][j].ypos = targetPoint[1][1].ypos + (j - 1);
+
+			// debug
+			std::cout << targetPoint[i][j].xpos << " , " << targetPoint[i][j].ypos << std::endl;
 		}
 
 	// 9개의 LocalInfo 가져오기
@@ -223,6 +233,9 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		{
 			targetInfo[i][j] = loc.getLocalInfo(targetPoint[i][j]);
 		}
+
+	//debug
+	std::cout << "Get each LocalInfo Complete" << std::endl;
 
 	/* 영향 요소들을 이용해 가중치 계산*/
 
@@ -239,14 +252,24 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		preyWeight = 6;
 	}
 
+	//debug
+	std::cout << "Weight assign Complete" << std::endl;
+
+
 	// 중앙 위치의 온도 값
-	int centerTemerature = loc.getWaterTemperature(targetPoint[4][4]);
+	int centerTemperature = loc.getWaterTemperature(targetPoint[1][1]);
+	std::cout << "centerTemperature : " << centerTemperature << std::endl;
+
+	//debug
+	std::cout << "CenterTemperature Complete" << std::endl;
 
 	// 먹이
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 			for (auto& orgMember : targetInfo[i][j].localOrganisms)
 			{
+				std::cout << i << "," << j << " Info : " << targetInfo[i][j].environment.getWaterTemperature() << std::endl;
+
 				// 1. 해당 위치에 크릴 새우가 있을 경우
 				if (orgMember->getOrganismName() == "Krill")
 					targetPossibility[i][j] += preyWeight;   // 가중치 가산
@@ -255,7 +278,7 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 				if (targetStatus == BREEDING)
 				{
 					// 주변의 온도가 중앙보다 높은 경우
-					if (loc.getWaterTemperature(targetPoint[i][j]) > centerTemerature)
+					if (loc.getWaterTemperature(targetPoint[i][j]) > centerTemperature)
 					{
 						targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
 					}
@@ -263,7 +286,7 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 				else    // NONBREEDING
 				{
 					// 주변의 온도가 중앙보다 낮은 경우
-					if (loc.getWaterTemperature(targetPoint[i][j]) < centerTemerature)
+					if (loc.getWaterTemperature(targetPoint[i][j]) < centerTemperature)
 					{
 						targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
 					}
@@ -272,14 +295,28 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 
 			}
 
+
+	//debug
+	//std::cout << "Temperature & Prey possibility complete" << std::endl;
+	//std::cout << targetInfo[1][2].localOrganisms.back()->getOrganismName() << std::endl;
+
 	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 		{
 			// 해당 인접 위치가 바다가 아닌 경우 : 이동 확률을 0으로 초기화
-			if (targetInfo[i][j].localState[2] != SEA)
+			if (targetInfo[i][j].localState[1] != SEA)
 				targetPossibility[i][j] = 0;
 		}
+	
+	//debug
+	/*for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			std::cout << targetPossibility[i][j] << std::endl;*/
+
+
+	//debug
+	std::cout << "Topology complete" << std::endl;
 
 	// 확률 계산
 	std::vector<int> randVec;
@@ -296,8 +333,18 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 			arrNum++;
 		}
 
+	//debug
+	std::cout << "Possibility setup complete" << std::endl;
+
+	for (auto& num : randVec)
+		std::cout << num << " ";
+	std::cout << std::endl;
+
 	// 이동 좌표 결정
 	randomGenerate(randVec);
+
+	//debug
+	std::cout << "Random Generatre Complete" << std::endl;
 
 	return randVec.back();
 }

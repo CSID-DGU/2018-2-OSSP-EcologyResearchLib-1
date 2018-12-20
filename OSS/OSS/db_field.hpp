@@ -93,7 +93,7 @@ public:
 	void updateTimerDay(int days);		// Update times
 
 	// Retrieve
-	Organism* retrieveOrganism(const std::string& name);
+	Organism* retrieveOrganism(const std::string& name, Point p);
 	bool isFoundName(const std::string& findName, const std::string& orgName);
 
 
@@ -355,11 +355,13 @@ void FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, const st
 
 	for ( ; iter != localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.end(); iter++)
 	{
-		if (name == (*iter)->getOrganismName())
+		std::cout << (*iter)->getOrganismName() << std::endl;
+
+		/*if (name == (*iter)->getOrganismName())
 		{
-			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back((*iter));
+			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(*iter);
 			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.erase(iter);
-		}
+		}*/
 	}
 }
 
@@ -370,9 +372,9 @@ void FieldDataBase::updateTimerDay(int days)
 #pragma endregion
 
 #pragma region FieldDataBase_Retrieve
-Organism* FieldDataBase::retrieveOrganism(const std::string& name)
+Organism* FieldDataBase::retrieveOrganism(const std::string& name, Point p)
 {
-	for (auto& orgIter : organismList)
+	for (auto& orgIter : localInfo[p.xpos][p.ypos].localOrganisms)
 	{
 		if (isFoundName(name, orgIter->getOrganismName()))
 		{
@@ -443,7 +445,7 @@ std::string FieldDataBase::getLocalName()
 
 std::string FieldDataBase::getLocalTime()
 {
-	return m_timer->getTimeString();
+	return m_timer->getDateString();
 }
 
 Timer* FieldDataBase::getTimer()

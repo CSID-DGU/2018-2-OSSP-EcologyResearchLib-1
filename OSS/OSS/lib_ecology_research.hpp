@@ -38,7 +38,7 @@ namespace EcologyResearchLib
 			MovementPrediction* mpAlgorithm = nullptr;
 			bool assignMpAlgorithmMemory();
 			void setTargetLocation();
-			void setTargetOrganism(std::string& str);
+			void setTargetOrganism(std::string& str, Point p);
 			void run();
 		}
 	}
@@ -118,9 +118,9 @@ void MovementPredictionLib::setTargetLocation()
 	MovementPredictionLib::mpAlgorithm->setLocation(DBLib::location);
 }
 
-void MovementPredictionLib::setTargetOrganism(std::string& str)
+void MovementPredictionLib::setTargetOrganism(std::string& str, Point p)
 {
-	if (MovementPredictionLib::mpAlgorithm->setTarget(str))
+	if (MovementPredictionLib::mpAlgorithm->setTarget(str, p))
 		std::cout << "Set Target Completed" << std::endl;
 	
 	else
