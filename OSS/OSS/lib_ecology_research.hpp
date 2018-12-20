@@ -90,6 +90,9 @@ void DBLib::getmovementPathData(const std::string& outFileName)
 	rwDB->writeFileOpen(outFileName);
 	rwDB->writeDB(); 
 	rwDB->writeFileClose();
+
+	// test
+	std::cout << "File Write Complete" << std::endl;
 }
 #pragma endregion
 
@@ -131,6 +134,6 @@ void MovementPredictionLib::run()
 	std::cout << "Get Target Completed" << std::endl;
 
 	// run Algorithm
-	
+	mpAlgorithm->run(DBLib::rwDB->getRWVecPointer());
 }
 #pragma endregion

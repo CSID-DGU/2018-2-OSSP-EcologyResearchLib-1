@@ -12,7 +12,6 @@ Last Updated : 18-11-05
 [ Timer ]
 
 <Explanation>
-2018. 10. 14. Timer 클래스 구현
 
 기본 형태 : int[6] 배열
 

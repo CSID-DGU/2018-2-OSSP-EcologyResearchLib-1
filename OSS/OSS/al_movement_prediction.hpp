@@ -69,7 +69,7 @@ public:
     // predictCount 횟수만큼 반복적으로 실행된다.
 	virtual void predict() = 0;
 
-	virtual void run() = 0;
+	virtual void run(std::vector<RWOutput>*) = 0;
 
 	// Setter
 	virtual bool setLocation(Location* loc) { return true; };
@@ -130,7 +130,7 @@ public:
 	// 예측 수행 = initiate + (predict * count)
 	
 	// Overridings
-    virtual void run()  override;
+    virtual void run(std::vector<RWOutput>*)  override;
 	virtual void initiate() override;
 	virtual void predict() override;
 
@@ -245,10 +245,12 @@ bool HumpbackWhaleMP::isTargetOrganism(Organism* org)
 
 #pragma region Public Functions
 
-void HumpbackWhaleMP::run()
+void HumpbackWhaleMP::run(std::vector<RWOutput>* rwDB)
 {
-    initiate();
-    predict();
+	initiate();
+	predict();
+	
+	rwDB = &(this->m_rwOutput);
 }
 
 void HumpbackWhaleMP::initiate()
@@ -279,6 +281,8 @@ void HumpbackWhaleMP::predict()
 		// 벡터에 랜덤 워커 객체 하나 추가
 		update();
 	}
+
+
 }
 
 void HumpbackWhaleMP::calculate()
@@ -312,7 +316,6 @@ void HumpbackWhaleMP::update()
 	m_targetOrganism->setOrganismPoint(m_rwOutput.back().getPoint());
 	m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());
 
-	//m_randomWalk.push_back(RandomWalk(m_point, m_timer));
 	m_numberOfWalkers++;
 }
 
@@ -348,4 +351,3 @@ void HumpbackWhaleMP::inputPredictCount(const int& count)
 	m_predictCount = count;
 }
 #pragma endregion
-

@@ -26,10 +26,12 @@ private:
 
 public:
 	// setter
+	void setData(std::vector<RWOutput>* rwVec);
 	void pushData(RWOutput randomWalk);
 	
 	// getter
 	RWOutput popData();
+	std::vector<RWOutput>* getRWVecPointer();
 
 	// DB I/O
 	virtual void writeDB() override;	// Write data to output stream
@@ -40,6 +42,11 @@ public:
 void RandomWalkMovementPathDB::pushData(RWOutput randomWalk)
 {
 	randomwWalkOutput->push_back(randomWalk);
+}
+
+void RandomWalkMovementPathDB::setData(std::vector<RWOutput>* rwVec)
+{
+	randomwWalkOutput = rwVec;
 }
 #pragma endregion
 
@@ -56,6 +63,11 @@ RWOutput RandomWalkMovementPathDB::popData()
 	else
 		exit(1);
 
+}
+
+std::vector<RWOutput>* RandomWalkMovementPathDB::getRWVecPointer()
+{
+	return this->randomwWalkOutput;
 }
 #pragma endregion
 
