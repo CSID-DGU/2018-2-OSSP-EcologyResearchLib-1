@@ -250,7 +250,8 @@ void HumpbackWhaleMP::run(std::vector<RWOutput>* rwDB)
 	initiate();
 	predict();
 	
-	//rwDB = &(this->m_rwOutput);
+	for (auto& data : m_rwOutput)
+		rwDB->push_back(data);
 }
 
 void HumpbackWhaleMP::initiate()
@@ -279,7 +280,7 @@ void HumpbackWhaleMP::predict()
 	{
 		// debug
 		std::cout << "N Predict Count : " << m_predictCount << std::endl;
-		std::cout << "RW : CACULATING.." << std::endl;
+		std::cout << "RW : CACULATING.. : Walker Num:" << m_numberOfWalkers << std::endl;
 
 		// 랜덤워커 벡터 내에 존재하는 마지막 객체에 대해 이동 확률 계산
 		calculate();
@@ -308,19 +309,12 @@ void HumpbackWhaleMP::calculate()
 
 	direction = randomWalk->doRandomWalk(*m_targetOrganism, *m_location);
 
-	//debug
-	std::cout <<"Direction : "<< direction << std::endl;
-	std::cout << "current Pos : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
-
 	// 단위 시간 증가
 	timeElapse();
 
 	// 출력 결과 셋팅
 	output.time = m_location->getTime();
 	output.point = decideDirection(direction, m_targetOrganism->getOrgPoint());
-
-	std::cout << "current Pos : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
-
 
 	// 랜덤워커 벡터에 객체 하나 추가, 개체 수 증가
 	m_rwOutput.push_back(output);
@@ -337,6 +331,12 @@ void HumpbackWhaleMP::update()
 	std::cout << "Current Point : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
 	std::cout << "Next Point : " << m_rwOutput.back().point.xpos << " , " << m_rwOutput.back().point.ypos << std::endl;
 	
+	// Status update
+	if (m_location->getMonth() >= 4 && m_location->getMonth() <= 9)
+		m_targetOrganism->setOrganismStatus("Winter");
+	else
+		m_targetOrganism->setOrganismStatus("Summer");
+
 
 
 	// target change

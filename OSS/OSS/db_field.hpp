@@ -109,6 +109,7 @@ public:
 	std::string getLocalTime(); // get local time form object
 	int getLocalWaterTemperature(Point p);
 	Timer* getTimer();			// get Timer
+	int getTimeMonth(); // get Month
 };
 
 #pragma region FieldDataBase_CONSTRUCTOR
@@ -352,9 +353,11 @@ void FieldDataBase::updateLocalState(int x, int y)
 Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, const std::string& name)
 {
 
-	std::cout << curPoint.xpos << " , " << curPoint.ypos << std::endl;
+	//debug
+	std::cout << "Update Organism List Test" << std::endl;
+	std::cout << "Organism Current Position : "<< curPoint.xpos << " , " << curPoint.ypos << std::endl;
 	std::vector<Organism*>::iterator iter = localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.begin();
-	std::cout << (*iter)->getOrganismName() << std::endl;
+	std::cout << "Organism Name : " << (*iter)->getOrganismName() << std::endl;
 
 	for ( ; iter != localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.end(); iter++)
 	{
@@ -364,7 +367,7 @@ Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, con
 
 			Organism* newOrg = new Organism(*iter);
 			newOrg->setOrganismPoint(nextPoint);
-			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(newOrg);
+			
 			
 			// debug
 			std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back()->getOrganismName() << std::endl;
@@ -375,8 +378,18 @@ Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, con
 			// Delete
 			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.pop_back();
 
+			// Add
+			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(newOrg);
+
 			// debug
+			std::cout << "Current Pos List" << std::endl;
 			for (auto& str : localInfo[curPoint.xpos][curPoint.ypos].localOrganisms)
+				std::cout << str->getOrganismName() << " ";
+			std::cout << std::endl;
+
+			// debug
+			std::cout << "Next Pos List" << std::endl;
+			for (auto& str : localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms)
 				std::cout << str->getOrganismName() << " ";
 			std::cout << std::endl;
 
@@ -477,6 +490,11 @@ Timer* FieldDataBase::getTimer()
 int FieldDataBase::getLocalWaterTemperature(Point p)
 {
 	return localInfo[p.xpos][p.ypos].environment.getWaterTemperature();
+}
+
+int FieldDataBase::getTimeMonth()
+{
+	return m_timer->getMonth();
 }
 #pragma endregion
 

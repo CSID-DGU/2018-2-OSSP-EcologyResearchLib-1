@@ -211,8 +211,8 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 
 	// debug
 	std::cout << org.getOrganismName() << std::endl;
-	std::cout << org.getOrgPoint().xpos << " " << org.getOrgPoint().ypos << std::endl;
 	std::cout << "TargetPoint Load : " << targetPoint[1][1].xpos << " " << targetPoint[1][1].ypos << std::endl;
+
 
 	// 인접한 9개의 좌표 계산
 	for (int i = 0; i < 3; i++)
@@ -222,7 +222,7 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 			targetPoint[i][j].ypos = targetPoint[1][1].ypos + (j - 1);
 
 			// debug
-			std::cout << targetPoint[i][j].xpos << " , " << targetPoint[i][j].ypos << std::endl;
+			// std::cout << targetPoint[i][j].xpos << " , " << targetPoint[i][j].ypos << std::endl;
 		}
 
 	// 9개의 LocalInfo 가져오기
@@ -301,9 +301,9 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		}
 	
 	//debug
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
-			std::cout << targetPossibility[i][j] << std::endl;
+			std::cout << targetPossibility[i][j] << std::endl;*/
 
 
 	//debug
@@ -327,9 +327,9 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	//debug
 	std::cout << "Possibility setup complete" << std::endl;
 
-	for (auto& num : randVec)
+	/*for (auto& num : randVec)
 		std::cout << num << " ";
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 
 	// 이동 좌표 결정
 	randomGenerate(randVec);

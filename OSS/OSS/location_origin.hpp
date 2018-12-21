@@ -47,7 +47,7 @@ public:
 
 	// Getter
 	timer_string_t getTime();
-	timer_string_t getYear();
+	int getMonth();
 	Organism* getTarget(const std::string& orgName, Point p); // return target organism to algorithm
 	LocalInfo getLocalInfo(Point p);			// 9개의 방향에 있는 Local data 를 배열로 리턴
 	int getWaterTemperature(Point p);
@@ -131,10 +131,10 @@ timer_string_t Location::getTime()
 	return m_FDB->getLocalTime();
 }
 
-timer_string_t Location::getYear()
+int Location::getMonth()
 {
 	// to do
-	return "";
+	return m_FDB->getTimeMonth();
 }
 #pragma endregion
 
