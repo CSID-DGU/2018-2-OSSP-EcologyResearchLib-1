@@ -370,13 +370,19 @@ Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, con
 			
 			
 			// debug
-			std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back()->getOrganismName() << std::endl;
-			std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back() << std::endl;
-			std::cout << *iter << std::endl;
-			std::cout << "push back OK" << std::endl;
+			if (!localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.empty())
+			{
+				std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back()->getOrganismName() << std::endl;
+				std::cout << localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.back() << std::endl;
+				std::cout << *iter << std::endl;
+				std::cout << "push back OK" << std::endl;
+			}
 
-			// Delete
-			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.pop_back();
+			if (!localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.empty())
+			{
+				// Delete
+				localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.pop_back();
+			}
 
 			// Add
 			localInfo[nextPoint.xpos][nextPoint.ypos].localOrganisms.push_back(newOrg);

@@ -264,32 +264,33 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 	// 먹이
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
+		{
 			for (auto& orgMember : targetInfo[i][j].localOrganisms)
 			{
 				// 1. 해당 위치에 크릴 새우가 있을 경우
 				if (orgMember->getOrganismName() == "Krill")
 					targetPossibility[i][j] += preyWeight;   // 가중치 가산
-
-				// 2. 온도
-				if (targetStatus == BREEDING)
-				{
-					// 주변의 온도가 중앙보다 높은 경우
-					if (loc.getWaterTemperature(targetPoint[i][j]) > centerTemperature)
-					{
-						targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
-					}
-				}
-				else    // NONBREEDING
-				{
-					// 주변의 온도가 중앙보다 낮은 경우
-					if (loc.getWaterTemperature(targetPoint[i][j]) < centerTemperature)
-					{
-						targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
-					}
-				}
-
-
 			}
+
+			// 2. 온도
+			if (targetStatus == BREEDING)
+			{
+				// 주변의 온도가 중앙보다 높은 경우
+				if (loc.getWaterTemperature(targetPoint[i][j]) > centerTemperature)
+				{
+					targetPossibility[i][j] += warmTemperatureWeight;   // 가중치 가산
+				}
+			}
+			else    // NONBREEDING
+			{
+				// 주변의 온도가 중앙보다 낮은 경우
+				if (loc.getWaterTemperature(targetPoint[i][j]) < centerTemperature)
+				{
+					targetPossibility[i][j] += coldTemperatureWeight;   // 가중치 가산
+				}
+			}
+		}
+			
 
 	// LAST. 주변 지형 이동 가능성 판단 (이동 불가능 : 0 초기화)
 	for (int i = 0; i < 3; i++)
@@ -319,7 +320,10 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 			int randNum = targetPossibility[i][j];
 
 			while (randNum--)
+			{
 				randVec.push_back(arrNum);
+			}
+			
 
 			arrNum++;
 		}
@@ -342,7 +346,11 @@ int RandomWalk::doRandomWalk(Organism& org, Location& loc)
 		std::cout << num << " ";
 	std::cout << std::endl;
 
-	return randVec.back();
+	if (randVec.empty())
+		return 4; // default pos
+
+	else
+		return randVec.back();
 }
 
 void RandomWalk::randomGenerate(std::vector<int>& rVec)
