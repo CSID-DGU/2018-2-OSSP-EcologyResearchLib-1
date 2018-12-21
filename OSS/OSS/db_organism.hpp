@@ -92,6 +92,7 @@ public:
 	void setSex(const SEX& sex);					 // Set Organism's sex
 	void setEnergy(const int& enerngy);				 // Set Organism's energy
 	void setStatus(const std::string& status);		 // Set Organism's status
+	void setStatus(STATUS status);
 	void setAction(const std::string& action);		 // Set Organism's action
 	void setPreferLocalState(const std::string& readData); 
 													// Set Organism's prefer local state					
@@ -108,6 +109,7 @@ public:
 	Point getPoint();
 	STATUS getStatus();
 	OrgDBStruct getOrgDBStruct();
+
 
 private:
 	OrgDBStruct* organismInfo;
@@ -132,6 +134,7 @@ public:
 	void setOrganismInfo(std::string& fileName);
 	void setOrganismPoint(Point p);
 	void setOrganismDB(OrgDBStruct odb);
+	void setOrganismStatus(timer_string_t time);
 
 	// Getter
 	std::string getOrganismName();
@@ -398,6 +401,13 @@ void OrgDataBase::setStatus(const std::string& status)
 	parsingStatusData(status, organismInfo->status);
 }
 
+
+void OrgDataBase::setStatus(STATUS status)
+{
+	organismInfo->status.pop_back();
+	organismInfo->status.push_back(status);
+}
+
 void OrgDataBase::setAction(const std::string& action)
 {
 	parsingActionData(action, organismInfo->action);
@@ -430,6 +440,7 @@ void OrgDataBase::setOrgDBStruct(const OrgDBStruct& odb)
 	organismInfo->sex = odb.sex;
 	organismInfo->status = odb.status;
 }
+
 #pragma endregion
 
 
@@ -519,6 +530,15 @@ void Organism::setOrganismPoint(Point p)
 void Organism::setOrganismDB(OrgDBStruct odb)
 {
 	m_ODB->setOrgDBStruct(odb);
+}
+
+void Organism::setOrganismStatus(timer_string_t time)
+{
+	if (time == "Winter")
+		m_ODB->setStatus(BREEDING);
+
+	else
+		m_ODB->setStatus(NONBREEDING);
 }
 #pragma endregion
 

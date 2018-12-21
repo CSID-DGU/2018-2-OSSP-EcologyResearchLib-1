@@ -315,6 +315,7 @@ void HumpbackWhaleMP::calculate()
 	// 단위 시간 증가
 	timeElapse();
 
+	// 출력 결과 셋팅
 	output.time = m_location->getTime();
 	output.point = decideDirection(direction, m_targetOrganism->getOrgPoint());
 
@@ -336,6 +337,8 @@ void HumpbackWhaleMP::update()
 	std::cout << "Current Point : " << m_targetOrganism->getOrgPoint().xpos << " , " << m_targetOrganism->getOrgPoint().ypos << std::endl;
 	std::cout << "Next Point : " << m_rwOutput.back().point.xpos << " , " << m_rwOutput.back().point.ypos << std::endl;
 	
+
+
 	// target change
 	m_targetOrganism = 
 		m_location->updateDB(m_targetOrganism->getOrgPoint(), m_rwOutput.back().point, m_targetOrganism->getOrganismName());

@@ -22,15 +22,13 @@ Coded by : Jong Ha Sin
 class RandomWalkMovementPathDB : public DataBase
 {
 private:
-	std::vector<RWOutput>* randomwWalkOutput;
+	std::vector<RWOutput> randomwWalkOutput;
 
 public:
 	// setter
-	void setData(std::vector<RWOutput>* rwVec);
 	void pushData(RWOutput randomWalk);
 	
 	// getter
-	RWOutput popData();
 	std::vector<RWOutput>* getRWVecPointer();
 
 	// DB I/O
@@ -41,39 +39,24 @@ public:
 #pragma region RandomWalkMovementPathDB_setter
 void RandomWalkMovementPathDB::pushData(RWOutput randomWalk)
 {
-	randomwWalkOutput->push_back(randomWalk);
-}
-
-void RandomWalkMovementPathDB::setData(std::vector<RWOutput>* rwVec)
-{
-	randomwWalkOutput = rwVec;
+	randomwWalkOutput.push_back(randomWalk);
 }
 #pragma endregion
 
 #pragma region RandomWalkMovementPathDB_getter
-RWOutput RandomWalkMovementPathDB::popData()
-{
-	if (!randomwWalkOutput->empty())
-	{
-		RWOutput temp = randomwWalkOutput->back();
-		randomwWalkOutput->pop_back();
-		return temp;
-	}
-
-	else
-		exit(1);
-
-}
 
 std::vector<RWOutput>* RandomWalkMovementPathDB::getRWVecPointer()
 {
-	return this->randomwWalkOutput;
+	return &randomwWalkOutput;
 }
 #pragma endregion
 
 #pragma region RandomWalkMovementPathDB_DB
 void RandomWalkMovementPathDB::writeDB()
 {
-	ofs << "ASD" << std::endl;
+	for (auto& data : randomwWalkOutput)
+	{
+		ofs << data.point.xpos << " " << data.point.ypos << " " << data.time << std::endl;
+	}
 }
 #pragma endregion

@@ -372,6 +372,7 @@ Organism* FieldDataBase::updateOrganismList(Point curPoint, Point nextPoint, con
 			std::cout << *iter << std::endl;
 			std::cout << "push back OK" << std::endl;
 
+			// Delete
 			localInfo[curPoint.xpos][curPoint.ypos].localOrganisms.pop_back();
 
 			// debug
