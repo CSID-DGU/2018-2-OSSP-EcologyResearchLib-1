@@ -133,6 +133,14 @@ public:
     Timer& operator -= (std::string timerString);
     Timer  operator +  (std::string timerString);
     Timer  operator -  (std::string timerString);
+
+    // Getters
+    int getYear()   { return this->time[YEAR];   }
+    int getMonth()  { return this->time[MONTH];  }
+    int getDay()    { return this->time[DAY];    }
+    int getHour()   { return this->time[HOUR];   }
+    int getMinute() { return this->time[MINUTE]; }
+    int getSecond() { return this->time[SECOND]; }
 };
 
 
